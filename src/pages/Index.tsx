@@ -3,9 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { MessageCircle, Mail, MapPin, Shield, Clock, Users, Star, Phone, CreditCard, Sun, Palmtree, Waves } from "lucide-react";
 import PriceCalculator from "@/components/PriceCalculator";
 import FAQ from "@/components/FAQ";
-import heroImage from "@/assets/tunisia-beach.jpg";
-import coastalImage from "@/assets/tunisia-coastal.jpg";
-import sunImage from "@/assets/tunisia-sun.jpg";
+import ExchangeRate from "@/components/ExchangeRate";
+import heroImage from "@/assets/tunisia-real-beach1.jpg";
+import coastalImage from "@/assets/tunisia-real-coastal.jpg";
+import sunImage from "@/assets/tunisia-real-beach2.jpg";
 
 const Index = () => {
   const generateWhatsAppLink = (phoneNumber: string, message: string) => {
@@ -87,6 +88,21 @@ const Index = () => {
 
       {/* Price Calculator */}
       <PriceCalculator />
+
+      {/* Exchange Rate Section */}
+      <section className="py-16 px-4 bg-background">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-primary mb-4">
+              💱 Currency Exchange
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Convert TND prices to your currency
+            </p>
+          </div>
+          <ExchangeRate />
+        </div>
+      </section>
 
       {/* How Booking Works */}
       <section id="booking-process" className="py-20 bg-gradient-ocean relative overflow-hidden">
