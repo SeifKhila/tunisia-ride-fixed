@@ -4,7 +4,7 @@ import { MessageCircle, Mail, MapPin, Shield, Clock, Users, Star, Phone, CreditC
 import PriceCalculator from "@/components/PriceCalculator";
 import FAQ from "@/components/FAQ";
 import ExchangeRate from "@/components/ExchangeRate";
-import heroImage from "@/assets/tunisia-real-beach1.jpg";
+import heroImage from "@/assets/tunisia-beach-hero.jpg";
 import coastalImage from "@/assets/tunisia-real-coastal.jpg";
 import sunImage from "@/assets/tunisia-real-beach2.jpg";
 
