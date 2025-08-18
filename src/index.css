@@ -8,52 +8,62 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Tunisia Theme Colors */
-    --background: 0 0% 100%;
-    --foreground: 208 69% 29%;
+    /* Tunisia Beach Theme Colors */
+    --background: 45 100% 99%;
+    --foreground: 208 88% 25%;
 
     --card: 0 0% 100%;
-    --card-foreground: 208 69% 29%;
+    --card-foreground: 208 88% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 208 69% 29%;
+    --popover-foreground: 208 88% 25%;
 
-    /* Deep Blue #0A4C8B */
-    --primary: 208 88% 30%;
+    /* Deep Ocean Blue */
+    --primary: 199 100% 33%;
     --primary-foreground: 0 0% 100%;
 
-    /* Sand #EADBC8 */
-    --secondary: 31 36% 86%;
-    --secondary-foreground: 208 69% 29%;
+    /* Warm Sand */
+    --secondary: 39 77% 83%;
+    --secondary-foreground: 208 88% 25%;
 
-    --muted: 31 36% 86%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 39 77% 90%;
+    --muted-foreground: 199 25% 45%;
 
-    /* Coral #F25C54 */
-    --accent: 3 87% 63%;
+    /* Sunset Coral */
+    --accent: 14 100% 66%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 31 36% 86%;
-    --input: 31 36% 86%;
-    --ring: 208 88% 30%;
+    --border: 39 50% 88%;
+    --input: 39 50% 92%;
+    --ring: 199 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
     
-    /* Custom Tunisia Colors */
-    --tunisia-blue: 208 88% 30%;
-    --tunisia-sand: 31 36% 86%;
-    --tunisia-coral: 3 87% 63%;
+    /* Tunisia Beach Colors */
+    --tunisia-blue: 199 100% 33%;
+    --tunisia-turquoise: 180 100% 50%;
+    --tunisia-sand: 39 77% 83%;
+    --tunisia-gold: 45 100% 70%;
+    --tunisia-coral: 14 100% 66%;
+    --tunisia-palm: 120 60% 35%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(208 88% 30%), hsl(208 88% 25%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(31 36% 96%));
+    /* Beautiful Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(199 100% 40%) 0%, hsl(180 100% 45%) 50%, hsl(45 100% 65%) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(14 100% 66%) 0%, hsl(39 100% 70%) 50%, hsl(45 100% 75%) 100%);
+    --gradient-ocean: linear-gradient(180deg, hsl(180 100% 85%) 0%, hsl(199 100% 50%) 100%);
+    --gradient-sand: linear-gradient(145deg, hsl(45 100% 95%) 0%, hsl(39 77% 88%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(45 100% 98%) 100%);
     
-    /* Shadows */
-    --shadow-tunisia: 0 10px 30px -10px hsl(208 88% 30% / 0.2);
-    --shadow-card: 0 4px 20px -5px hsl(208 88% 30% / 0.1);
+    /* Enhanced Shadows */
+    --shadow-tunisia: 0 20px 50px -15px hsl(199 100% 33% / 0.3);
+    --shadow-card: 0 8px 30px -8px hsl(199 50% 50% / 0.15);
+    --shadow-glow: 0 0 40px hsl(45 100% 70% / 0.4);
+    
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 

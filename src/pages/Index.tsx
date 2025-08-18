@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageCircle, Mail, MapPin, Shield, Clock, Users, Star, Phone, CreditCard } from "lucide-react";
+import { MessageCircle, Mail, MapPin, Shield, Clock, Users, Star, Phone, CreditCard, Sun, Palmtree, Waves } from "lucide-react";
 import PriceCalculator from "@/components/PriceCalculator";
 import FAQ from "@/components/FAQ";
-import heroImage from "@/assets/tunisia-hero.jpg";
+import heroImage from "@/assets/tunisia-beach.jpg";
+import coastalImage from "@/assets/tunisia-coastal.jpg";
+import sunImage from "@/assets/tunisia-sun.jpg";
 
 const Index = () => {
   const generateWhatsAppLink = (phoneNumber: string, message: string) => {
@@ -17,47 +19,65 @@ const Index = () => {
   const tourMessage = "Hello Affordable Taxi! I'm interested in tours across Tunisia. Dates: {...}, People: {...}, Interests: {...}. Please send me information and pricing.";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-sand">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero z-10"></div>
+        <div className="absolute inset-0 bg-gradient-hero opacity-90 z-10"></div>
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-float" 
           style={{ backgroundImage: `url(${heroImage})` }}
         ></div>
-        <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Affordable Taxi – Fixed-Price Airport Transfers in Tunisia
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Transparent prices. Reliable drivers. WhatsApp us for instant quote.
+        <div className="absolute inset-0 bg-gradient-to-t from-tunisia-blue/50 via-transparent to-tunisia-turquoise/30 z-10"></div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 text-tunisia-gold animate-shimmer">
+          <Sun size={40} />
+        </div>
+        <div className="absolute top-32 right-20 text-tunisia-coral animate-wave">
+          <Palmtree size={35} />
+        </div>
+        <div className="absolute bottom-40 left-16 text-tunisia-turquoise animate-float">
+          <Waves size={30} />
+        </div>
+        
+        <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
+          <div className="mb-8 animate-float">
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-tunisia-gold to-white bg-clip-text text-transparent drop-shadow-2xl">
+              Affordable Taxi Tunisia
+            </h1>
+            <div className="text-2xl md:text-3xl font-semibold mb-4 text-tunisia-gold drop-shadow-lg">
+              Fixed-Price Airport Transfers
+            </div>
+          </div>
+          <p className="text-xl md:text-2xl mb-12 opacity-95 max-w-3xl mx-auto leading-relaxed bg-black/20 backdrop-blur-sm rounded-2xl p-6">
+            🌅 Transparent prices • 🏖️ Reliable drivers • 📱 WhatsApp us for instant quote
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button asChild size="lg" className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold px-10 py-4 text-lg shadow-glow transform hover:scale-105 transition-all duration-300">
               <a
                 href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi! I'd like to get a quote for airport transfer.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2"
+                className="flex items-center gap-3"
               >
-                <MessageCircle size={24} />
-                WhatsApp Quote (TN)
+                <MessageCircle size={28} />
+                WhatsApp Tunisia
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="bg-white/10 border-white text-white hover:bg-white hover:text-primary font-semibold px-8 py-3">
+            <Button asChild variant="outline" size="lg" className="bg-white/15 border-2 border-white text-white hover:bg-white hover:text-tunisia-blue font-bold px-10 py-4 text-lg backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
               <a
                 href={generateWhatsAppLink("447956643662", "Hello Affordable Taxi! I'd like to get a quote for airport transfer.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2"
+                className="flex items-center gap-3"
               >
-                <MessageCircle size={24} />
-                WhatsApp Quote (UK)
+                <MessageCircle size={28} />
+                WhatsApp UK
               </a>
             </Button>
-            <Button asChild variant="secondary" size="lg" className="font-semibold px-8 py-3">
-              <a href={generateEmailLink()} className="flex items-center gap-2">
-                <Mail size={24} />
+            <Button asChild variant="secondary" size="lg" className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold px-10 py-4 text-lg shadow-tunisia transform hover:scale-105 transition-all duration-300">
+              <a href={generateEmailLink()} className="flex items-center gap-3">
+                <Mail size={28} />
                 Email Quote
               </a>
             </Button>
@@ -69,52 +89,56 @@ const Index = () => {
       <PriceCalculator />
 
       {/* How Booking Works */}
-      <section id="booking-process" className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">How Booking Works</h2>
-            <p className="text-xl text-muted-foreground">Simple, fast, and reliable booking process</p>
+      <section id="booking-process" className="py-20 bg-gradient-ocean relative overflow-hidden">
+        <div 
+          className="absolute inset-0 opacity-10 bg-cover bg-center" 
+          style={{ backgroundImage: `url(${coastalImage})` }}
+        ></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">How Booking Works</h2>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">Simple, fast, and reliable booking process in paradise</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <Card className="text-center shadow-card">
+          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <Card className="text-center shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4">
-                  <MessageCircle className="text-primary-foreground" size={32} />
+                <div className="mx-auto w-20 h-20 bg-gradient-sunset rounded-full flex items-center justify-center mb-6 shadow-glow animate-float">
+                  <MessageCircle className="text-white" size={40} />
                 </div>
-                <CardTitle className="text-xl">1. Choose & Contact</CardTitle>
+                <CardTitle className="text-2xl text-tunisia-blue">1. Choose & Contact</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  Choose your route and click WhatsApp or Email to send us your booking request with all details.
+                <CardDescription className="text-lg leading-relaxed">
+                  🏖️ Choose your route and click WhatsApp or Email to send us your booking request with all details.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center shadow-card">
+            <Card className="text-center shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-accent rounded-full flex items-center justify-center mb-4">
-                  <Shield className="text-white" size={32} />
+                <div className="mx-auto w-20 h-20 bg-tunisia-turquoise rounded-full flex items-center justify-center mb-6 shadow-glow animate-float" style={{ animationDelay: '1s' }}>
+                  <Shield className="text-white" size={40} />
                 </div>
-                <CardTitle className="text-xl">2. We Confirm</CardTitle>
+                <CardTitle className="text-2xl text-tunisia-blue">2. We Confirm</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  We confirm availability and send you driver details, car information, and payment instructions.
+                <CardDescription className="text-lg leading-relaxed">
+                  ✨ We confirm availability and send you driver details, car information, and payment instructions.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center shadow-card">
+            <Card className="text-center shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-tunisia-sand rounded-full flex items-center justify-center mb-4">
-                  <CreditCard className="text-foreground" size={32} />
+                <div className="mx-auto w-20 h-20 bg-tunisia-coral rounded-full flex items-center justify-center mb-6 shadow-glow animate-float" style={{ animationDelay: '2s' }}>
+                  <CreditCard className="text-white" size={40} />
                 </div>
-                <CardTitle className="text-xl">3. Pay & Travel</CardTitle>
+                <CardTitle className="text-2xl text-tunisia-blue">3. Pay & Travel</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  Pay 30% deposit via Revolut or PayPal. Pay balance to driver on pickup. Free cancellation up to 48 hours.
+                <CardDescription className="text-lg leading-relaxed">
+                  🌊 Pay 30% deposit via Revolut or PayPal. Pay balance to driver on pickup. Free cancellation up to 48 hours.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -123,45 +147,50 @@ const Index = () => {
       </section>
 
       {/* Tours Section */}
-      <section id="tours" className="py-16 bg-secondary/20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Tours Across Tunisia</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Explore the beauty of Tunisia with our private tour services. From ancient ruins to stunning coastlines, 
-              we'll create the perfect itinerary for your adventure.
+      <section id="tours" className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20" 
+          style={{ backgroundImage: `url(${sunImage})` }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-sunset opacity-90"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">🌅 Tours Across Tunisia</h2>
+            <p className="text-xl text-white/95 max-w-4xl mx-auto leading-relaxed bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+              🏛️ Explore the beauty of Tunisia with our private tour services. From ancient ruins to stunning coastlines, 
+              golden beaches to desert dunes - we'll create the perfect itinerary for your adventure in paradise.
             </p>
           </div>
           <div className="text-center">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 px-8 py-3">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button asChild size="lg" className="bg-white hover:bg-white/90 text-tunisia-coral font-bold px-10 py-4 text-lg shadow-glow transform hover:scale-105 transition-all duration-300">
                 <a
                   href={generateWhatsAppLink("21628602147", tourMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3"
                 >
-                  <MessageCircle size={24} />
+                  <Palmtree size={28} />
                   WhatsApp Tours (TN)
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="px-8 py-3">
+              <Button asChild variant="outline" size="lg" className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-tunisia-coral font-bold px-10 py-4 text-lg backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
                 <a
                   href={generateWhatsAppLink("447956643662", tourMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3"
                 >
-                  <MessageCircle size={24} />
+                  <Sun size={28} />
                   WhatsApp Tours (UK)
                 </a>
               </Button>
-              <Button asChild variant="secondary" size="lg" className="px-8 py-3">
+              <Button asChild variant="secondary" size="lg" className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold px-10 py-4 text-lg shadow-tunisia transform hover:scale-105 transition-all duration-300">
                 <a 
                   href="mailto:khilas592@gmail.com,bolbebakhila@gmail.com?subject=Tour%20Enquiry&body=Hello%20Affordable%20Taxi!%0A%0AI'm%20interested%20in%20tours%20across%20Tunisia.%0ADates:%20{...}%0APeople:%20{...}%0AInterests:%20{...}%0A%0APlease%20send%20me%20information%20and%20pricing."
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3"
                 >
-                  <Mail size={24} />
+                  <Mail size={28} />
                   Email Tours
                 </a>
               </Button>
@@ -171,106 +200,110 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section id="why-choose" className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Why Choose Affordable Taxi</h2>
-            <p className="text-xl text-muted-foreground">Your trusted partner for Tunisia travels</p>
+      <section id="why-choose" className="py-20 bg-gradient-sand relative overflow-hidden">
+        <div 
+          className="absolute inset-0 opacity-5 bg-cover bg-center" 
+          style={{ backgroundImage: `url(${coastalImage})` }}
+        ></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">🌟 Why Choose Affordable Taxi</h2>
+            <p className="text-xl text-tunisia-blue/80 max-w-2xl mx-auto">Your trusted partner for magical Tunisia travels</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="shadow-card">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                    <Star className="text-primary-foreground" size={24} />
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-sunset rounded-xl flex items-center justify-center shadow-glow animate-float">
+                    <Star className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-lg">Fixed Transparent Prices</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">🎯 Fixed Transparent Prices</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  No hidden fees, no surprises. Our fixed prices include taxes and tolls.
+                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
+                  💰 No hidden fees, no surprises. Our fixed prices include taxes and tolls - just pure transparency.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card">
+            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
-                    <Users className="text-white" size={24} />
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-tunisia-turquoise rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '0.5s' }}>
+                    <Users className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-lg">Vetted Drivers & Clean Cars</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">🚗 Vetted Drivers & Clean Cars</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  Professional, experienced drivers with well-maintained, comfortable vehicles.
+                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
+                  ✨ Professional, experienced drivers with well-maintained, comfortable vehicles for your journey.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card">
+            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-tunisia-sand rounded-lg flex items-center justify-center">
-                    <MessageCircle className="text-foreground" size={24} />
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-tunisia-coral rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '1s' }}>
+                    <MessageCircle className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-lg">Instant WhatsApp Support</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">📱 Instant WhatsApp Support</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  Quick responses and real-time communication for all your travel needs.
+                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
+                  ⚡ Quick responses and real-time communication for all your travel needs - we're always here.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card">
+            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                    <Shield className="text-primary-foreground" size={24} />
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-tunisia-gold rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '1.5s' }}>
+                    <Shield className="text-tunisia-blue" size={32} />
                   </div>
-                  <CardTitle className="text-lg">Child Seats on Request</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">👶 Child Seats on Request</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  Family-friendly service with child seats available upon request.
+                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
+                  👨‍👩‍👧‍👦 Family-friendly service with child seats available upon request for safe travels.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card">
+            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
-                    <Clock className="text-white" size={24} />
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '2s' }}>
+                    <Clock className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-lg">Flight Monitoring & Meet-and-Greet</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">✈️ Flight Monitoring</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  We track your flight and adjust for delays. Personal meet-and-greet service.
+                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
+                  🛬 We track your flight and adjust for delays. Personal meet-and-greet service included.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="shadow-card">
+            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-tunisia-sand rounded-lg flex items-center justify-center">
-                    <MapPin className="text-foreground" size={24} />
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-tunisia-palm rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '2.5s' }}>
+                    <MapPin className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-lg">All Tunisia Destinations</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">🗺️ All Tunisia Destinations</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  Service to any location in Tunisia. If it's not listed, just ask us!
+                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
+                  🏖️ Service to any location in Tunisia. If it's not listed, just ask us - we go everywhere!
                 </CardDescription>
               </CardContent>
             </Card>
@@ -282,99 +315,103 @@ const Index = () => {
       <FAQ />
 
       {/* Contact & Footer */}
-      <footer className="bg-primary text-primary-foreground py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <footer className="bg-gradient-hero text-white py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 opacity-10 bg-cover bg-center" 
+          style={{ backgroundImage: `url(${heroImage})` }}
+        ></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Affordable Taxi Tunisia</h3>
-              <p className="opacity-90 mb-4">
-                Fixed prices, reliable drivers, and instant WhatsApp support for all your Tunisia travel needs.
+              <h3 className="text-3xl font-bold mb-6 text-tunisia-gold">🌊 Affordable Taxi Tunisia</h3>
+              <p className="opacity-90 mb-6 text-lg leading-relaxed">
+                Fixed prices, reliable drivers, and instant WhatsApp support for all your magical Tunisia travel adventures.
               </p>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Contact Tunisia</h4>
-              <div className="space-y-2">
+              <h4 className="text-xl font-semibold mb-6 text-tunisia-gold">📞 Contact Tunisia</h4>
+              <div className="space-y-4">
                 <a 
                   href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Phone size={18} />
+                  <Phone size={20} />
                   +216 28602147
                 </a>
                 <a 
                   href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle size={18} />
+                  <MessageCircle size={20} />
                   WhatsApp (TN)
                 </a>
               </div>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Contact UK</h4>
-              <div className="space-y-2">
+              <h4 className="text-xl font-semibold mb-6 text-tunisia-gold">🇬🇧 Contact UK</h4>
+              <div className="space-y-4">
                 <a 
                   href={generateWhatsAppLink("447956643662", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Phone size={18} />
+                  <Phone size={20} />
                   +44 7956 643662
                 </a>
                 <a 
                   href={generateWhatsAppLink("447956643662", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageCircle size={18} />
+                  <MessageCircle size={20} />
                   WhatsApp (UK)
                 </a>
               </div>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Email & Payment</h4>
-              <div className="space-y-2">
+              <h4 className="text-xl font-semibold mb-6 text-tunisia-gold">💳 Email & Payment</h4>
+              <div className="space-y-4">
                 <a 
                   href="mailto:khilas592@gmail.com,bolbebakhila@gmail.com"
-                  className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
                 >
-                  <Mail size={18} />
+                  <Mail size={20} />
                   Email Us
                 </a>
-                <div className="flex items-center gap-2 opacity-90">
-                  <CreditCard size={18} />
+                <div className="flex items-center gap-3 opacity-90">
+                  <CreditCard size={20} />
                   Revolut, PayPal
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-primary-foreground/20 pt-8 text-center">
-            <div className="mb-4">
-              <p className="text-lg font-semibold mb-2">Payment Information</p>
-              <p className="opacity-90">
+          <div className="border-t border-white/20 pt-12 text-center">
+            <div className="mb-8 bg-white/5 backdrop-blur-sm rounded-2xl p-8">
+              <p className="text-2xl font-semibold mb-4 text-tunisia-gold">💰 Payment Information</p>
+              <p className="opacity-90 text-lg">
                 Pay 30% deposit via Revolut or PayPal after confirmation. Balance to driver on pickup.
               </p>
             </div>
             
-            <div className="space-y-2 text-sm opacity-75">
-              <p>Affordable Taxi is a Tunisia-wide airport transfer and tours service.</p>
-              <p>Fixed prices, friendly drivers, and instant WhatsApp support.</p>
-              <p>If your destination isn't listed, message us your pickup & drop-off, dates and times—we'll send you the best price.</p>
+            <div className="space-y-3 text-lg opacity-85 leading-relaxed">
+              <p>🏖️ Affordable Taxi is a Tunisia-wide airport transfer and tours service.</p>
+              <p>🌅 Fixed prices, friendly drivers, and instant WhatsApp support.</p>
+              <p>🗺️ If your destination isn't listed, message us your pickup & drop-off, dates and times—we'll send you the best price.</p>
             </div>
             
-            <div className="mt-6 pt-6 border-t border-primary-foreground/20">
-              <p className="text-sm opacity-75">
-                Prices include taxes and tolls. Night/holiday surcharges not applied to listed fixed prices.
+            <div className="mt-8 pt-8 border-t border-white/20">
+              <p className="opacity-75 text-lg">
+                ✨ Prices include taxes and tolls. Night/holiday surcharges not applied to listed fixed prices.
               </p>
             </div>
           </div>
@@ -383,21 +420,21 @@ const Index = () => {
 
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-4 left-4 right-4 md:hidden z-50">
-        <div className="flex gap-2">
-          <Button asChild size="lg" className="flex-1 bg-primary hover:bg-primary/90 shadow-tunisia">
+        <div className="flex gap-3">
+          <Button asChild size="lg" className="flex-1 bg-tunisia-coral hover:bg-tunisia-coral/90 shadow-glow font-bold transform hover:scale-105 transition-all duration-300">
             <a
               href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi! I need a transfer quote.")}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2"
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={24} />
               WhatsApp
             </a>
           </Button>
-          <Button asChild variant="secondary" size="lg" className="flex-1 shadow-tunisia">
+          <Button asChild variant="secondary" size="lg" className="flex-1 bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue shadow-glow font-bold transform hover:scale-105 transition-all duration-300">
             <a href={generateEmailLink()} className="flex items-center justify-center gap-2">
-              <Mail size={20} />
+              <Mail size={24} />
               Email
             </a>
           </Button>

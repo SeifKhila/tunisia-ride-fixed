@@ -64,17 +64,43 @@ export default {
 				},
 				tunisia: {
 					blue: 'hsl(var(--tunisia-blue))',
+					turquoise: 'hsl(var(--tunisia-turquoise))',
 					sand: 'hsl(var(--tunisia-sand))',
-					coral: 'hsl(var(--tunisia-coral))'
+					gold: 'hsl(var(--tunisia-gold))',
+					coral: 'hsl(var(--tunisia-coral))',
+					palm: 'hsl(var(--tunisia-palm))'
 				}
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-sunset': 'var(--gradient-sunset)',
+				'gradient-ocean': 'var(--gradient-ocean)',
+				'gradient-sand': 'var(--gradient-sand)',
 				'gradient-card': 'var(--gradient-card)'
 			},
 			boxShadow: {
 				'tunisia': 'var(--shadow-tunisia)',
-				'card': 'var(--shadow-card)'
+				'card': 'var(--shadow-card)',
+				'glow': 'var(--shadow-glow)'
+			},
+			animation: {
+				'float': 'float 3s ease-in-out infinite',
+				'wave': 'wave 2s ease-in-out infinite',
+				'shimmer': 'shimmer 2s ease-in-out infinite alternate'
+			},
+			keyframes: {
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'wave': {
+					'0%, 100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				},
+				'shimmer': {
+					'0%': { opacity: '0.5' },
+					'100%': { opacity: '1' }
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

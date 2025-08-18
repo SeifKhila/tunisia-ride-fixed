@@ -77,35 +77,35 @@ Please confirm price and availability.`;
   };
 
   return (
-    <section id="calculator" className="py-16 bg-secondary/20">
+    <section id="calculator" className="py-20 bg-gradient-sand relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-foreground">Fixed Price Calculator</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose your route and get an instant fixed price. No hidden fees, no surprises.
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">🏖️ Fixed Price Calculator</h2>
+          <p className="text-xl text-tunisia-blue/80 max-w-3xl mx-auto leading-relaxed">
+            Choose your route and get an instant fixed price. No hidden fees, no surprises - just pure transparency like our crystal-clear beaches! 🌊
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto shadow-card bg-gradient-card">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">Get Your Quote</CardTitle>
-            <CardDescription className="text-center">
-              Select your pickup and destination to see the fixed price
+        <Card className="max-w-5xl mx-auto shadow-glow bg-gradient-card border-0 overflow-hidden">
+          <CardHeader className="bg-gradient-sunset text-white text-center py-12">
+            <CardTitle className="text-3xl mb-4">✨ Get Your Quote</CardTitle>
+            <CardDescription className="text-white/90 text-lg">
+              Select your pickup and destination to see the fixed price instantly
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label htmlFor="from-airport" className="text-sm font-medium">
-                  From Airport
+          <CardContent className="p-10 space-y-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-3">
+                <label htmlFor="from-airport" className="text-lg font-semibold text-tunisia-blue flex items-center gap-2">
+                  ✈️ From Airport
                 </label>
                 <Select value={fromAirport} onValueChange={setFromAirport}>
-                  <SelectTrigger id="from-airport">
+                  <SelectTrigger id="from-airport" className="h-14 text-lg border-2 border-tunisia-turquoise/20 focus:border-tunisia-turquoise">
                     <SelectValue placeholder="Select departure airport" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover z-50">
                     {airports.map((airport) => (
-                      <SelectItem key={airport.code} value={airport.code}>
+                      <SelectItem key={airport.code} value={airport.code} className="text-lg py-3">
                         {airport.name} ({airport.code})
                       </SelectItem>
                     ))}
@@ -113,18 +113,18 @@ Please confirm price and availability.`;
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="to-destination" className="text-sm font-medium">
-                  To Destination
+              <div className="space-y-3">
+                <label htmlFor="to-destination" className="text-lg font-semibold text-tunisia-blue flex items-center gap-2">
+                  🏖️ To Destination
                 </label>
                 <Select value={toDestination} onValueChange={setToDestination}>
-                  <SelectTrigger id="to-destination">
+                  <SelectTrigger id="to-destination" className="h-14 text-lg border-2 border-tunisia-turquoise/20 focus:border-tunisia-turquoise">
                     <SelectValue placeholder="Select destination area" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover z-50">
                     {destinations.map((destination) => (
-                      <SelectItem key={destination} value={destination}>
-                        {destination}
+                      <SelectItem key={destination} value={destination} className="text-lg py-3">
+                        🌊 {destination}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -133,57 +133,55 @@ Please confirm price and availability.`;
             </div>
 
             {selectedPrice && (
-              <Card className="bg-primary text-primary-foreground shadow-tunisia">
-                <CardContent className="p-6 text-center">
-                  <div className="mb-4">
-                    <p className="text-lg opacity-90 mb-2">Fixed Price</p>
-                    <p className="text-5xl font-bold">{selectedPrice} TND</p>
-                    <p className="text-sm opacity-75 mt-2">Per car (up to 4 passengers)</p>
+              <Card className="bg-gradient-hero text-white shadow-glow border-0 transform hover:scale-105 transition-all duration-300">
+                <CardContent className="p-10 text-center">
+                  <div className="mb-8">
+                    <p className="text-xl opacity-90 mb-4">🎯 Fixed Price</p>
+                    <p className="text-7xl font-bold mb-4 text-tunisia-gold drop-shadow-lg">{selectedPrice} TND</p>
+                    <p className="text-lg opacity-80">Per car (up to 4 passengers) 🚗</p>
                   </div>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-3 gap-6">
                     <Button 
                       asChild 
-                      variant="secondary" 
                       size="lg" 
-                      className="w-full bg-background text-foreground hover:bg-background/90"
+                      className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold text-lg py-4 shadow-glow transform hover:scale-105 transition-all duration-300"
                     >
                       <a
                         href={generateWhatsAppMessage("21628602147")}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
+                        className="flex items-center justify-center gap-3"
                       >
-                        <MessageCircle size={20} />
+                        <MessageCircle size={24} />
                         WhatsApp (TN)
                       </a>
                     </Button>
                     <Button 
                       asChild 
-                      variant="secondary" 
                       size="lg" 
-                      className="w-full bg-background text-foreground hover:bg-background/90"
+                      className="w-full bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold text-lg py-4 shadow-glow transform hover:scale-105 transition-all duration-300"
                     >
                       <a
                         href={generateWhatsAppMessage("447956643662")}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
+                        className="flex items-center justify-center gap-3"
                       >
-                        <MessageCircle size={20} />
+                        <MessageCircle size={24} />
                         WhatsApp (UK)
                       </a>
                     </Button>
                     <Button 
                       asChild 
-                      variant="secondary" 
+                      variant="outline" 
                       size="lg" 
-                      className="w-full bg-background text-foreground hover:bg-background/90"
+                      className="w-full border-2 border-white text-white hover:bg-white hover:text-tunisia-blue font-bold text-lg py-4 backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
                     >
                       <a
                         href={generateEmailLink()}
-                        className="flex items-center justify-center gap-2"
+                        className="flex items-center justify-center gap-3"
                       >
-                        <Mail size={20} />
+                        <Mail size={24} />
                         Email Quote
                       </a>
                     </Button>
@@ -192,10 +190,10 @@ Please confirm price and availability.`;
               </Card>
             )}
 
-            <div className="text-center text-sm text-muted-foreground space-y-1">
-              <p>• Prices are per car (up to 4 passengers)</p>
-              <p>• For vans/minibuses, ask on WhatsApp</p>
-              <p>• Any location within the destination area (hotels, rentals, beaches)</p>
+            <div className="text-center text-lg text-tunisia-blue/70 space-y-2 bg-tunisia-turquoise/5 rounded-2xl p-6">
+              <p>🚗 • Prices are per car (up to 4 passengers)</p>
+              <p>🚐 • For vans/minibuses, ask on WhatsApp</p>
+              <p>🏨 • Any location within the destination area (hotels, rentals, beaches)</p>
             </div>
           </CardContent>
         </Card>
