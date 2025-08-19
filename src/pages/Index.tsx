@@ -6,6 +6,7 @@ import LanguageSelector from "@/components/LanguageSelector";
 import PriceCalculator from "@/components/PriceCalculator";
 import ExchangeRate from "@/components/ExchangeRate";
 import FAQ from "@/components/FAQ";
+import WeatherWidget from "@/components/WeatherWidget";
 import heroImage from "@/assets/tunisia-hero-new.jpg";
 
 export default function Index() {
@@ -316,6 +317,9 @@ export default function Index() {
 
       {/* Exchange Rate */}
       <ExchangeRate />
+
+      {/* Weather Widget */}
+      <WeatherWidget />
 
       {/* FAQ */}
       <FAQ />

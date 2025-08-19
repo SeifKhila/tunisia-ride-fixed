@@ -42,9 +42,16 @@ const translations = {
     'hero.title': 'Affordable Taxi Tunisia',
     'hero.subtitle': 'Fixed-Price Airport Transfers',
     'hero.description': '🌅 Transparent prices • 🏖️ Reliable drivers • 📱 WhatsApp us for instant quote',
-    'hero.whatsapp_tunisia': 'WhatsApp Tunisia',
-    'hero.whatsapp_uk': 'WhatsApp UK',
-    'hero.email_quote': 'Email Quote',
+    'hero.whatsappTunisia': 'WhatsApp Tunisia',
+    'hero.whatsappUK': 'WhatsApp UK',
+    'hero.emailQuote': 'Email Quote',
+    'hero.calculatePrice': 'Calculate Price',
+    'hero.licensed': 'Licensed & Insured',
+    'hero.available24_7': '24/7 Available',
+    'hero.englishSpeaking': 'English Speaking',
+    'hero.whatsappMessage': 'Hi! I need a taxi quote for my trip to Tunisia. Please send me pricing information.',
+    'hero.emailSubject': 'Tunisia Taxi Quote Request',
+    'hero.emailBody': 'Hello,\n\nI would like to request a quote for taxi service in Tunisia.\n\nPlease provide pricing for my trip.\n\nThank you!',
     
     // Exchange Rate
     'exchange.title': '💱 Currency Exchange',
@@ -130,7 +137,19 @@ const translations = {
     'faq.q7': 'Are there any hidden fees?',
     'faq.a7': 'No hidden fees! Our listed prices include taxes and tolls. No night or holiday surcharges are applied to our fixed prices.',
     'faq.q8': 'What if my destination isn\'t listed?',
-    'faq.a8': 'Contact us with your specific pickup and drop-off locations, dates, and times. We\'ll provide you with the best price for any destination in Tunisia.'
+    'faq.a8': 'Contact us with your specific pickup and drop-off locations, dates, and times. We\'ll provide you with the best price for any destination in Tunisia.',
+    
+    // Footer
+    'footer.tunisiaContact': 'Tunisia Contact',
+    'footer.ukContact': 'UK Contact',
+    'footer.email': 'Email',
+    'footer.payment': 'Payment',
+    'footer.cashPayment': 'Cash to Driver',
+    'footer.whatsappMessage': 'Hello! I need information about your taxi services.',
+    'footer.serviceDescription': 'Professional taxi and tour services across beautiful Tunisia',
+    'footer.pricingNote': 'All prices include taxes and tolls. No hidden fees.',
+    'footer.allRightsReserved': 'All rights reserved.',
+    'footer.quickContact': 'Quick Contact'
   },
   
   fr: {
@@ -138,9 +157,16 @@ const translations = {
     'hero.title': 'Taxi Abordable Tunisie',
     'hero.subtitle': 'Transferts Aéroport Prix Fixe',
     'hero.description': '🌅 Prix transparents • 🏖️ Chauffeurs fiables • 📱 WhatsApp pour devis instantané',
-    'hero.whatsapp_tunisia': 'WhatsApp Tunisie',
-    'hero.whatsapp_uk': 'WhatsApp UK',
-    'hero.email_quote': 'Devis Email',
+    'hero.whatsappTunisia': 'WhatsApp Tunisie',
+    'hero.whatsappUK': 'WhatsApp UK',
+    'hero.emailQuote': 'Devis Email',
+    'hero.calculatePrice': 'Calculer le Prix',
+    'hero.licensed': 'Licencié et Assuré',
+    'hero.available24_7': '24/7 Disponible',
+    'hero.englishSpeaking': 'Parlant Anglais',
+    'hero.whatsappMessage': 'Salut! J\'ai besoin d\'un devis de taxi pour mon voyage en Tunisie. Veuillez m\'envoyer les informations de prix.',
+    'hero.emailSubject': 'Demande de Devis Taxi Tunisie',
+    'hero.emailBody': 'Bonjour,\n\nJe souhaiterais demander un devis pour le service de taxi en Tunisie.\n\nVeuillez fournir les prix pour mon voyage.\n\nMerci!',
     
     // Exchange Rate
     'exchange.title': '💱 Change de Devises',
@@ -226,7 +252,19 @@ const translations = {
     'faq.q7': 'Y a-t-il des frais cachés?',
     'faq.a7': 'Pas de frais cachés! Nos prix affichés incluent les taxes et péages. Aucun supplément de nuit ou de vacances n\'est appliqué à nos prix fixes.',
     'faq.q8': 'Que faire si ma destination n\'est pas listée?',
-    'faq.a8': 'Contactez-nous avec vos lieux de prise en charge et de dépose spécifiques, dates et heures. Nous vous fournirons le meilleur prix pour toute destination en Tunisie.'
+    'faq.a8': 'Contactez-nous avec vos lieux de prise en charge et de dépose spécifiques, dates et heures. Nous vous fournirons le meilleur prix pour toute destination en Tunisie.',
+    
+    // Footer
+    'footer.tunisiaContact': 'Contact Tunisie',
+    'footer.ukContact': 'Contact UK',
+    'footer.email': 'Email',
+    'footer.payment': 'Paiement',
+    'footer.cashPayment': 'Espèces au Chauffeur',
+    'footer.whatsappMessage': 'Bonjour! J\'ai besoin d\'informations sur vos services de taxi.',
+    'footer.serviceDescription': 'Services de taxi et de tours professionnels à travers la belle Tunisie',
+    'footer.pricingNote': 'Tous les prix incluent les taxes et péages. Pas de frais cachés.',
+    'footer.allRightsReserved': 'Tous droits réservés.',
+    'footer.quickContact': 'Contact Rapide'
   },
   
   ar: {
@@ -234,9 +272,16 @@ const translations = {
     'hero.title': 'تاكسي تونس بأسعار معقولة',
     'hero.subtitle': 'نقل المطار بأسعار ثابتة',
     'hero.description': '🌅 أسعار شفافة • 🏖️ سائقون موثوقون • 📱 واتساب للحصول على عرض سعر فوري',
-    'hero.whatsapp_tunisia': 'واتساب تونس',
-    'hero.whatsapp_uk': 'واتساب المملكة المتحدة',
-    'hero.email_quote': 'عرض سعر بالإيميل',
+    'hero.whatsappTunisia': 'واتساب تونس',
+    'hero.whatsappUK': 'واتساب المملكة المتحدة',
+    'hero.emailQuote': 'عرض سعر بالإيميل',
+    'hero.calculatePrice': 'احسب السعر',
+    'hero.licensed': 'مرخص ومؤمن',
+    'hero.available24_7': 'متاح 24/7',
+    'hero.englishSpeaking': 'يتحدث الإنجليزية',
+    'hero.whatsappMessage': 'مرحبا! أحتاج عرض سعر تاكسي لرحلتي إلى تونس. يرجى إرسال معلومات الأسعار.',
+    'hero.emailSubject': 'طلب عرض سعر تاكسي تونس',
+    'hero.emailBody': 'مرحبا،\n\nأود طلب عرض سعر لخدمة التاكسي في تونس.\n\nيرجى تقديم الأسعار لرحلتي.\n\nشكرا!',
     
     // Exchange Rate
     'exchange.title': '💱 صرف العملات',
@@ -322,6 +367,18 @@ const translations = {
     'faq.q7': 'هل توجد رسوم مخفية؟',
     'faq.a7': 'لا توجد رسوم مخفية! أسعارنا المدرجة تشمل الضرائب والرسوم. لا يتم تطبيق رسوم ليلية أو عطلات على أسعارنا الثابتة.',
     'faq.q8': 'ماذا لو لم تكن وجهتي مدرجة؟',
-    'faq.a8': 'اتصلوا بنا مع مواقع الالتقاط والإنزال المحددة والتواريخ والأوقات. سنقدم لكم أفضل سعر لأي وجهة في تونس.'
+    'faq.a8': 'اتصلوا بنا مع مواقع الالتقاط والإنزال المحددة والتواريخ والأوقات. سنقدم لكم أفضل سعر لأي وجهة في تونس.',
+    
+    // Footer
+    'footer.tunisiaContact': 'اتصال تونس',
+    'footer.ukContact': 'اتصال المملكة المتحدة',
+    'footer.email': 'البريد الإلكتروني',
+    'footer.payment': 'الدفع',
+    'footer.cashPayment': 'نقداً للسائق',
+    'footer.whatsappMessage': 'مرحبا! أحتاج معلومات حول خدمات التاكسي الخاصة بكم.',
+    'footer.serviceDescription': 'خدمات تاكسي وجولات مهنية عبر تونس الجميلة',
+    'footer.pricingNote': 'جميع الأسعار تشمل الضرائب والرسوم. لا توجد رسوم مخفية.',
+    'footer.allRightsReserved': 'جميع الحقوق محفوظة.',
+    'footer.quickContact': 'اتصال سريع'
   }
 };
