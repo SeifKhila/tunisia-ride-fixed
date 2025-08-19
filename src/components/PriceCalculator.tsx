@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PriceData {
   [airport: string]: {
@@ -48,6 +49,7 @@ const destinations = [
 ];
 
 export default function PriceCalculator() {
+  const { t } = useLanguage();
   const [fromAirport, setFromAirport] = useState<string>("");
   const [toDestination, setToDestination] = useState<string>("");
   
@@ -80,28 +82,28 @@ Please confirm price and availability.`;
     <section id="calculator" className="py-20 bg-gradient-sand relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">🏖️ Fixed Price Calculator</h2>
+          <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">{t('calc.title')}</h2>
           <p className="text-xl text-tunisia-blue/80 max-w-3xl mx-auto leading-relaxed">
-            Choose your route and get an instant fixed price. No hidden fees, no surprises - just pure transparency like our crystal-clear beaches! 🌊
+            {t('calc.description')}
           </p>
         </div>
 
         <Card className="max-w-5xl mx-auto shadow-glow bg-gradient-card border-0 overflow-hidden">
           <CardHeader className="bg-gradient-sunset text-white text-center py-12">
-            <CardTitle className="text-3xl mb-4">✨ Get Your Quote</CardTitle>
+            <CardTitle className="text-3xl mb-4">{t('calc.get_quote')}</CardTitle>
             <CardDescription className="text-white/90 text-lg">
-              Select your pickup and destination to see the fixed price instantly
+              {t('calc.quote_desc')}
             </CardDescription>
           </CardHeader>
           <CardContent className="p-10 space-y-8">
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-3">
                 <label htmlFor="from-airport" className="text-lg font-semibold text-tunisia-blue flex items-center gap-2">
-                  ✈️ From Airport
+                  {t('calc.from_airport')}
                 </label>
                 <Select value={fromAirport} onValueChange={setFromAirport}>
                   <SelectTrigger id="from-airport" className="h-14 text-lg border-2 border-tunisia-turquoise/20 focus:border-tunisia-turquoise">
-                    <SelectValue placeholder="Select departure airport" />
+                    <SelectValue placeholder={t('calc.select_departure')} />
                   </SelectTrigger>
                   <SelectContent className="bg-popover z-50">
                     {airports.map((airport) => (
@@ -115,11 +117,11 @@ Please confirm price and availability.`;
 
               <div className="space-y-3">
                 <label htmlFor="to-destination" className="text-lg font-semibold text-tunisia-blue flex items-center gap-2">
-                  🏖️ To Destination
+                  {t('calc.to_destination')}
                 </label>
                 <Select value={toDestination} onValueChange={setToDestination}>
                   <SelectTrigger id="to-destination" className="h-14 text-lg border-2 border-tunisia-turquoise/20 focus:border-tunisia-turquoise">
-                    <SelectValue placeholder="Select destination area" />
+                    <SelectValue placeholder={t('calc.select_destination')} />
                   </SelectTrigger>
                   <SelectContent className="bg-popover z-50">
                     {destinations.map((destination) => (
@@ -136,9 +138,9 @@ Please confirm price and availability.`;
               <Card className="bg-gradient-hero text-white shadow-glow border-0 transform hover:scale-105 transition-all duration-300">
                 <CardContent className="p-10 text-center">
                   <div className="mb-8">
-                    <p className="text-xl opacity-90 mb-4">🎯 Fixed Price</p>
+                    <p className="text-xl opacity-90 mb-4">{t('calc.fixed_price')}</p>
                     <p className="text-7xl font-bold mb-4 text-tunisia-gold drop-shadow-lg">{selectedPrice} TND</p>
-                    <p className="text-lg opacity-80">Per car (up to 4 passengers) 🚗</p>
+                    <p className="text-lg opacity-80">{t('calc.per_car')}</p>
                   </div>
                   <div className="grid md:grid-cols-3 gap-6">
                     <Button 
@@ -153,7 +155,7 @@ Please confirm price and availability.`;
                         className="flex items-center justify-center gap-3"
                       >
                         <MessageCircle size={24} />
-                        WhatsApp (TN)
+                        {t('calc.whatsapp_tn')}
                       </a>
                     </Button>
                     <Button 
@@ -168,7 +170,7 @@ Please confirm price and availability.`;
                         className="flex items-center justify-center gap-3"
                       >
                         <MessageCircle size={24} />
-                        WhatsApp (UK)
+                        {t('calc.whatsapp_uk')}
                       </a>
                     </Button>
                     <Button 
@@ -182,7 +184,7 @@ Please confirm price and availability.`;
                         className="flex items-center justify-center gap-3"
                       >
                         <Mail size={24} />
-                        Email Quote
+                        {t('calc.email_quote')}
                       </a>
                     </Button>
                   </div>
@@ -191,22 +193,22 @@ Please confirm price and availability.`;
             )}
 
             <div className="text-center text-lg text-tunisia-blue/70 space-y-2 bg-tunisia-turquoise/5 rounded-2xl p-6">
-              <p>🚗 • Prices are per car (up to 4 passengers)</p>
-              <p>🚐 • For vans/minibuses, ask on WhatsApp</p>
-              <p>🏨 • Any location within the destination area (hotels, rentals, beaches)</p>
+              <p>{t('calc.info1')}</p>
+              <p>{t('calc.info2')}</p>
+              <p>{t('calc.info3')}</p>
             </div>
           </CardContent>
         </Card>
 
         {/* Price Table */}
         <div className="mt-12 max-w-6xl mx-auto">
-          <h3 className="text-2xl font-bold text-center mb-8">All Fixed Prices</h3>
+          <h3 className="text-2xl font-bold text-center mb-8">{t('calc.all_prices')}</h3>
           <div className="grid lg:grid-cols-3 gap-8">
             {airports.map((airport) => (
               <Card key={airport.code} className="shadow-card">
                 <CardHeader>
                   <CardTitle className="text-center text-lg">
-                    From {airport.name}
+                    {t('calc.from')} {airport.name}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>

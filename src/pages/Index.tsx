@@ -4,11 +4,14 @@ import { MessageCircle, Mail, MapPin, Shield, Clock, Users, Star, Phone, CreditC
 import PriceCalculator from "@/components/PriceCalculator";
 import FAQ from "@/components/FAQ";
 import ExchangeRate from "@/components/ExchangeRate";
+import LanguageSelector from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@/assets/tunisia-beach-hero.jpg";
 import coastalImage from "@/assets/tunisia-real-coastal.jpg";
 import sunImage from "@/assets/tunisia-real-beach2.jpg";
 
 const Index = () => {
+  const { t, language } = useLanguage();
   const generateWhatsAppLink = (phoneNumber: string, message: string) => {
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };
@@ -20,7 +23,8 @@ const Index = () => {
   const tourMessage = "Hello Affordable Taxi! I'm interested in tours across Tunisia. Dates: {...}, People: {...}, Interests: {...}. Please send me information and pricing.";
 
   return (
-    <div className="min-h-screen bg-gradient-sand">
+    <div className={`min-h-screen bg-gradient-sand ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+      <LanguageSelector />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-90 z-10"></div>
@@ -44,14 +48,14 @@ const Index = () => {
         <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
           <div className="mb-8 animate-float">
             <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-tunisia-gold to-white bg-clip-text text-transparent drop-shadow-2xl">
-              Affordable Taxi Tunisia
+              {t('hero.title')}
             </h1>
             <div className="text-2xl md:text-3xl font-semibold mb-4 text-tunisia-gold drop-shadow-lg">
-              Fixed-Price Airport Transfers
+              {t('hero.subtitle')}
             </div>
           </div>
           <p className="text-xl md:text-2xl mb-12 opacity-95 max-w-3xl mx-auto leading-relaxed bg-black/20 backdrop-blur-sm rounded-2xl p-6">
-            🌅 Transparent prices • 🏖️ Reliable drivers • 📱 WhatsApp us for instant quote
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button asChild size="lg" className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold px-10 py-4 text-lg shadow-glow transform hover:scale-105 transition-all duration-300">
@@ -62,7 +66,7 @@ const Index = () => {
                 className="flex items-center gap-3"
               >
                 <MessageCircle size={28} />
-                WhatsApp Tunisia
+                {t('hero.whatsapp_tunisia')}
               </a>
             </Button>
             <Button asChild variant="outline" size="lg" className="bg-white/15 border-2 border-white text-white hover:bg-white hover:text-tunisia-blue font-bold px-10 py-4 text-lg backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
