@@ -77,13 +77,13 @@ const Index = () => {
                 className="flex items-center gap-3"
               >
                 <MessageCircle size={28} />
-                WhatsApp UK
+                {t('hero.whatsapp_uk')}
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold px-10 py-4 text-lg shadow-tunisia transform hover:scale-105 transition-all duration-300">
               <a href={generateEmailLink()} className="flex items-center gap-3">
                 <Mail size={28} />
-                Email Quote
+                {t('hero.email_quote')}
               </a>
             </Button>
           </div>
@@ -98,10 +98,10 @@ const Index = () => {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-primary mb-4">
-              💱 Currency Exchange
+              {t('exchange.title')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Convert TND prices to your currency
+              {t('exchange.description')}
             </p>
           </div>
           <ExchangeRate />
@@ -116,8 +116,8 @@ const Index = () => {
         ></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">How Booking Works</h2>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">Simple, fast, and reliable booking process in paradise</p>
+            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">{t('booking.title')}</h2>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">{t('booking.description')}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
@@ -126,11 +126,11 @@ const Index = () => {
                 <div className="mx-auto w-20 h-20 bg-gradient-sunset rounded-full flex items-center justify-center mb-6 shadow-glow animate-float">
                   <MessageCircle className="text-white" size={40} />
                 </div>
-                <CardTitle className="text-2xl text-tunisia-blue">1. Choose & Contact</CardTitle>
+                <CardTitle className="text-2xl text-tunisia-blue">{t('booking.step1.title')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed">
-                  🏖️ Choose your route and click WhatsApp or Email to send us your booking request with all details.
+                  {t('booking.step1.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -140,11 +140,11 @@ const Index = () => {
                 <div className="mx-auto w-20 h-20 bg-tunisia-turquoise rounded-full flex items-center justify-center mb-6 shadow-glow animate-float" style={{ animationDelay: '1s' }}>
                   <Shield className="text-white" size={40} />
                 </div>
-                <CardTitle className="text-2xl text-tunisia-blue">2. We Confirm</CardTitle>
+                <CardTitle className="text-2xl text-tunisia-blue">{t('booking.step2.title')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed">
-                  ✨ We confirm availability and send you driver details, car information, and payment instructions.
+                  {t('booking.step2.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -154,11 +154,11 @@ const Index = () => {
                 <div className="mx-auto w-20 h-20 bg-tunisia-coral rounded-full flex items-center justify-center mb-6 shadow-glow animate-float" style={{ animationDelay: '2s' }}>
                   <CreditCard className="text-white" size={40} />
                 </div>
-                <CardTitle className="text-2xl text-tunisia-blue">3. Pay & Travel</CardTitle>
+                <CardTitle className="text-2xl text-tunisia-blue">{t('booking.step3.title')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed">
-                  🌊 Pay 30% deposit via Revolut or PayPal. Pay balance to driver on pickup. Free cancellation up to 48 hours.
+                  {t('booking.step3.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -175,10 +175,9 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-sunset opacity-90"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">🌅 Tours Across Tunisia</h2>
+            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">{t('tours.title')}</h2>
             <p className="text-xl text-white/95 max-w-4xl mx-auto leading-relaxed bg-white/10 backdrop-blur-sm rounded-2xl p-8">
-              🏛️ Explore the beauty of Tunisia with our private tour services. From ancient ruins to stunning coastlines, 
-              golden beaches to desert dunes - we'll create the perfect itinerary for your adventure in paradise.
+              {t('tours.description')}
             </p>
           </div>
           <div className="text-center">
@@ -191,7 +190,7 @@ const Index = () => {
                   className="flex items-center gap-3"
                 >
                   <Palmtree size={28} />
-                  WhatsApp Tours (TN)
+                  {t('tours.whatsapp_tn')}
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-tunisia-coral font-bold px-10 py-4 text-lg backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
@@ -202,7 +201,7 @@ const Index = () => {
                   className="flex items-center gap-3"
                 >
                   <Sun size={28} />
-                  WhatsApp Tours (UK)
+                  {t('tours.whatsapp_uk')}
                 </a>
               </Button>
               <Button asChild variant="secondary" size="lg" className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold px-10 py-4 text-lg shadow-tunisia transform hover:scale-105 transition-all duration-300">
@@ -211,7 +210,7 @@ const Index = () => {
                   className="flex items-center gap-3"
                 >
                   <Mail size={28} />
-                  Email Tours
+                  {t('tours.email_tours')}
                 </a>
               </Button>
             </div>
@@ -227,8 +226,8 @@ const Index = () => {
         ></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">🌟 Why Choose Affordable Taxi</h2>
-            <p className="text-xl text-tunisia-blue/80 max-w-2xl mx-auto">Your trusted partner for magical Tunisia travels</p>
+            <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">{t('why.title')}</h2>
+            <p className="text-xl text-tunisia-blue/80 max-w-2xl mx-auto">{t('why.description')}</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
@@ -238,12 +237,12 @@ const Index = () => {
                   <div className="w-16 h-16 bg-gradient-sunset rounded-xl flex items-center justify-center shadow-glow animate-float">
                     <Star className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-xl text-tunisia-blue">🎯 Fixed Transparent Prices</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">{t('why.transparent.title')}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  💰 No hidden fees, no surprises. Our fixed prices include taxes and tolls - just pure transparency.
+                  {t('why.transparent.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -254,12 +253,12 @@ const Index = () => {
                   <div className="w-16 h-16 bg-tunisia-turquoise rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '0.5s' }}>
                     <Users className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-xl text-tunisia-blue">🚗 Vetted Drivers & Clean Cars</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">{t('why.drivers.title')}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  ✨ Professional, experienced drivers with well-maintained, comfortable vehicles for your journey.
+                  {t('why.drivers.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -270,12 +269,12 @@ const Index = () => {
                   <div className="w-16 h-16 bg-tunisia-coral rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '1s' }}>
                     <MessageCircle className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-xl text-tunisia-blue">📱 Instant WhatsApp Support</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">{t('why.support.title')}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  ⚡ Quick responses and real-time communication for all your travel needs - we're always here.
+                  {t('why.support.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -286,12 +285,12 @@ const Index = () => {
                   <div className="w-16 h-16 bg-tunisia-gold rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '1.5s' }}>
                     <Shield className="text-tunisia-blue" size={32} />
                   </div>
-                  <CardTitle className="text-xl text-tunisia-blue">👶 Child Seats on Request</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">{t('why.childseats.title')}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  👨‍👩‍👧‍👦 Family-friendly service with child seats available upon request for safe travels.
+                  {t('why.childseats.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -302,12 +301,12 @@ const Index = () => {
                   <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '2s' }}>
                     <Clock className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-xl text-tunisia-blue">✈️ Flight Monitoring</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">{t('why.monitoring.title')}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  🛬 We track your flight and adjust for delays. Personal meet-and-greet service included.
+                  {t('why.monitoring.desc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -318,12 +317,12 @@ const Index = () => {
                   <div className="w-16 h-16 bg-tunisia-palm rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '2.5s' }}>
                     <MapPin className="text-white" size={32} />
                   </div>
-                  <CardTitle className="text-xl text-tunisia-blue">🗺️ All Tunisia Destinations</CardTitle>
+                  <CardTitle className="text-xl text-tunisia-blue">{t('why.destinations.title')}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  🏖️ Service to any location in Tunisia. If it's not listed, just ask us - we go everywhere!
+                  {t('why.destinations.desc')}
                 </CardDescription>
               </CardContent>
             </Card>

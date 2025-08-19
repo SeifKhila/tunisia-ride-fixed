@@ -49,6 +49,10 @@ const translations = {
     // Exchange Rate
     'exchange.title': '💱 Currency Exchange',
     'exchange.description': 'Convert TND prices to your currency',
+    'exchange.amount': 'Amount',
+    'exchange.currency': 'Currency',
+    'exchange.select_currency': 'Select currency',
+    'exchange.rate_info': 'Exchange rates are approximate and may vary',
     
     // Booking Process
     'booking.title': 'How Booking Works',
@@ -136,6 +140,10 @@ const translations = {
     // Exchange Rate
     'exchange.title': '💱 Change de Devises',
     'exchange.description': 'Convertir les prix TND dans votre devise',
+    'exchange.amount': 'Montant',
+    'exchange.currency': 'Devise',
+    'exchange.select_currency': 'Sélectionner la devise',
+    'exchange.rate_info': 'Les taux de change sont approximatifs et peuvent varier',
     
     // Booking Process  
     'booking.title': 'Comment Réserver',
@@ -223,6 +231,10 @@ const translations = {
     // Exchange Rate
     'exchange.title': '💱 صرف العملات',
     'exchange.description': 'تحويل أسعار الدينار التونسي إلى عملتك',
+    'exchange.amount': 'المبلغ',
+    'exchange.currency': 'العملة',
+    'exchange.select_currency': 'اختر العملة',
+    'exchange.rate_info': 'أسعار الصرف تقريبية وقد تختلف',
     
     // Booking Process
     'booking.title': 'كيفية الحجز',

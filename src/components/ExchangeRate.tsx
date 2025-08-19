@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Exchange rates (TND to other currencies) - These should be updated regularly
 const EXCHANGE_RATES = {
@@ -12,6 +13,7 @@ const EXCHANGE_RATES = {
 };
 
 const ExchangeRate = () => {
+  const { t } = useLanguage();
   const [tndAmount, setTndAmount] = useState(100);
 
   const formatCurrency = (amount: number, currency: string) => {
@@ -28,16 +30,16 @@ const ExchangeRate = () => {
       <CardHeader className="text-center">
         <CardTitle className="text-xl text-primary flex items-center justify-center gap-2">
           <span>💱</span>
-          Currency Exchange
+          {t('exchange.title')}
         </CardTitle>
         <p className="text-muted-foreground text-sm">
-          Convert TND to major currencies
+          {t('exchange.description')}
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="tnd-input" className="text-sm font-medium">
-            Tunisian Dinar (TND)
+            {t('exchange.amount')} (TND)
           </Label>
           <Input
             id="tnd-input"
@@ -71,7 +73,7 @@ const ExchangeRate = () => {
         
         <div className="text-center pt-2">
           <p className="text-xs text-muted-foreground">
-            Rates are approximate and may vary. Check current rates before payment.
+            {t('exchange.rate_info')}
           </p>
         </div>
       </CardContent>
