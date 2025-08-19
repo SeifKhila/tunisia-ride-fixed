@@ -4,6 +4,7 @@ import { MessageCircle, Mail, Phone, Shield, Clock, Users, Star, CheckCircle, Ma
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from "@/components/LanguageSelector";
 import PriceCalculator from "@/components/PriceCalculator";
+import BookingCalculator from "@/components/BookingCalculator";
 import ExchangeRate from "@/components/ExchangeRate";
 import FAQ from "@/components/FAQ";
 import WeatherWidget from "@/components/WeatherWidget";
@@ -136,8 +137,11 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Price Calculator */}
-      <PriceCalculator />
+        {/* Booking Calculator */}
+        <BookingCalculator />
+        
+        {/* Price Calculator */}
+        <PriceCalculator />
 
       {/* How Booking Works */}
       <section className="py-16 bg-tunisia-turquoise">
