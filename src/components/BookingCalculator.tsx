@@ -235,11 +235,17 @@ export default function BookingCalculator() {
                     </div>
                   </div>
 
-                  <div className="text-center space-y-2">
-                    <Button className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white">
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <Button 
+                      onClick={() => window.open(`https://wa.me/21628602147?text=${encodeURIComponent(`Hi! I want to book a one-way transfer from ${pickupLocation?.name} to ${dropoffLocation?.name}. Price: ${pricing.oneWay} TND. Please confirm availability.`)}`, '_blank')}
+                      className="flex-1 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                    >
                       Book One Way Transfer
                     </Button>
-                    <Button className="w-full bg-tunisia-gold hover:bg-tunisia-gold/90 text-white">
+                    <Button 
+                      onClick={() => window.open(`https://wa.me/21628602147?text=${encodeURIComponent(`Hi! I want to book a return transfer from ${pickupLocation?.name} to ${dropoffLocation?.name}. Price: ${Math.round(pricing.return)} TND (10% discount applied). Please confirm availability.`)}`, '_blank')}
+                      className="flex-1 bg-tunisia-gold hover:bg-tunisia-gold/90 text-white"
+                    >
                       Book Return Transfer (Save 10%)
                     </Button>
                   </div>

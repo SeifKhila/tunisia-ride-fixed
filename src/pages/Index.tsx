@@ -21,7 +21,7 @@ export default function Index() {
   const generateEmailLink = () => {
     const subject = encodeURIComponent(t('hero.emailSubject'));
     const body = encodeURIComponent(t('hero.emailBody'));
-    return `mailto:bolbebakhila@gmail.com,khilas@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:khilas592@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -377,22 +377,13 @@ export default function Index() {
               <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.email')}</h3>
               <div className="space-y-3">
                 <Button
-                  onClick={() => window.open('mailto:bolbebakhila@gmail.com', '_blank')}
+                  onClick={() => window.open('mailto:khilas592@gmail.com', '_blank')}
                   variant="ghost"
                   size="sm"
                   className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
                 >
                   <Mail className="h-4 w-4 mr-2" />
-                  bolbebakhila@gmail.com
-                </Button>
-                <Button
-                  onClick={() => window.open('mailto:khilas@gmail.com', '_blank')}
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
-                >
-                  <Mail className="h-4 w-4 mr-2" />
-                  khilas@gmail.com
+                  khilas592@gmail.com
                 </Button>
               </div>
             </div>
