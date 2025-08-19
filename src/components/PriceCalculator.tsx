@@ -120,7 +120,7 @@ export default function PriceCalculator() {
       `${t('priceCalculator.tripType')}: ${tripType}\n` +
       `${t('priceCalculator.totalPrice')}: ${totalPrice} TND`
     );
-    return `mailto:tunisiataxi.ride@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:bolbebakhila@gmail.com,khilas@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -205,7 +205,7 @@ export default function PriceCalculator() {
               {selectedPrice > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
-                    onClick={() => window.open(`https://wa.me/21658893464?text=${generateWhatsAppMessage()}`, '_blank')}
+                    onClick={() => window.open(`https://wa.me/21628602147?text=${generateWhatsAppMessage()}`, '_blank')}
                     className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                   >
                     <MessageCircle className="mr-2 h-4 w-4" />

@@ -4,36 +4,46 @@ import { MessageCircle, Mail, Phone, Shield, Clock, Users, Star, CheckCircle, Ma
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from "@/components/LanguageSelector";
 import PriceCalculator from "@/components/PriceCalculator";
-import ExchangeRate from "@/components/ExchangeRate";  
+import ExchangeRate from "@/components/ExchangeRate";
 import FAQ from "@/components/FAQ";
 import heroImage from "@/assets/tunisia-hero.jpg";
-import coastalImage from "@/assets/tunisia-real-coastal.jpg";
-import sunImage from "@/assets/tunisia-real-beach2.jpg";
 
-const Index = () => {
+export default function Index() {
   const { t, language } = useLanguage();
+
+  // Helper functions for contact links
   const generateWhatsAppLink = (phoneNumber: string, message: string) => {
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };
 
   const generateEmailLink = () => {
-    return "mailto:khilas592@gmail.com,bolbebakhila@gmail.com?subject=Transfer%20Quote&body=Hello%20Affordable%20Taxi!%0A%0AI%E2%80%99d%20like%20to%20book:%0AFROM:%20{Airport}%0ATO:%20{Destination%20Area}%0ADate:%20{DD/MM/YYYY}%0ATime:%20{HH:MM}%0APassengers:%20{#}%0ALuggage:%20{#}%0AChild%20seats:%20{Yes/No}%0AName:%20{Name}%0A%0APlease%20confirm%20price%20and%20availability.";
+    const subject = encodeURIComponent(t('hero.emailSubject'));
+    const body = encodeURIComponent(t('hero.emailBody'));
+    return `mailto:bolbebakhila@gmail.com,khilas@gmail.com?subject=${subject}&body=${body}`;
   };
 
-  const tourMessage = "Hello Affordable Taxi! I'm interested in tours across Tunisia. Dates: {...}, People: {...}, Interests: {...}. Please send me information and pricing.";
-
   return (
-    <div className={`min-h-screen bg-gradient-sand ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+    <div className="min-h-screen bg-gradient-primary">
       <LanguageSelector />
+      
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero opacity-90 z-10"></div>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-float" 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-tunisia-blue/50 via-transparent to-tunisia-turquoise/30 z-10"></div>
-        
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-tunisia-blue/80 via-tunisia-blue/60 to-transparent"></div>
+        </div>
+
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-20 h-20 bg-tunisia-gold/20 rounded-full animate-float"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-tunisia-coral/20 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-40 left-20 w-12 h-12 bg-tunisia-gold/30 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-20 right-40 w-24 h-24 bg-tunisia-coral/15 rounded-full animate-float" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 text-tunisia-gold animate-shimmer">
           <Sun size={40} />
@@ -44,48 +54,83 @@ const Index = () => {
         <div className="absolute bottom-40 left-16 text-tunisia-turquoise animate-float">
           <Waves size={30} />
         </div>
-        
-        <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
-          <div className="mb-8 animate-float">
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-tunisia-gold to-white bg-clip-text text-transparent drop-shadow-2xl">
+
+        {/* Content */}
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <div className="animate-fade-in">
+            <h1 className={`text-5xl md:text-7xl font-bold mb-6 text-white ${language === 'ar' ? 'font-arabic' : ''}`}>
               {t('hero.title')}
             </h1>
-            <div className="text-2xl md:text-3xl font-semibold mb-4 text-tunisia-gold drop-shadow-lg">
+            <h2 className={`text-2xl md:text-3xl mb-8 text-tunisia-gold font-medium ${language === 'ar' ? 'font-arabic' : ''}`}>
               {t('hero.subtitle')}
+            </h2>
+            <p className={`text-xl mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed ${language === 'ar' ? 'font-arabic' : ''}`}>
+              {t('hero.description')}
+            </p>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <Button
+              onClick={() => window.open(generateWhatsAppLink('21628602147', t('hero.whatsappMessage')), '_blank')}
+              size="lg"
+              className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-glow transition-all duration-300 hover:scale-105"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              {t('hero.whatsappTunisia')}
+            </Button>
+            
+            <Button
+              onClick={() => window.open(generateWhatsAppLink('447956643662', t('hero.whatsappMessage')), '_blank')}
+              size="lg"
+              variant="outline"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-blue backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              {t('hero.whatsappUK')}
+            </Button>
+            
+            <Button
+              onClick={() => window.open(generateEmailLink(), '_blank')}
+              size="lg"
+              variant="outline"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-blue backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            >
+              <Mail className="mr-2 h-5 w-5" />
+              {t('hero.emailQuote')}
+            </Button>
+
+            <Button
+              onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
+              size="lg"
+              className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue shadow-glow transition-all duration-300 hover:scale-105"
+            >
+              <Car className="mr-2 h-5 w-5" />
+              {t('hero.calculatePrice')}
+            </Button>
+          </div>
+
+          {/* Quick Info */}
+          <div className="flex flex-wrap justify-center gap-6 text-white/80 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <div className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-tunisia-gold" />
+              <span>{t('hero.licensed')}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-tunisia-gold" />
+              <span>{t('hero.available24_7')}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-tunisia-gold" />
+              <span>{t('hero.englishSpeaking')}</span>
             </div>
           </div>
-          <p className="text-xl md:text-2xl mb-12 opacity-95 max-w-3xl mx-auto leading-relaxed bg-black/20 backdrop-blur-sm rounded-2xl p-6">
-            {t('hero.description')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button asChild size="lg" className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold px-10 py-4 text-lg shadow-glow transform hover:scale-105 transition-all duration-300">
-              <a
-                href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi! I'd like to get a quote for airport transfer.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3"
-              >
-                <MessageCircle size={28} />
-                {t('hero.whatsapp_tunisia')}
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="bg-white/15 border-2 border-white text-white hover:bg-white hover:text-tunisia-blue font-bold px-10 py-4 text-lg backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
-              <a
-                href={generateWhatsAppLink("447956643662", "Hello Affordable Taxi! I'd like to get a quote for airport transfer.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3"
-              >
-                <MessageCircle size={28} />
-                {t('hero.whatsapp_uk')}
-              </a>
-            </Button>
-            <Button asChild variant="secondary" size="lg" className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold px-10 py-4 text-lg shadow-tunisia transform hover:scale-105 transition-all duration-300">
-              <a href={generateEmailLink()} className="flex items-center gap-3">
-                <Mail size={28} />
-                {t('hero.email_quote')}
-              </a>
-            </Button>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
@@ -93,73 +138,53 @@ const Index = () => {
       {/* Price Calculator */}
       <PriceCalculator />
 
-      {/* Exchange Rate Section */}
-      <section className="py-16 px-4 bg-background">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-primary mb-4">
-              {t('exchange.title')}
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              {t('exchange.description')}
+      {/* Exchange Rate */}
+      <ExchangeRate />
+
+      {/* Booking Process */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('bookingProcess.title')}</h2>
+            <p className="text-xl text-muted-foreground">
+              {t('bookingProcess.description')}
             </p>
           </div>
-          <ExchangeRate />
-        </div>
-      </section>
 
-      {/* How Booking Works */}
-      <section id="booking-process" className="py-20 bg-gradient-ocean relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-10 bg-cover bg-center" 
-          style={{ backgroundImage: `url(${coastalImage})` }}
-        ></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">{t('booking.title')}</h2>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">{t('booking.description')}</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            <Card className="text-center shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300">
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <Card className="text-center bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant hover:shadow-glow transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-20 h-20 bg-gradient-sunset rounded-full flex items-center justify-center mb-6 shadow-glow animate-float">
-                  <MessageCircle className="text-white" size={40} />
+                <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4">
+                  <MessageCircle className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-2xl text-tunisia-blue">{t('booking.step1.title')}</CardTitle>
+                <CardTitle className="text-tunisia-blue">{t('bookingProcess.step1Title')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-lg leading-relaxed">
-                  {t('booking.step1.desc')}
-                </CardDescription>
+                <CardDescription className="text-muted-foreground">{t('bookingProcess.step1Description')}</CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300">
+            <Card className="text-center bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant hover:shadow-glow transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-20 h-20 bg-tunisia-turquoise rounded-full flex items-center justify-center mb-6 shadow-glow animate-float" style={{ animationDelay: '1s' }}>
-                  <Shield className="text-white" size={40} />
+                <div className="mx-auto w-16 h-16 bg-tunisia-gold rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle className="h-8 w-8 text-tunisia-blue" />
                 </div>
-                <CardTitle className="text-2xl text-tunisia-blue">{t('booking.step2.title')}</CardTitle>
+                <CardTitle className="text-tunisia-blue">{t('bookingProcess.step2Title')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-lg leading-relaxed">
-                  {t('booking.step2.desc')}
-                </CardDescription>
+                <CardDescription className="text-muted-foreground">{t('bookingProcess.step2Description')}</CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300">
+            <Card className="text-center bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant hover:shadow-glow transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-20 h-20 bg-tunisia-coral rounded-full flex items-center justify-center mb-6 shadow-glow animate-float" style={{ animationDelay: '2s' }}>
-                  <CreditCard className="text-white" size={40} />
+                <div className="mx-auto w-16 h-16 bg-tunisia-blue rounded-full flex items-center justify-center mb-4">
+                  <Car className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-2xl text-tunisia-blue">{t('booking.step3.title')}</CardTitle>
+                <CardTitle className="text-tunisia-blue">{t('bookingProcess.step3Title')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-lg leading-relaxed">
-                  {t('booking.step3.desc')}
-                </CardDescription>
+                <CardDescription className="text-muted-foreground">{t('bookingProcess.step3Description')}</CardDescription>
               </CardContent>
             </Card>
           </div>
@@ -167,300 +192,211 @@ const Index = () => {
       </section>
 
       {/* Tours Section */}
-      <section id="tours" className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20" 
-          style={{ backgroundImage: `url(${sunImage})` }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-sunset opacity-90"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6 text-white drop-shadow-lg">{t('tours.title')}</h2>
-            <p className="text-xl text-white/95 max-w-4xl mx-auto leading-relaxed bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('tours.title')}</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {t('tours.description')}
             </p>
           </div>
-          <div className="text-center">
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button asChild size="lg" className="bg-white hover:bg-white/90 text-tunisia-coral font-bold px-10 py-4 text-lg shadow-glow transform hover:scale-105 transition-all duration-300">
-                <a
-                  href={generateWhatsAppLink("21628602147", tourMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3"
+
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-card/50 backdrop-blur-sm rounded-lg p-8 border-2 border-tunisia-gold/20 shadow-elegant">
+              <MapPin className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-4 text-tunisia-blue">{t('tours.customTitle')}</h3>
+              <p className="text-muted-foreground mb-6">
+                {t('tours.customDescription')}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button
+                  onClick={() => window.open(generateWhatsAppLink('21628602147', t('tours.whatsappMessage')), '_blank')}
+                  className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                 >
-                  <Palmtree size={28} />
-                  {t('tours.whatsapp_tn')}
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-tunisia-coral font-bold px-10 py-4 text-lg backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
-                <a
-                  href={generateWhatsAppLink("447956643662", tourMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3"
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  {t('tours.whatsappTours')}
+                </Button>
+                
+                <Button
+                  onClick={() => window.open(generateEmailLink(), '_blank')}
+                  variant="outline"
+                  className="border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
                 >
-                  <Sun size={28} />
-                  {t('tours.whatsapp_uk')}
-                </a>
-              </Button>
-              <Button asChild variant="secondary" size="lg" className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold px-10 py-4 text-lg shadow-tunisia transform hover:scale-105 transition-all duration-300">
-                <a 
-                  href="mailto:khilas592@gmail.com,bolbebakhila@gmail.com?subject=Tour%20Enquiry&body=Hello%20Affordable%20Taxi!%0A%0AI'm%20interested%20in%20tours%20across%20Tunisia.%0ADates:%20{...}%0APeople:%20{...}%0AInterests:%20{...}%0A%0APlease%20send%20me%20information%20and%20pricing."
-                  className="flex items-center gap-3"
-                >
-                  <Mail size={28} />
-                  {t('tours.email_tours')}
-                </a>
-              </Button>
+                  <Mail className="mr-2 h-4 w-4" />
+                  {t('tours.emailTours')}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Why Choose Us */}
-      <section id="why-choose" className="py-20 bg-gradient-sand relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-5 bg-cover bg-center" 
-          style={{ backgroundImage: `url(${coastalImage})` }}
-        ></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">{t('why.title')}</h2>
-            <p className="text-xl text-tunisia-blue/80 max-w-2xl mx-auto">{t('why.description')}</p>
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('whyChooseUs.title')}</h2>
+            <p className="text-xl text-muted-foreground">
+              {t('whyChooseUs.description')}
+            </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gradient-sunset rounded-xl flex items-center justify-center shadow-glow animate-float">
-                    <Star className="text-white" size={32} />
-                  </div>
-                  <CardTitle className="text-xl text-tunisia-blue">{t('why.transparent.title')}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  {t('why.transparent.desc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
 
-            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-tunisia-turquoise rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '0.5s' }}>
-                    <Users className="text-white" size={32} />
-                  </div>
-                  <CardTitle className="text-xl text-tunisia-blue">{t('why.drivers.title')}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  {t('why.drivers.desc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center group">
+              <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Shield className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.reliability')}</h3>
+              <p className="text-muted-foreground">{t('whyChooseUs.reliabilityDesc')}</p>
+            </div>
 
-            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-tunisia-coral rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '1s' }}>
-                    <MessageCircle className="text-white" size={32} />
-                  </div>
-                  <CardTitle className="text-xl text-tunisia-blue">{t('why.support.title')}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  {t('why.support.desc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <div className="text-center group">
+              <div className="mx-auto w-16 h-16 bg-tunisia-gold rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Star className="h-8 w-8 text-tunisia-blue" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.experience')}</h3>
+              <p className="text-muted-foreground">{t('whyChooseUs.experienceDesc')}</p>
+            </div>
 
-            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-tunisia-gold rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '1.5s' }}>
-                    <Shield className="text-tunisia-blue" size={32} />
-                  </div>
-                  <CardTitle className="text-xl text-tunisia-blue">{t('why.childseats.title')}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  {t('why.childseats.desc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <div className="text-center group">
+              <div className="mx-auto w-16 h-16 bg-tunisia-blue rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.multilingual')}</h3>
+              <p className="text-muted-foreground">{t('whyChooseUs.multilingualDesc')}</p>
+            </div>
 
-            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '2s' }}>
-                    <Clock className="text-white" size={32} />
-                  </div>
-                  <CardTitle className="text-xl text-tunisia-blue">{t('why.monitoring.title')}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  {t('why.monitoring.desc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="shadow-glow bg-gradient-card border-0 transform hover:scale-105 transition-all duration-300 hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-tunisia-palm rounded-xl flex items-center justify-center shadow-glow animate-float" style={{ animationDelay: '2.5s' }}>
-                    <MapPin className="text-white" size={32} />
-                  </div>
-                  <CardTitle className="text-xl text-tunisia-blue">{t('why.destinations.title')}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-lg leading-relaxed text-tunisia-blue/70">
-                  {t('why.destinations.desc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <div className="text-center group">
+              <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Clock className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.availability')}</h3>
+              <p className="text-muted-foreground">{t('whyChooseUs.availabilityDesc')}</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ */}
       <FAQ />
 
       {/* Contact & Footer */}
-      <footer className="bg-gradient-hero text-white py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-10 bg-cover bg-center" 
-          style={{ backgroundImage: `url(${coastalImage})` }}
-        ></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+      <footer className="py-16 bg-tunisia-blue text-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            {/* Tunisia Contact */}
             <div>
-              <h3 className="text-3xl font-bold mb-6 text-tunisia-gold">🌊 Affordable Taxi Tunisia</h3>
-              <p className="opacity-90 mb-6 text-lg leading-relaxed">
-                Fixed prices, reliable drivers, and instant WhatsApp support for all your magical Tunisia travel adventures.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-xl font-semibold mb-6 text-tunisia-gold">📞 Contact Tunisia</h4>
-              <div className="space-y-4">
-                <a 
-                  href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.tunisiaContact')}</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  <span>+216 28 602 147</span>
+                </div>
+                <Button
+                  onClick={() => window.open(generateWhatsAppLink('21628602147', t('footer.whatsappMessage')), '_blank')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
                 >
-                  <Phone size={20} />
-                  +216 28602147
-                </a>
-                <a 
-                  href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle size={20} />
-                  WhatsApp (TN)
-                </a>
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  WhatsApp Tunisia
+                </Button>
               </div>
             </div>
-            
+
+            {/* UK Contact */}
             <div>
-              <h4 className="text-xl font-semibold mb-6 text-tunisia-gold">🇬🇧 Contact UK</h4>
-              <div className="space-y-4">
-                <a 
-                  href={generateWhatsAppLink("447956643662", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.ukContact')}</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  <span>+44 7956 643662</span>
+                </div>
+                <Button
+                  onClick={() => window.open(generateWhatsAppLink('447956643662', t('footer.whatsappMessage')), '_blank')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
                 >
-                  <Phone size={20} />
-                  +44 7956 643662
-                </a>
-                <a 
-                  href={generateWhatsAppLink("447956643662", "Hello Affordable Taxi!")}
-                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle size={20} />
-                  WhatsApp (UK)
-                </a>
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  WhatsApp UK
+                </Button>
               </div>
             </div>
-            
+
+            {/* Email */}
             <div>
-              <h4 className="text-xl font-semibold mb-6 text-tunisia-gold">💳 Email & Payment</h4>
-              <div className="space-y-4">
-                <a 
-                  href="mailto:khilas592@gmail.com,bolbebakhila@gmail.com"
-                  className="flex items-center gap-3 opacity-90 hover:opacity-100 transition-all duration-300 hover:text-tunisia-gold transform hover:translate-x-2"
+              <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.email')}</h3>
+              <div className="space-y-3">
+                <Button
+                  onClick={() => window.open('mailto:bolbebakhila@gmail.com', '_blank')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
                 >
-                  <Mail size={20} />
-                  Email Us
-                </a>
-                <div className="flex items-center gap-3 opacity-90">
-                  <CreditCard size={20} />
-                  Revolut, PayPal
+                  <Mail className="h-4 w-4 mr-2" />
+                  bolbebakhila@gmail.com
+                </Button>
+                <Button
+                  onClick={() => window.open('mailto:khilas@gmail.com', '_blank')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  khilas@gmail.com
+                </Button>
+              </div>
+            </div>
+
+            {/* Payment */}
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.payment')}</h3>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  <span>Revolut</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  <span>PayPal</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  <span>{t('footer.cashPayment')}</span>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div className="border-t border-white/20 pt-12 text-center">
-            <div className="mb-8 bg-white/5 backdrop-blur-sm rounded-2xl p-8">
-              <p className="text-2xl font-semibold mb-4 text-tunisia-gold">💰 Payment Information</p>
-              <p className="opacity-90 text-lg">
-                Pay 30% deposit via Revolut or PayPal after confirmation. Balance to driver on pickup.
+
+          <div className="border-t border-white/20 pt-8">
+            <div className="text-center space-y-4">
+              <p className="text-tunisia-gold font-medium">
+                {t('footer.serviceDescription')}
               </p>
-            </div>
-            
-            <div className="space-y-3 text-lg opacity-85 leading-relaxed">
-              <p>🏖️ Affordable Taxi is a Tunisia-wide airport transfer and tours service.</p>
-              <p>🌅 Fixed prices, friendly drivers, and instant WhatsApp support.</p>
-              <p>🗺️ If your destination isn't listed, message us your pickup & drop-off, dates and times—we'll send you the best price.</p>
-            </div>
-            
-            <div className="mt-8 pt-8 border-t border-white/20">
-              <p className="opacity-75 text-lg">
-                ✨ Prices include taxes and tolls. Night/holiday surcharges not applied to listed fixed prices.
+              <p className="text-white/80">
+                {t('footer.pricingNote')}
+              </p>
+              <p className="text-sm text-white/60">
+                © 2024 Tunisia Taxi & Tours. {t('footer.allRightsReserved')}
               </p>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-4 left-4 right-4 md:hidden z-50">
-        <div className="flex gap-3">
-          <Button asChild size="lg" className="flex-1 bg-tunisia-coral hover:bg-tunisia-coral/90 shadow-glow font-bold transform hover:scale-105 transition-all duration-300">
-            <a
-              href={generateWhatsAppLink("21628602147", "Hello Affordable Taxi! I need a transfer quote.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2"
-            >
-              <MessageCircle size={24} />
-              WhatsApp
-            </a>
-          </Button>
-          <Button asChild variant="secondary" size="lg" className="flex-1 bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue shadow-glow font-bold transform hover:scale-105 transition-all duration-300">
-            <a href={generateEmailLink()} className="flex items-center justify-center gap-2">
-              <Mail size={24} />
-              Email
-            </a>
-          </Button>
-        </div>
+      {/* Mobile Sticky CTA */}
+      <div className="fixed bottom-4 left-4 right-4 md:hidden z-40">
+        <Button
+          onClick={() => window.open(generateWhatsAppLink('21628602147', t('hero.whatsappMessage')), '_blank')}
+          className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
+          size="lg"
+        >
+          <MessageCircle className="mr-2 h-5 w-5" />
+          {t('footer.quickContact')}
+        </Button>
       </div>
     </div>
   );
-};
-
-export default Index;
+}
