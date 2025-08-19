@@ -228,11 +228,21 @@ export default function BookingCalculator() {
                       </div>
                     </div>
 
-                    <div className="text-center p-2 bg-tunisia-gold/10 rounded border border-tunisia-gold/30">
-                      <p className="text-sm text-tunisia-coral font-medium">
-                        💰 Save {Math.round(pricing.savings)} TND with return booking!
-                      </p>
-                    </div>
+                  <div className="text-center p-2 bg-tunisia-gold/10 rounded border border-tunisia-gold/30">
+                    <p className="text-sm text-tunisia-coral font-medium">
+                      💰 Save {Math.round(pricing.savings)} TND with return booking!
+                    </p>
+                  </div>
+
+                  {/* Payment Info */}
+                  <div className="p-3 bg-tunisia-blue/10 rounded border border-tunisia-blue/20">
+                    <h4 className="text-sm font-semibold text-tunisia-blue mb-2 flex items-center gap-2">
+                      💳 Payment Information
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Pay 30% deposit via Revolut or PayPal after confirmation. Balance to driver on pickup.
+                    </p>
+                  </div>
                   </div>
 
                   <div className="flex flex-col md:flex-row gap-2">
