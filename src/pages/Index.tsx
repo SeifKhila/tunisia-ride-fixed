@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageCircle, Mail, MapPin, Shield, Clock, Users, Star, Phone, CreditCard, Sun, Palmtree, Waves } from "lucide-react";
-import PriceCalculator from "@/components/PriceCalculator";
-import FAQ from "@/components/FAQ";
-import ExchangeRate from "@/components/ExchangeRate";
-import LanguageSelector from "@/components/LanguageSelector";
+import { MessageCircle, Mail, Phone, Shield, Clock, Users, Star, CheckCircle, MapPin, Car, Plane, CreditCard, Sun, Palmtree, Waves } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import heroImage from "@/assets/tunisia-beach-hero.jpg";
+import LanguageSelector from "@/components/LanguageSelector";
+import PriceCalculator from "@/components/PriceCalculator";
+import ExchangeRate from "@/components/ExchangeRate";  
+import FAQ from "@/components/FAQ";
+import heroImage from "@/assets/tunisia-hero.jpg";
 import coastalImage from "@/assets/tunisia-real-coastal.jpg";
 import sunImage from "@/assets/tunisia-real-beach2.jpg";
 

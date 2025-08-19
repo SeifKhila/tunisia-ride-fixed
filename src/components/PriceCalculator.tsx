@@ -1,305 +1,251 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MessageCircle, Mail, ArrowLeftRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { MessageCircle, Mail, MapPin, Plane } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+// Price data structure
 interface PriceData {
-  [airport: string]: {
-    [destination: string]: number;
+  [key: string]: {
+    [key: string]: number;
   };
 }
 
-// Bidirectional pricing - same price both ways
+// Price data for different routes
 const priceData: PriceData = {
-  "TUN": {
-    "Hammamet": 130,
-    "Yasmine Hammamet": 140,
-    "Sousse": 160,
-    "Monastir": 180,
-    "Mahdia": 200,
+  "Tunis-Carthage Airport": {
+    "Tunis City Center": 15,
+    "La Marsa": 20,
+    "Sidi Bou Said": 22,
+    "Carthage": 18,
+    "Hammamet": 65,
+    "Sousse": 120,
+    "Monastir": 140,
+    "Mahdia": 160,
+    "Kairouan": 110,
+    "Djerba": 280,
+    "Tozeur": 320,
+    "Douz": 350,
+    "Matmata": 250,
+    "Sfax": 200
   },
-  "NBE": {
-    "Hammamet": 120,
-    "Yasmine Hammamet": 110,
-    "Sousse": 130,
-    "Monastir": 150,
-    "Mahdia": 180,
+  "Monastir Airport": {
+    "Monastir City": 15,
+    "Sousse": 25,
+    "Hammamet": 80,
+    "Tunis City Center": 140,
+    "Mahdia": 35,
+    "Kairouan": 60,
+    "Sfax": 90,
+    "Djerba": 200,
+    "Tozeur": 280,
+    "Douz": 310
   },
-  "MIR": {
-    "Sousse": 70,
-    "Hammamet": 170,
-    "Yasmine Hammamet": 150, // Updated price from 180 to 150
-    "Mahdia": 90,
+  "Sfax Airport": {
+    "Sfax City": 15,
+    "Sousse": 90,
+    "Monastir": 90,
+    "Mahdia": 70,
+    "Kairouan": 80,
+    "Tunis City Center": 200,
+    "Djerba": 150,
+    "Tozeur": 220,
+    "Douz": 250
   },
-  // Reverse routes (destination to airport) - same prices
-  "Hammamet": {
-    "TUN": 130,
-    "NBE": 120,
-    "MIR": 170,
-  },
-  "Yasmine Hammamet": {
-    "TUN": 140,
-    "NBE": 110,
-    "MIR": 150, // Updated price from 180 to 150
-  },
-  "Sousse": {
-    "TUN": 160,
-    "NBE": 130,
-    "MIR": 70,
-  },
-  "Monastir": {
-    "TUN": 180,
-    "NBE": 150,
-  },
-  "Mahdia": {
-    "TUN": 200,
-    "NBE": 180,
-    "MIR": 90,
-  },
+  "Djerba Airport": {
+    "Houmt Souk": 15,
+    "Midoun": 20,
+    "Sfax": 150,
+    "Sousse": 200,
+    "Monastir": 200,
+    "Tunis City Center": 280,
+    "Tozeur": 180,
+    "Douz": 150,
+    "Matmata": 120
+  }
 };
 
+// Available locations
 const airports = [
-  { code: "TUN", name: "Tunis-Carthage Airport" },
-  { code: "NBE", name: "Enfidha Airport" },
-  { code: "MIR", name: "Monastir Airport" },
+  "Tunis-Carthage Airport",
+  "Monastir Airport", 
+  "Sfax Airport",
+  "Djerba Airport"
 ];
 
 const destinations = [
-  "Hammamet",
-  "Yasmine Hammamet", 
-  "Sousse",
-  "Monastir",
-  "Mahdia",
+  "Tunis City Center", "La Marsa", "Sidi Bou Said", "Carthage",
+  "Hammamet", "Sousse", "Monastir City", "Monastir", "Mahdia", 
+  "Kairouan", "Sfax City", "Sfax", "Djerba", "Houmt Souk", "Midoun",
+  "Tozeur", "Douz", "Matmata"
 ];
 
-// All locations (airports + destinations) for bidirectional selection
-const allLocations = [
-  ...airports.map(a => ({ code: a.code, name: a.name, type: 'airport' as const })),
-  ...destinations.map(d => ({ code: d, name: d, type: 'destination' as const }))
-];
+const allLocations = [...airports, ...destinations];
 
 export default function PriceCalculator() {
   const { t } = useLanguage();
   const [fromLocation, setFromLocation] = useState<string>("");
   const [toLocation, setToLocation] = useState<string>("");
   const [isReturn, setIsReturn] = useState<boolean>(false);
-  
-  const selectedPrice = fromLocation && toLocation ? priceData[fromLocation]?.[toLocation] : null;
-  const returnPrice = selectedPrice ? Math.round(selectedPrice * 2 * 0.9) : null; // 10% discount on return
 
-  const generateWhatsAppMessage = (phoneNumber: string) => {
-    const fromLocationName = allLocations.find(l => l.code === fromLocation)?.name || "{Location}";
-    const toLocationName = allLocations.find(l => l.code === toLocation)?.name || "{Location}";
-    const tripType = isReturn ? "RETURN TRIP" : "ONE-WAY";
-    const price = isReturn ? returnPrice : selectedPrice;
-    
-    const message = `Hello Affordable Taxi! I'd like to book a ${tripType}: FROM: ${fromLocationName} TO: ${toLocationName} – Price: ${price} TND – Date: {DD/MM/YYYY}, Time: {HH:MM}, Passengers: {#}, Luggage: {#}, Child seats: {Yes/No}. My name is {Name}. Please confirm availability.`;
-    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  // Calculate price based on selections
+  const selectedPrice = fromLocation && toLocation && priceData[fromLocation]?.[toLocation] 
+    ? priceData[fromLocation][toLocation] 
+    : 0;
+
+  const returnPrice = toLocation && fromLocation && priceData[toLocation]?.[fromLocation]
+    ? priceData[toLocation][fromLocation]
+    : selectedPrice;
+
+  const totalPrice = isReturn ? selectedPrice + returnPrice : selectedPrice;
+
+  // Generate WhatsApp message
+  const generateWhatsAppMessage = () => {
+    const tripType = isReturn ? t('priceCalculator.return') : t('priceCalculator.oneWay');
+    const message = `${t('priceCalculator.whatsappMessage')} ${fromLocation} → ${toLocation} (${tripType}) - ${totalPrice} TND`;
+    return encodeURIComponent(message);
   };
 
+  // Generate email link
   const generateEmailLink = () => {
-    const subject = "Transfer Quote";
-    const fromLocationName = allLocations.find(l => l.code === fromLocation)?.name || "{Location}";
-    const toLocationName = allLocations.find(l => l.code === toLocation)?.name || "{Location}";
-    const tripType = isReturn ? "RETURN TRIP" : "ONE-WAY";
-    const price = isReturn ? returnPrice : selectedPrice;
-    
-    const body = `Hello Affordable Taxi!
-
-I'd like to book a ${tripType}:
-FROM: ${fromLocationName}
-TO: ${toLocationName}
-Price: ${price} TND
-Date: {DD/MM/YYYY}
-Time: {HH:MM}
-Passengers: {#}
-Luggage: {#}
-Child seats: {Yes/No}
-Name: {Name}
-
-Please confirm availability.`;
-    return `mailto:khilas592@gmail.com,bolbebakhila@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const tripType = isReturn ? t('priceCalculator.return') : t('priceCalculator.oneWay');
+    const subject = encodeURIComponent(`${t('priceCalculator.bookingRequest')} - ${fromLocation} → ${toLocation}`);
+    const body = encodeURIComponent(
+      `${t('priceCalculator.emailBody')}\n\n` +
+      `${t('priceCalculator.from')}: ${fromLocation}\n` +
+      `${t('priceCalculator.to')}: ${toLocation}\n` +
+      `${t('priceCalculator.tripType')}: ${tripType}\n` +
+      `${t('priceCalculator.totalPrice')}: ${totalPrice} TND`
+    );
+    return `mailto:tunisiataxi.ride@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
-    <section id="calculator" className="py-20 bg-gradient-sand relative overflow-hidden">
+    <section id="calculator" className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 text-tunisia-blue drop-shadow-sm">{t('calc.title')}</h2>
-          <p className="text-xl text-tunisia-blue/80 max-w-3xl mx-auto leading-relaxed">
-            {t('calc.description')}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4 text-foreground">{t('priceCalculator.title')}</h2>
+          <p className="text-xl text-muted-foreground">
+            {t('priceCalculator.description')}
           </p>
         </div>
 
-        {/* Promotional Banner */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-gradient-hero text-white px-6 py-3 rounded-full text-lg font-semibold shadow-glow animate-pulse">
-            <ArrowLeftRight size={20} />
-            {t('calc.promo_banner')}
-          </div>
+        <div className="max-w-2xl mx-auto mb-12">
+          <Card className="bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant">
+            <CardHeader>
+              <CardTitle className="text-center text-tunisia-blue flex items-center justify-center gap-2">
+                <MapPin className="h-6 w-6" />
+                {t('priceCalculator.calculator')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <Plane className="h-4 w-4" />
+                    {t('priceCalculator.from')}
+                  </Label>
+                  <Select value={fromLocation} onValueChange={setFromLocation}>
+                    <SelectTrigger className="bg-background">
+                      <SelectValue placeholder={t('priceCalculator.selectDeparture')} />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      {allLocations.map((location) => (
+                        <SelectItem key={location} value={location} className="hover:bg-muted">
+                          {location}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    {t('priceCalculator.to')}
+                  </Label>
+                  <Select value={toLocation} onValueChange={setToLocation}>
+                    <SelectTrigger className="bg-background">
+                      <SelectValue placeholder={t('priceCalculator.selectDestination')} />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      {allLocations.map((location) => (
+                        <SelectItem key={location} value={location} className="hover:bg-muted">
+                          {location}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2 justify-center">
+                <Switch
+                  id="return-trip"
+                  checked={isReturn}
+                  onCheckedChange={setIsReturn}
+                />
+                <Label htmlFor="return-trip">{t('priceCalculator.returnTrip')}</Label>
+              </div>
+
+              {selectedPrice > 0 && (
+                <div className="text-center p-6 bg-tunisia-gold/10 rounded-lg border border-tunisia-gold/20">
+                  <div className="text-3xl font-bold text-tunisia-coral mb-2">
+                    {totalPrice} TND
+                  </div>
+                  <p className="text-muted-foreground">
+                    {isReturn ? t('priceCalculator.returnPrice') : t('priceCalculator.oneWayPrice')}
+                  </p>
+                </div>
+              )}
+
+              {selectedPrice > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Button
+                    onClick={() => window.open(`https://wa.me/21658893464?text=${generateWhatsAppMessage()}`, '_blank')}
+                    className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    {t('priceCalculator.bookWhatsApp')}
+                  </Button>
+                  
+                  <Button
+                    onClick={() => window.open(generateEmailLink(), '_blank')}
+                    variant="outline"
+                    className="border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    {t('priceCalculator.bookEmail')}
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
 
-        <Card className="max-w-5xl mx-auto shadow-glow bg-gradient-card border-0 overflow-hidden">
-          <CardHeader className="bg-gradient-sunset text-white text-center py-12">
-            <CardTitle className="text-3xl mb-4">{t('calc.get_quote')}</CardTitle>
-            <CardDescription className="text-white/90 text-lg">
-              {t('calc.quote_desc')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-10 space-y-8">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-3">
-                <label htmlFor="from-location" className="text-lg font-semibold text-tunisia-blue flex items-center gap-2">
-                  {t('calc.from_location')}
-                </label>
-                <Select value={fromLocation} onValueChange={setFromLocation}>
-                  <SelectTrigger id="from-location" className="h-14 text-lg border-2 border-tunisia-turquoise/20 focus:border-tunisia-turquoise">
-                    <SelectValue placeholder={t('calc.select_from')} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover z-50">
-                    {allLocations.map((location) => (
-                      <SelectItem key={location.code} value={location.code} className="text-lg py-3">
-                        {location.type === 'airport' ? '✈️' : '🌊'} {location.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-3">
-                <label htmlFor="to-location" className="text-lg font-semibold text-tunisia-blue flex items-center gap-2">
-                  {t('calc.to_location')}
-                </label>
-                <Select value={toLocation} onValueChange={setToLocation}>
-                  <SelectTrigger id="to-location" className="h-14 text-lg border-2 border-tunisia-turquoise/20 focus:border-tunisia-turquoise">
-                    <SelectValue placeholder={t('calc.select_to')} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover z-50">
-                    {allLocations
-                      .filter(location => location.code !== fromLocation) // Don't show same location
-                      .map((location) => (
-                      <SelectItem key={location.code} value={location.code} className="text-lg py-3">
-                        {location.type === 'airport' ? '✈️' : '🌊'} {location.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Return Trip Toggle */}
-            {selectedPrice && (
-              <div className="flex items-center justify-center gap-4 bg-tunisia-turquoise/5 rounded-2xl p-6">
-                <Button
-                  variant={!isReturn ? "default" : "outline"}
-                  onClick={() => setIsReturn(false)}
-                  className="font-semibold"
-                >
-                  {t('calc.one_way')}
-                </Button>
-                <Button
-                  variant={isReturn ? "default" : "outline"}
-                  onClick={() => setIsReturn(true)}
-                  className="font-semibold"
-                >
-                  {t('calc.return_trip')} <span className="ml-2 text-tunisia-gold">-10%</span>
-                </Button>
-              </div>
-            )}
-
-            {selectedPrice && (
-              <Card className="bg-gradient-hero text-white shadow-glow border-0 transform hover:scale-105 transition-all duration-300">
-                <CardContent className="p-10 text-center">
-                  <div className="mb-8">
-                    <p className="text-xl opacity-90 mb-4">{isReturn ? t('calc.return_price') : t('calc.fixed_price')}</p>
-                    {isReturn ? (
-                      <div className="space-y-2">
-                        <p className="text-5xl font-bold mb-2 text-tunisia-gold drop-shadow-lg">{returnPrice} TND</p>
-                        <p className="text-lg opacity-80 line-through">{selectedPrice * 2} TND</p>
-                        <p className="text-lg text-tunisia-gold font-semibold">{t('calc.save')} {selectedPrice * 2 - returnPrice!} TND!</p>
-                      </div>
-                    ) : (
-                      <p className="text-7xl font-bold mb-4 text-tunisia-gold drop-shadow-lg">{selectedPrice} TND</p>
-                    )}
-                    <p className="text-lg opacity-80">{t('calc.per_car')}</p>
-                  </div>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <Button 
-                      asChild 
-                      size="lg" 
-                      className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold text-lg py-4 shadow-glow transform hover:scale-105 transition-all duration-300"
-                    >
-                      <a
-                        href={generateWhatsAppMessage("21628602147")}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-3"
-                      >
-                        <MessageCircle size={24} />
-                        {t('calc.whatsapp_tn')}
-                      </a>
-                    </Button>
-                    <Button 
-                      asChild 
-                      size="lg" 
-                      className="w-full bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue font-bold text-lg py-4 shadow-glow transform hover:scale-105 transition-all duration-300"
-                    >
-                      <a
-                        href={generateWhatsAppMessage("447956643662")}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-3"
-                      >
-                        <MessageCircle size={24} />
-                        {t('calc.whatsapp_uk')}
-                      </a>
-                    </Button>
-                    <Button 
-                      asChild 
-                      variant="outline" 
-                      size="lg" 
-                      className="w-full border-2 border-white text-white hover:bg-white hover:text-tunisia-blue font-bold text-lg py-4 backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
-                    >
-                      <a
-                        href={generateEmailLink()}
-                        className="flex items-center justify-center gap-3"
-                      >
-                        <Mail size={24} />
-                        {t('calc.email_quote')}
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            <div className="text-center text-lg text-tunisia-blue/70 space-y-2 bg-tunisia-turquoise/5 rounded-2xl p-6">
-              <p>{t('calc.info1')}</p>
-              <p>{t('calc.info2')}</p>
-              <p>{t('calc.info3')}</p>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Price Table */}
-        <div className="mt-12 max-w-6xl mx-auto">
-          <h3 className="text-2xl font-bold text-center mb-8">{t('calc.all_prices')}</h3>
-          <div className="grid lg:grid-cols-3 gap-8">
-            {airports.map((airport) => (
-              <Card key={airport.code} className="shadow-card">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-2xl font-bold text-center mb-8 text-foreground">
+            {t('priceCalculator.priceTable')}
+          </h3>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+            {Object.entries(priceData).map(([airport, destinations]) => (
+              <Card key={airport} className="bg-card/30 backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle className="text-center text-lg">
-                    {t('calc.from')} {airport.name}
+                  <CardTitle className="text-tunisia-blue flex items-center gap-2">
+                    <Plane className="h-5 w-5" />
+                    {airport}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    {Object.entries(priceData[airport.code] || {}).map(([dest, price]) => (
-                      <div key={dest} className="flex justify-between items-center py-2 border-b border-border last:border-0">
-                        <span className="font-medium">{dest}</span>
-                        <span className="text-lg font-bold text-primary">{price} TND</span>
+                  <div className="space-y-2">
+                    {Object.entries(destinations).map(([destination, price]) => (
+                      <div key={destination} className="flex justify-between items-center py-1 border-b border-border/50 last:border-b-0">
+                        <span className="text-muted-foreground">{destination}</span>
+                        <span className="font-bold text-tunisia-coral">{price} TND</span>
                       </div>
                     ))}
                   </div>
