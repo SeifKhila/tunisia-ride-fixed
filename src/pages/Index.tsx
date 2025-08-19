@@ -138,145 +138,184 @@ export default function Index() {
       {/* Price Calculator */}
       <PriceCalculator />
 
-      {/* Exchange Rate */}
-      <ExchangeRate />
-
-      {/* Booking Process */}
-      <section className="py-16 bg-muted/30">
+      {/* How Booking Works */}
+      <section className="py-16 bg-tunisia-turquoise">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('bookingProcess.title')}</h2>
-            <p className="text-xl text-muted-foreground">
-              {t('bookingProcess.description')}
+            <h2 className="text-4xl font-bold mb-4 text-white">How Booking Works</h2>
+            <p className="text-xl text-white/90">
+              Simple, fast, and reliable booking process in paradise
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <Card className="text-center bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant hover:shadow-glow transition-all duration-300">
+            <Card className="text-center bg-white/90 backdrop-blur-sm shadow-elegant hover:shadow-glow transition-all duration-300">
               <CardHeader>
                 <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4">
                   <MessageCircle className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-tunisia-blue">{t('bookingProcess.step1Title')}</CardTitle>
+                <CardTitle className="text-tunisia-blue">1. Choose & Contact</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-muted-foreground">{t('bookingProcess.step1Description')}</CardDescription>
+                <CardDescription className="text-muted-foreground">🚗 Choose your route and click WhatsApp or Email to send us your booking request with all details.</CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant hover:shadow-glow transition-all duration-300">
+            <Card className="text-center bg-white/90 backdrop-blur-sm shadow-elegant hover:shadow-glow transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-tunisia-gold rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle className="h-8 w-8 text-tunisia-blue" />
+                <div className="mx-auto w-16 h-16 bg-tunisia-turquoise rounded-full flex items-center justify-center mb-4">
+                  <Shield className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-tunisia-blue">{t('bookingProcess.step2Title')}</CardTitle>
+                <CardTitle className="text-tunisia-blue">2. We Confirm</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-muted-foreground">{t('bookingProcess.step2Description')}</CardDescription>
+                <CardDescription className="text-muted-foreground">✨ We confirm availability and send you driver details, car information, and payment instructions.</CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-elegant hover:shadow-glow transition-all duration-300">
+            <Card className="text-center bg-white/90 backdrop-blur-sm shadow-elegant hover:shadow-glow transition-all duration-300">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-tunisia-blue rounded-full flex items-center justify-center mb-4">
+                <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4">
+                  <CreditCard className="h-8 w-8 text-white" />
+                </div>
+                <CardTitle className="text-tunisia-blue">3. Pay & Travel</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-muted-foreground">💳 Pay 30% deposit via Revolut or PayPal. Pay balance to driver on pickup. Free cancellation up to 48 hours.</CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Affordable Taxi */}
+      <section className="py-16 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">☀️ Why Choose Affordable Taxi</h2>
+            <p className="text-xl text-muted-foreground">
+              Your trusted partner for magical Tunisia travels
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Card className="bg-white/90 backdrop-blur-sm shadow-elegant p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center flex-shrink-0">
+                  <Star className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-tunisia-blue">Fixed Transparent Prices</h3>
+                  <p className="text-muted-foreground">💰 No hidden fees, no surprises. Our fixed prices include taxes and tolls - just pure transparency.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm shadow-elegant p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-tunisia-turquoise rounded-full flex items-center justify-center flex-shrink-0">
                   <Car className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-tunisia-blue">{t('bookingProcess.step3Title')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-muted-foreground">{t('bookingProcess.step3Description')}</CardDescription>
-              </CardContent>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-tunisia-blue">Vetted Drivers & Clean Cars</h3>
+                  <p className="text-muted-foreground">✨ Professional, experienced drivers with well-maintained, comfortable vehicles for your journey.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm shadow-elegant p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center flex-shrink-0">
+                  <MessageCircle className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-tunisia-blue">Instant WhatsApp Support</h3>
+                  <p className="text-muted-foreground">⚡ Quick responses and real-time communication for all your travel needs - we're always here.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm shadow-elegant p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-tunisia-gold rounded-full flex items-center justify-center flex-shrink-0">
+                  <Shield className="h-8 w-8 text-tunisia-blue" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-tunisia-blue">Child Seats on Request</h3>
+                  <p className="text-muted-foreground">👶 Family-friendly service with child seats available upon request for safe travels.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm shadow-elegant p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-tunisia-blue rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-tunisia-blue">✈️ Flight Monitoring</h3>
+                  <p className="text-muted-foreground">Flight delays? No problem! We monitor your flight and adjust pickup times accordingly.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm shadow-elegant p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-tunisia-turquoise rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-tunisia-blue">🗺️ All Tunisia Destinations</h3>
+                  <p className="text-muted-foreground">From major cities to hidden gems - we'll take you anywhere in beautiful Tunisia.</p>
+                </div>
+              </div>
             </Card>
           </div>
         </div>
       </section>
 
       {/* Tours Section */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-gradient-to-br from-tunisia-coral to-tunisia-gold">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('tours.title')}</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('tours.description')}
+            <h2 className="text-4xl font-bold mb-4 text-white">🏝️ Tours Across Tunisia</h2>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              🗿 Explore the beauty of Tunisia with our private tour services. From ancient ruins to stunning coastlines, golden beaches to desert dunes - we'll create the perfect itinerary for your adventure in paradise.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-card/50 backdrop-blur-sm rounded-lg p-8 border-2 border-tunisia-gold/20 shadow-elegant">
-              <MapPin className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-4 text-tunisia-blue">{t('tours.customTitle')}</h3>
-              <p className="text-muted-foreground mb-6">
-                {t('tours.customDescription')}
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button
-                  onClick={() => window.open(generateWhatsAppLink('21628602147', t('tours.whatsappMessage')), '_blank')}
-                  className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
-                >
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  {t('tours.whatsappTours')}
-                </Button>
-                
-                <Button
-                  onClick={() => window.open(generateEmailLink(), '_blank')}
-                  variant="outline"
-                  className="border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
-                >
-                  <Mail className="mr-2 h-4 w-4" />
-                  {t('tours.emailTours')}
-                </Button>
-              </div>
-            </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button
+              onClick={() => window.open(generateWhatsAppLink('21628602147', t('tours.whatsappMessage')), '_blank')}
+              className="bg-white text-tunisia-coral hover:bg-white/90 px-8 py-3 text-lg font-semibold"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              🇹🇳 WhatsApp Tours (TN)
+            </Button>
+            
+            <Button
+              onClick={() => window.open(generateWhatsAppLink('447956643662', t('tours.whatsappMessage')), '_blank')}
+              variant="outline"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-coral px-8 py-3 text-lg font-semibold"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              ☀️ WhatsApp Tours (UK)
+            </Button>
+            
+            <Button
+              onClick={() => window.open(generateEmailLink(), '_blank')}
+              variant="outline"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-coral px-8 py-3 text-lg font-semibold"
+            >
+              <Mail className="mr-2 h-5 w-5" />
+              📧 Email Tours
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('whyChooseUs.title')}</h2>
-            <p className="text-xl text-muted-foreground">
-              {t('whyChooseUs.description')}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Shield className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.reliability')}</h3>
-              <p className="text-muted-foreground">{t('whyChooseUs.reliabilityDesc')}</p>
-            </div>
-
-            <div className="text-center group">
-              <div className="mx-auto w-16 h-16 bg-tunisia-gold rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Star className="h-8 w-8 text-tunisia-blue" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.experience')}</h3>
-              <p className="text-muted-foreground">{t('whyChooseUs.experienceDesc')}</p>
-            </div>
-
-            <div className="text-center group">
-              <div className="mx-auto w-16 h-16 bg-tunisia-blue rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Users className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.multilingual')}</h3>
-              <p className="text-muted-foreground">{t('whyChooseUs.multilingualDesc')}</p>
-            </div>
-
-            <div className="text-center group">
-              <div className="mx-auto w-16 h-16 bg-tunisia-coral rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Clock className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-tunisia-blue">{t('whyChooseUs.availability')}</h3>
-              <p className="text-muted-foreground">{t('whyChooseUs.availabilityDesc')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Exchange Rate */}
+      <ExchangeRate />
 
       {/* FAQ */}
       <FAQ />
