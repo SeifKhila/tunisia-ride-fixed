@@ -6,7 +6,7 @@ import LanguageSelector from "@/components/LanguageSelector";
 import PriceCalculator from "@/components/PriceCalculator";
 import ExchangeRate from "@/components/ExchangeRate";
 import FAQ from "@/components/FAQ";
-import heroImage from "@/assets/tunisia-hero.jpg";
+import heroImage from "@/assets/tunisia-hero-new.jpg";
 
 export default function Index() {
   const { t, language } = useLanguage();
