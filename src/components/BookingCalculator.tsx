@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeftRight, MapPin, Calculator } from "lucide-react";
+import { ArrowLeftRight, MapPin, Calculator, MessageCircle, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Location {
@@ -77,6 +77,8 @@ export default function BookingCalculator() {
   const [dropoff, setDropoff] = useState<string>('');
   const [isReturn, setIsReturn] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [showContactOptions, setShowContactOptions] = useState(false);
+  const [selectedTripType, setSelectedTripType] = useState<'oneway' | 'return'>('oneway');
 
   const getPrice = (from: string, to: string): number => {
     const route = routePrices.find(r => r.from === from && r.to === to);
@@ -98,16 +100,39 @@ export default function BookingCalculator() {
     };
   };
 
-  const handleCalculate = () => {
-    if (pickup && dropoff) {
-      setShowResult(true);
-    }
+  const handleBooking = (tripType: 'oneway' | 'return') => {
+    setSelectedTripType(tripType);
+    setShowContactOptions(true);
+  };
+
+  const generateBookingMessage = (tripType: 'oneway' | 'return') => {
+    const pickupLoc = locations.find(l => l.id === pickup);
+    const dropoffLoc = locations.find(l => l.id === dropoff);
+    const fromName = pickupLoc?.name || pickup;
+    const toName = dropoffLoc?.name || dropoff;
+    const currentPricing = calculatePrice();
+    const price = tripType === 'oneway' ? currentPricing.oneWay : Math.round(currentPricing.return);
+    const discount = tripType === 'return' ? ' (10% discount applied)' : '';
+    
+    return `Hi! I want to book a ${tripType === 'oneway' ? 'one-way' : 'return'} transfer from ${fromName} to ${toName}. Price: ${price} TND${discount}. Please confirm availability.`;
+  };
+
+  const generateEmailLink = (tripType: 'oneway' | 'return') => {
+    const subject = encodeURIComponent(`Tunisia Transfer Booking - ${tripType === 'oneway' ? 'One Way' : 'Return'}`);
+    const body = encodeURIComponent(generateBookingMessage(tripType));
+    return `mailto:khilas592@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const handleSwapLocations = () => {
     const temp = pickup;
     setPickup(dropoff);
     setDropoff(temp);
+  };
+
+  const handleCalculate = () => {
+    if (pickup && dropoff) {
+      setShowResult(true);
+    }
   };
 
   const pricing = calculatePrice();
@@ -246,28 +271,78 @@ export default function BookingCalculator() {
                   </div>
                   </div>
 
+                  {/* Contact Options Modal */}
+                  {showContactOptions && (
+                    <div className="space-y-4 p-4 bg-white/95 rounded-lg border border-tunisia-blue/20 shadow-lg">
+                      <h4 className="font-semibold text-tunisia-blue text-center">Choose Contact Method</h4>
+                      <p className="text-sm text-muted-foreground text-center">
+                        {selectedTripType === 'oneway' ? 'One-Way' : 'Return'} Transfer: {pickupLocation?.name} → {dropoffLocation?.name}
+                      </p>
+                      <p className="text-center font-bold text-tunisia-blue">
+                        Price: {selectedTripType === 'oneway' ? pricing.oneWay : Math.round(pricing.return)} TND
+                        {selectedTripType === 'return' && <span className="text-tunisia-coral text-sm"> (10% OFF)</span>}
+                      </p>
+                      
+                      <div className="flex flex-col gap-2">
+                        <Button
+                          onClick={() => {
+                            window.open(`https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`, '_blank');
+                            setShowContactOptions(false);
+                          }}
+                          className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                        >
+                          <MessageCircle className="mr-2 h-4 w-4" />
+                          WhatsApp Tunisia (+216 28 602 147)
+                        </Button>
+                        
+                        <Button
+                          onClick={() => {
+                            window.open(`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`, '_blank');
+                            setShowContactOptions(false);
+                          }}
+                          variant="outline"
+                          className="border-tunisia-coral text-tunisia-coral hover:bg-tunisia-coral/10"
+                        >
+                          <MessageCircle className="mr-2 h-4 w-4" />
+                          WhatsApp UK (+44 7956 643662)
+                        </Button>
+                        
+                        <Button
+                          onClick={() => {
+                            window.open(generateEmailLink(selectedTripType), '_blank');
+                            setShowContactOptions(false);
+                          }}
+                          variant="outline"
+                          className="border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue/10"
+                        >
+                          <Mail className="mr-2 h-4 w-4" />
+                          Email Quote
+                        </Button>
+                        
+                        <Button
+                          onClick={() => setShowContactOptions(false)}
+                          variant="ghost"
+                          size="sm"
+                          className="text-muted-foreground"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex flex-col md:flex-row gap-2">
                     <Button 
-                      onClick={() => {
-                        const fromName = pickupLocation?.name || pickup;
-                        const toName = dropoffLocation?.name || dropoff;
-                        const message = `Hi! I want to book a one-way transfer from ${fromName} to ${toName}. Price: ${pricing.oneWay} TND. Please confirm availability.`;
-                        window.open(`https://wa.me/21628602147?text=${encodeURIComponent(message)}`, '_blank');
-                      }}
+                      onClick={() => handleBooking('oneway')}
                       className="flex-1 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white focus:outline-none focus:ring-4 focus:ring-tunisia-coral/50 focus:ring-offset-2 min-h-[48px]"
-                      aria-label="Book one way transfer via WhatsApp - Opens in new window"
+                      aria-label="Book one way transfer - Choose contact method"
                     >
                       Book One Way Transfer
                     </Button>
                     <Button 
-                      onClick={() => {
-                        const fromName = pickupLocation?.name || pickup;
-                        const toName = dropoffLocation?.name || dropoff;
-                        const message = `Hi! I want to book a return transfer from ${fromName} to ${toName}. Price: ${Math.round(pricing.return)} TND (10% discount applied). Please confirm availability.`;
-                        window.open(`https://wa.me/21628602147?text=${encodeURIComponent(message)}`, '_blank');
-                      }}
+                      onClick={() => handleBooking('return')}
                       className="flex-1 bg-tunisia-gold hover:bg-tunisia-gold/90 text-white focus:outline-none focus:ring-4 focus:ring-tunisia-gold/50 focus:ring-offset-2 min-h-[48px]"
-                      aria-label="Book return transfer with 10% discount via WhatsApp - Opens in new window"
+                      aria-label="Book return transfer with 10% discount - Choose contact method"
                     >
                       Book Return Transfer (Save 10%)
                     </Button>
