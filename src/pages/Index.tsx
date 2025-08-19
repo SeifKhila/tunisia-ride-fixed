@@ -26,14 +26,24 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gradient-primary">
+      {/* Skip to main content link for keyboard users */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-tunisia-blue text-white px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-tunisia-gold"
+      >
+        Skip to main content
+      </a>
+      
       <LanguageSelector />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <header className="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
+          role="img"
+          aria-label="Beautiful Tunisia beach landscape"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-tunisia-blue/80 via-tunisia-blue/60 to-transparent"></div>
         </div>
@@ -76,9 +86,10 @@ export default function Index() {
             <Button
               onClick={() => window.open(generateWhatsAppLink('21628602147', t('hero.whatsappMessage')), '_blank')}
               size="lg"
-              className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-glow transition-all duration-300 hover:scale-105"
+              className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-glow transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-tunisia-coral/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Contact us via WhatsApp Tunisia - Opens in new window"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-5 w-5" aria-hidden="true" />
               {t('hero.whatsappTunisia')}
             </Button>
             
@@ -86,9 +97,10 @@ export default function Index() {
               onClick={() => window.open(generateWhatsAppLink('447956643662', t('hero.whatsappMessage')), '_blank')}
               size="lg"
               variant="outline"
-              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-blue backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-blue backdrop-blur-sm transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Contact us via WhatsApp UK - Opens in new window"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-5 w-5" aria-hidden="true" />
               {t('hero.whatsappUK')}
             </Button>
             
@@ -96,18 +108,20 @@ export default function Index() {
               onClick={() => window.open(generateEmailLink(), '_blank')}
               size="lg"
               variant="outline"
-              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-blue backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-blue backdrop-blur-sm transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Send us an email quote - Opens in new window"
             >
-              <Mail className="mr-2 h-5 w-5" />
+              <Mail className="mr-2 h-5 w-5" aria-hidden="true" />
               {t('hero.emailQuote')}
             </Button>
 
             <Button
               onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
               size="lg"
-              className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue shadow-glow transition-all duration-300 hover:scale-105"
+              className="bg-tunisia-gold hover:bg-tunisia-gold/90 text-tunisia-blue shadow-glow transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-tunisia-gold/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Calculate transfer price"
             >
-              <Car className="mr-2 h-5 w-5" />
+              <Car className="mr-2 h-5 w-5" aria-hidden="true" />
               {t('hero.calculatePrice')}
             </Button>
           </div>
@@ -130,13 +144,14 @@ export default function Index() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce" aria-hidden="true">
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
-      </section>
+      </header>
 
+      <main id="main-content">
         {/* Booking Calculator */}
         <BookingCalculator />
         
@@ -144,10 +159,10 @@ export default function Index() {
         <PriceCalculator />
 
       {/* How Booking Works */}
-      <section className="py-16 bg-tunisia-turquoise">
+      <section className="py-16 bg-tunisia-turquoise" aria-labelledby="booking-process">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-white">How Booking Works</h2>
+            <h2 id="booking-process" className="text-4xl font-bold mb-4 text-white">How Booking Works</h2>
             <p className="text-xl text-white/90">
               Simple, fast, and reliable booking process in paradise
             </p>
@@ -194,10 +209,10 @@ export default function Index() {
       </section>
 
       {/* Why Choose Affordable Taxi */}
-      <section className="py-16 bg-muted/50">
+      <section className="py-16 bg-muted/50" aria-labelledby="why-choose">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">☀️ Why Choose Affordable Taxi</h2>
+            <h2 id="why-choose" className="text-4xl font-bold mb-4 text-foreground">☀️ Why Choose Affordable Taxi</h2>
             <p className="text-xl text-muted-foreground">
               Your trusted partner for magical Tunisia travels
             </p>
@@ -280,10 +295,10 @@ export default function Index() {
       </section>
 
       {/* Tours Section */}
-      <section className="py-16 bg-gradient-to-br from-tunisia-coral to-tunisia-gold">
+      <section className="py-16 bg-gradient-to-br from-tunisia-coral to-tunisia-gold" aria-labelledby="tours">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-white">🏝️ Tours Across Tunisia</h2>
+            <h2 id="tours" className="text-4xl font-bold mb-4 text-white">🏝️ Tours Across Tunisia</h2>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
               🗿 Explore the beauty of Tunisia with our private tour services. From ancient ruins to stunning coastlines, golden beaches to desert dunes - we'll create the perfect itinerary for your adventure in paradise.
             </p>
@@ -292,27 +307,30 @@ export default function Index() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               onClick={() => window.open(generateWhatsAppLink('21628602147', t('tours.whatsappMessage')), '_blank')}
-              className="bg-white text-tunisia-coral hover:bg-white/90 px-8 py-3 text-lg font-semibold"
+              className="bg-white text-tunisia-coral hover:bg-white/90 px-8 py-3 text-lg font-semibold focus:outline-none focus:ring-4 focus:ring-white/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Contact us for tours via WhatsApp Tunisia - Opens in new window"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-5 w-5" aria-hidden="true" />
               🇹🇳 WhatsApp Tours (TN)
             </Button>
             
             <Button
               onClick={() => window.open(generateWhatsAppLink('447956643662', t('tours.whatsappMessage')), '_blank')}
               variant="outline"
-              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-coral px-8 py-3 text-lg font-semibold"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-coral px-8 py-3 text-lg font-semibold focus:outline-none focus:ring-4 focus:ring-white/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Contact us for tours via WhatsApp UK - Opens in new window"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-5 w-5" aria-hidden="true" />
               ☀️ WhatsApp Tours (UK)
             </Button>
             
             <Button
               onClick={() => window.open(generateEmailLink(), '_blank')}
               variant="outline"
-              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-coral px-8 py-3 text-lg font-semibold"
+              className="bg-white/10 border-white text-white hover:bg-white hover:text-tunisia-coral px-8 py-3 text-lg font-semibold focus:outline-none focus:ring-4 focus:ring-white/50 focus:ring-offset-2 min-h-[48px]"
+              aria-label="Email us for tours - Opens in new window"
             >
-              <Mail className="mr-2 h-5 w-5" />
+              <Mail className="mr-2 h-5 w-5" aria-hidden="true" />
               📧 Email Tours
             </Button>
           </div>
@@ -327,9 +345,10 @@ export default function Index() {
 
       {/* FAQ */}
       <FAQ />
+      </main>
 
       {/* Contact & Footer */}
-      <footer className="py-16 bg-tunisia-blue text-white">
+      <footer className="py-16 bg-tunisia-blue text-white" role="contentinfo">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {/* Tunisia Contact */}
@@ -337,16 +356,17 @@ export default function Index() {
               <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.tunisiaContact')}</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
+                  <Phone className="h-4 w-4" aria-hidden="true" />
                   <span>+216 28 602 147</span>
                 </div>
                 <Button
                   onClick={() => window.open(generateWhatsAppLink('21628602147', t('footer.whatsappMessage')), '_blank')}
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start focus:outline-none focus:ring-2 focus:ring-tunisia-gold min-h-[44px]"
+                  aria-label="Contact us via WhatsApp Tunisia - Opens in new window"
                 >
-                  <MessageCircle className="h-4 w-4 mr-2" />
+                  <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
                   WhatsApp Tunisia
                 </Button>
               </div>
@@ -357,16 +377,17 @@ export default function Index() {
               <h3 className="text-xl font-bold mb-4 text-tunisia-gold">{t('footer.ukContact')}</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
+                  <Phone className="h-4 w-4" aria-hidden="true" />
                   <span>+44 7956 643662</span>
                 </div>
                 <Button
                   onClick={() => window.open(generateWhatsAppLink('447956643662', t('footer.whatsappMessage')), '_blank')}
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start focus:outline-none focus:ring-2 focus:ring-tunisia-gold min-h-[44px]"
+                  aria-label="Contact us via WhatsApp UK - Opens in new window"
                 >
-                  <MessageCircle className="h-4 w-4 mr-2" />
+                  <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
                   WhatsApp UK
                 </Button>
               </div>
@@ -380,9 +401,10 @@ export default function Index() {
                   onClick={() => window.open('mailto:khilas592@gmail.com', '_blank')}
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start"
+                  className="text-white hover:text-tunisia-gold hover:bg-white/10 p-0 h-auto font-normal justify-start focus:outline-none focus:ring-2 focus:ring-tunisia-gold min-h-[44px]"
+                  aria-label="Send email to khilas592@gmail.com - Opens in new window"
                 >
-                  <Mail className="h-4 w-4 mr-2" />
+                  <Mail className="h-4 w-4 mr-2" aria-hidden="true" />
                   khilas592@gmail.com
                 </Button>
               </div>
@@ -428,10 +450,11 @@ export default function Index() {
       <div className="fixed bottom-4 left-4 right-4 md:hidden z-40">
         <Button
           onClick={() => window.open(generateWhatsAppLink('21628602147', t('hero.whatsappMessage')), '_blank')}
-          className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
+          className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg focus:outline-none focus:ring-4 focus:ring-tunisia-coral/50 focus:ring-offset-2 min-h-[56px]"
           size="lg"
+          aria-label="Quick contact via WhatsApp - Opens in new window"
         >
-          <MessageCircle className="mr-2 h-5 w-5" />
+          <MessageCircle className="mr-2 h-5 w-5" aria-hidden="true" />
           {t('footer.quickContact')}
         </Button>
       </div>

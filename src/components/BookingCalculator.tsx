@@ -139,12 +139,12 @@ export default function BookingCalculator() {
                     Pick-up Location
                   </label>
                   <Select value={pickup} onValueChange={setPickup}>
-                    <SelectTrigger className="border-tunisia-gold/20">
+                    <SelectTrigger className="border-tunisia-gold/20 focus:ring-2 focus:ring-tunisia-blue/50 min-h-[48px]" aria-label="Select pickup location">
                       <SelectValue placeholder="Select pick-up location" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border border-tunisia-gold/20 shadow-lg z-50">
                       {locations.map((location) => (
-                        <SelectItem key={location.id} value={location.id}>
+                        <SelectItem key={location.id} value={location.id} className="hover:bg-tunisia-blue/10 focus:bg-tunisia-blue/10">
                           <span className="flex items-center gap-2">
                             {location.type === 'airport' ? '✈️' : '🏨'} {location.name}
                           </span>
@@ -172,12 +172,12 @@ export default function BookingCalculator() {
                     Drop-off Location
                   </label>
                   <Select value={dropoff} onValueChange={setDropoff}>
-                    <SelectTrigger className="border-tunisia-gold/20">
+                    <SelectTrigger className="border-tunisia-gold/20 focus:ring-2 focus:ring-tunisia-blue/50 min-h-[48px]" aria-label="Select drop-off location">
                       <SelectValue placeholder="Select drop-off location" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border border-tunisia-gold/20 shadow-lg z-50">
                       {locations.map((location) => (
-                        <SelectItem key={location.id} value={location.id}>
+                        <SelectItem key={location.id} value={location.id} className="hover:bg-tunisia-blue/10 focus:bg-tunisia-blue/10">
                           <span className="flex items-center gap-2">
                             {location.type === 'airport' ? '✈️' : '🏨'} {location.name}
                           </span>
@@ -192,7 +192,8 @@ export default function BookingCalculator() {
               <Button 
                 onClick={handleCalculate}
                 disabled={!pickup || !dropoff}
-                className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90 text-white"
+                className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90 text-white focus:outline-none focus:ring-4 focus:ring-tunisia-blue/50 focus:ring-offset-2 min-h-[48px]"
+                aria-label="Calculate transfer price between selected locations"
               >
                 Calculate Price
               </Button>
@@ -253,7 +254,8 @@ export default function BookingCalculator() {
                         const message = `Hi! I want to book a one-way transfer from ${fromName} to ${toName}. Price: ${pricing.oneWay} TND. Please confirm availability.`;
                         window.open(`https://wa.me/21628602147?text=${encodeURIComponent(message)}`, '_blank');
                       }}
-                      className="flex-1 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                      className="flex-1 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white focus:outline-none focus:ring-4 focus:ring-tunisia-coral/50 focus:ring-offset-2 min-h-[48px]"
+                      aria-label="Book one way transfer via WhatsApp - Opens in new window"
                     >
                       Book One Way Transfer
                     </Button>
@@ -264,7 +266,8 @@ export default function BookingCalculator() {
                         const message = `Hi! I want to book a return transfer from ${fromName} to ${toName}. Price: ${Math.round(pricing.return)} TND (10% discount applied). Please confirm availability.`;
                         window.open(`https://wa.me/21628602147?text=${encodeURIComponent(message)}`, '_blank');
                       }}
-                      className="flex-1 bg-tunisia-gold hover:bg-tunisia-gold/90 text-white"
+                      className="flex-1 bg-tunisia-gold hover:bg-tunisia-gold/90 text-white focus:outline-none focus:ring-4 focus:ring-tunisia-gold/50 focus:ring-offset-2 min-h-[48px]"
+                      aria-label="Book return transfer with 10% discount via WhatsApp - Opens in new window"
                     >
                       Book Return Transfer (Save 10%)
                     </Button>
