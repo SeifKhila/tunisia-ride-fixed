@@ -105,12 +105,37 @@ const translations = {
 
     // FAQs
     'faq.title': 'Frequently Asked Questions',
-    'faq.cancellation.q': 'What is your cancellation policy?',
-    'faq.cancellation.a': 'Free ≥24h = full refund; <24h = deposit non-refundable; no-show = deposit forfeited.',
-    'faq.payment.q': 'How do I pay?',
-    'faq.payment.a': '25% deposit online, 75% cash to driver.',
-    'faq.flight.q': 'Do you track flights?',
-    'faq.flight.a': 'Yes, enter your flight number.',
+    'faq.q1': 'How do I pay?',
+    'faq.a1': '25% online deposit, 75% cash at pickup',
+    'faq.q2': 'What if my flight is late?',
+    'faq.a2': 'Free waiting, drivers track flights',
+    'faq.q3': 'Can I cancel?',
+    'faq.a3': 'Free ≥24h refund, <24h deposit lost',
+    'faq.q4': 'Are child seats available?',
+    'faq.a4': 'Yes, free on request',
+    'faq.q5': 'Night transfers?',
+    'faq.a5': 'Same price day or night',
+    'faq.q6': 'Do you serve all Tunisia?',
+    'faq.a6': 'Yes, transfers from all airports to major cities',
+    'faq.q7': 'Are your drivers licensed?',
+    'faq.a7': 'Yes, only vetted drivers with valid insurance',
+    'faq.q8': 'Do you offer group transfers?',
+    'faq.a8': 'Yes, minivan and VIP available',
+    
+    // Testimonials
+    'testimonials.title': 'What Our Customers Say',
+    'testimonials.1': '"Great service, on time, very professional!" – Sarah, UK',
+    'testimonials.2': '"Reliable transfers, friendly drivers!" – John, Canada', 
+    'testimonials.3': '"Best airport service in Tunisia!" – Lisa, Germany',
+    
+    // Excursions
+    'excursions.title': 'Special Requests & Excursions',
+    'excursions.subtitle': 'Looking for more than just a transfer? Contact us for custom tours across Tunisia.',
+    'excursions.plan_button': 'Plan My Excursion',
+    'excursions.custom_note': 'Custom stops and group trips available on request',
+    
+    // Routes
+    'routes.guarantee': 'Best price guaranteed • No hidden fees • Free waiting & child seats',
 
     // Footer
     'footer.contact_tunisia': 'Tunisia Contact',
@@ -199,12 +224,37 @@ const translations = {
 
     // FAQs
     'faq.title': 'Questions fréquemment posées',
-    'faq.cancellation.q': 'Quelle est votre politique d\'annulation ?',
-    'faq.cancellation.a': 'Gratuite ≥24h remboursement complet ; <24h acompte non remboursable ; absence = acompte perdu.',
-    'faq.payment.q': 'Comment puis-je payer ?',
-    'faq.payment.a': '25 % acompte en ligne, solde en espèces au chauffeur.',
-    'faq.flight.q': 'Suivez-vous les vols ?',
-    'faq.flight.a': 'Oui, indiquez simplement votre numéro de vol.',
+    'faq.q1': 'Comment puis-je payer ?',
+    'faq.a1': '25 % en ligne, solde en espèces',
+    'faq.q2': 'Et si mon vol est en retard ?',
+    'faq.a2': 'Attente gratuite, suivi de vol inclus',
+    'faq.q3': 'Puis-je annuler ?',
+    'faq.a3': '≥24h remboursement complet ; <24h acompte perdu',
+    'faq.q4': 'Les sièges enfant sont-ils disponibles ?',
+    'faq.a4': 'Oui, gratuits sur demande',
+    'faq.q5': 'Transferts de nuit ?',
+    'faq.a5': 'Même tarif jour et nuit',
+    'faq.q6': 'Desservez-vous toute la Tunisie ?',
+    'faq.a6': 'Oui, tous les aéroports vers les principales villes',
+    'faq.q7': 'Vos chauffeurs sont-ils agréés ?',
+    'faq.a7': 'Oui, chauffeurs agréés avec assurance',
+    'faq.q8': 'Proposez-vous des transferts de groupe ?',
+    'faq.a8': 'Oui, minibus et VIP disponibles',
+    
+    // Testimonials
+    'testimonials.title': 'Ce que disent nos clients',
+    'testimonials.1': '"Service excellent, chauffeur ponctuel et sérieux !" – Julien, France',
+    'testimonials.2': '"Transferts fiables, chauffeurs sympathiques !" – Marie, Belgique',
+    'testimonials.3': '"Meilleur service d\'aéroport en Tunisie !" – Pierre, Suisse',
+    
+    // Excursions
+    'excursions.title': 'Demandes spéciales & Excursions',
+    'excursions.subtitle': 'Vous cherchez plus qu\'un simple transfert ? Contactez-nous pour des tours personnalisés à travers la Tunisie.',
+    'excursions.plan_button': 'Planifier mon excursion',
+    'excursions.custom_note': 'Arrêts personnalisés et voyages de groupe disponibles sur demande',
+    
+    // Routes
+    'routes.guarantee': 'Meilleur prix garanti • Pas de frais cachés • Attente et sièges enfant gratuits',
 
     // Footer
     'footer.contact_tunisia': 'Contact Tunisie',
@@ -295,12 +345,37 @@ const translations = {
 
     // FAQs
     'faq.title': 'الأسئلة المتكررة',
-    'faq.cancellation.q': 'ما هي سياسة الإلغاء؟',
-    'faq.cancellation.a': 'مجاني قبل 24 ساعة مع استرداد كامل؛ أقل من 24 ساعة المقدم غير قابل للاسترداد؛ عدم الحضور = مصادرة المقدم.',
-    'faq.payment.q': 'كيف أدفع؟',
-    'faq.payment.a': '25٪ عبر الإنترنت، والباقي نقدًا للسائق.',
-    'faq.flight.q': 'هل تتتبعون الرحلات؟',
-    'faq.flight.a': 'نعم، أضف رقم رحلتك.',
+    'faq.q1': 'كيف أدفع؟',
+    'faq.a1': '25٪ عبر الإنترنت، والباقي نقدًا عند الوصول',
+    'faq.q2': 'ماذا لو تأخرت رحلتي؟',
+    'faq.a2': 'الانتظار مجاني، السائق يتابع الرحلات',
+    'faq.q3': 'هل يمكنني الإلغاء؟',
+    'faq.a3': 'مجاني قبل 24 ساعة؛ أقل من 24 ساعة المقدم غير مسترد',
+    'faq.q4': 'هل تتوفر مقاعد الأطفال؟',
+    'faq.a4': 'نعم، مجانًا عند الطلب',
+    'faq.q5': 'النقل الليلي؟',
+    'faq.a5': 'نفس السعر ليلًا ونهارًا',
+    'faq.q6': 'هل تخدمون كل تونس؟',
+    'faq.a6': 'نعم، من جميع المطارات إلى المدن الكبرى',
+    'faq.q7': 'هل سائقوكم مرخصون؟',
+    'faq.a7': 'نعم، سائقون مرخصون مع تأمين',
+    'faq.q8': 'هل تقدمون نقل جماعي؟',
+    'faq.a8': 'نعم، تتوفر خيارات ميني فان وVIP',
+    
+    // Testimonials
+    'testimonials.title': 'ماذا يقول عملاؤنا',
+    'testimonials.1': '"خدمة رائعة، في الموعد ومحترفة جدًا!" – أحمد، تونس',
+    'testimonials.2': '"نقل موثوق، سائقون ودودون!" – فاطمة، الجزائر',
+    'testimonials.3': '"أفضل خدمة مطار في تونس!" – محمد، المغرب',
+    
+    // Excursions
+    'excursions.title': 'الطلبات الخاصة والجولات السياحية',
+    'excursions.subtitle': 'تبحث عن أكثر من مجرد نقل؟ اتصل بنا للجولات المخصصة عبر تونس.',
+    'excursions.plan_button': 'خطط لرحلتي',
+    'excursions.custom_note': 'توقفات مخصصة ورحلات جماعية متاحة عند الطلب',
+    
+    // Routes
+    'routes.guarantee': 'أفضل سعر مضمون • لا رسوم خفية • انتظار ومقاعد أطفال مجانية',
 
     // Footer
     'footer.contact_tunisia': 'التواصل تونس',

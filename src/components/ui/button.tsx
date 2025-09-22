@@ -9,9 +9,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 hover:shadow-lg rounded-3xl",
-        cta: "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 hover:shadow-xl rounded-3xl font-bold",
-        alt: "bg-tunisia-turquoise text-white hover:bg-tunisia-turquoise/90 hover:scale-105 hover:shadow-xl rounded-3xl font-bold",
+        default: "bg-primary text-white hover:bg-primary/90 hover:scale-105 hover:shadow-lg rounded-full font-bold",
+        cta: "bg-primary text-white hover:bg-primary/90 hover:scale-105 hover:shadow-xl rounded-full font-bold transition-all duration-300",
+        alt: "bg-tunisia-turquoise text-white hover:bg-tunisia-turquoise/90 hover:scale-105 hover:shadow-xl rounded-full font-bold transition-all duration-300",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-md",
         outline:

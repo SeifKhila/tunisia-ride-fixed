@@ -24,10 +24,20 @@ const Index = () => {
   };
 
   const topRoutes = [
-    { from: 'Enfidha', to: 'Hammamet', price: '45 TND', route: 'Enfidha → Hammamet' },
-    { from: 'Tunis', to: 'Hammamet', price: '60 TND', route: 'Tunis → Hammamet' },
-    { from: 'Monastir', to: 'Sousse', price: '25 TND', route: 'Monastir → Sousse' },
-    { from: 'Djerba', to: 'Midoun', price: '20 TND', route: 'Djerba → Midoun' }
+    { from: 'Enfidha', to: 'Hammamet', price: '160 TND', route: 'Enfidha → Hammamet' },
+    { from: 'Tunis', to: 'Hammamet', price: '180 TND', route: 'Tunis → Hammamet' },
+    { from: 'Monastir', to: 'Sousse', price: '80 TND', route: 'Monastir → Sousse' },
+    { from: 'Djerba', to: 'Midoun', price: '100 TND', route: 'Djerba → Midoun' }
+  ];
+
+  const excursions = [
+    { name: 'Hammamet → Sidi Bou Said', duration: 'half-day', price: '200 TND' },
+    { name: 'Hammamet/Yasmine → Tunis Carthage + Medina', duration: 'full-day', price: '220 TND' },
+    { name: 'Yasmine Hammamet → El Jem Amphitheatre', duration: 'full-day', price: '500 TND' },
+    { name: 'Sousse → Kairouan Historical Tour', duration: '', price: '350 TND' },
+    { name: 'Monastir → Sousse + Monastir City Tour', duration: '', price: '140 TND' },
+    { name: 'El Jem → City & Amphitheatre Tour', duration: 'half-day', price: '100 TND' },
+    { name: 'Sousse/Hammamet/Monastir → Sahara Desert', duration: '2 days, 1 night', price: 'from 900 TND (car) or 1200 TND (minivan)' }
   ];
 
   return (
@@ -189,6 +199,7 @@ const Index = () => {
                     <span className="font-semibold">{route.route}</span>
                   </div>
                   <div className="text-2xl font-bold text-tunisia-blue mb-3">{route.price}</div>
+                  <p className="text-sm text-muted-foreground mb-3">{t('routes.guarantee')}</p>
                   <Button
                     onClick={() => window.open(generateWhatsAppLink(`Hi, I want to book ${route.route} transfer`))}
                     variant="cta"
@@ -232,6 +243,79 @@ const Index = () => {
               <CardContent className="p-6">
                 <MessageCircle className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
                 <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.support')}</h3>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Special Requests & Excursions Section */}
+        <section className="space-y-8">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-tunisia-blue mb-4">
+              {t('excursions.title')}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-4xl mx-auto mb-8">
+              {t('excursions.subtitle')}
+            </p>
+            <Button
+              onClick={() => window.open('https://wa.me/447956643662?text=Hi%20I%20want%20to%20plan%20a%20tour%20in%20Tunisia')}
+              variant="cta"
+              className="min-h-[48px] mb-12"
+            >
+              {t('excursions.plan_button')}
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {excursions.map((excursion, index) => (
+              <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-tunisia-blue mb-2">{excursion.name}</h3>
+                  {excursion.duration && (
+                    <p className="text-sm text-muted-foreground mb-2">({excursion.duration})</p>
+                  )}
+                  <div className="text-xl font-bold text-tunisia-coral mb-3">{excursion.price}</div>
+                  <p className="text-xs text-muted-foreground mb-4">{t('excursions.custom_note')}</p>
+                  <Button
+                    onClick={() => window.open(generateWhatsAppLink(`Hi, I want to book ${excursion.name} excursion`))}
+                    variant="cta"
+                    className="w-full min-h-[42px]"
+                  >
+                    Book Tour
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Happy Customers Section */}
+        <section className="space-y-8">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-tunisia-blue mb-4">
+              {t('testimonials.title')}
+            </h2>
+          </div>
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${language === 'ar' ? 'md:grid-flow-col-reverse' : ''}`}>
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">👤</div>
+                <div className="text-yellow-400 text-lg mb-3">★★★★★</div>
+                <p className="text-muted-foreground italic">{t('testimonials.1')}</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">👤</div>
+                <div className="text-yellow-400 text-lg mb-3">★★★★★</div>
+                <p className="text-muted-foreground italic">{t('testimonials.2')}</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">👤</div>
+                <div className="text-yellow-400 text-lg mb-3">★★★★★</div>
+                <p className="text-muted-foreground italic">{t('testimonials.3')}</p>
               </CardContent>
             </Card>
           </div>
