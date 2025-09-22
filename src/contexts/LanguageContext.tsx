@@ -141,13 +141,85 @@ const translations = {
     'hero.book_email': 'Réserver par email',
     'hero.trust_badges': '🧾 Garantie du meilleur prix • 🚖 Taxis locaux de confiance • 📲 Assistance 24/7',
 
-    // Same structure for French translations...
+    // Booking Form
     'booking.title': 'Réservez votre transfert',
     'booking.description': 'Remplissez le formulaire ci-dessous pour obtenir votre devis',
+    'booking.name': 'Nom',
+    'booking.email': 'Email',
+    'booking.phone': 'Téléphone/WhatsApp',
+    'booking.from_airport': 'Depuis l\'aéroport',
+    'booking.destination': 'Zone de destination',
+    'booking.pickup_datetime': 'Date & heure de prise en charge',
+    'booking.flight_number': 'Numéro de vol (optionnel)',
+    'booking.one_way': 'Aller simple',
+    'booking.return': 'Retour',
+    'booking.passengers': 'Passagers',
+    'booking.bags': 'Bagages',
+    'booking.child_seats': 'Sièges enfant',
+    'booking.vehicle_type': 'Type de véhicule',
+    'booking.notes': 'Notes',
+    'booking.consent': 'J\'accepte la politique d\'annulation',
+    'booking.submit': 'Obtenez le meilleur tarif',
+    'booking.success': 'Merci d\'avoir réservé avec Get Tunisia Transfer ! Réf GT-{{ID}}. Nous confirmerons votre tarif et le lien de paiement bientôt. Annulation : gratuite ≥24h remboursement complet ; <24h acompte non remboursable ; absence = acompte perdu.',
+
+    // Driver Form
+    'driver.title': 'Devenez chauffeur',
+    'driver.name': 'Nom',
+    'driver.email': 'Email',
+    'driver.phone': 'Téléphone/WhatsApp',
+    'driver.service_zones': 'Zones de service',
+    'driver.vehicle_details': 'Détails du véhicule',
+    'driver.vehicle_photos': 'Photos du véhicule',
+    'driver.documents': 'ID / Permis / Assurance',
+    'driver.availability': 'Notes de disponibilité',
+    'driver.consent': 'J\'accepte les termes et conditions',
+    'driver.submit': 'Postuler maintenant',
+    'driver.success': 'Merci ! Nous vérifierons sous 24–48h.',
+
+    // Sections
     'how_it_works.title': 'Comment ça marche',
+    'how_it_works.step1': 'Indiquez votre trajet',
+    'how_it_works.step2': 'Payez 25 % d\'acompte',
+    'how_it_works.step3': 'Retrouvez votre chauffeur',
+
+    'guarantee.title': 'Garantie du meilleur prix',
+    'guarantee.content': 'Tarifs fixes et équitables avec des taxis locaux de confiance. Aucun frais caché. Pas de supplément de nuit. Sièges enfants gratuits. Attente gratuite à l\'aéroport. Le prix annoncé est le prix payé.',
+
+    'routes.title': 'Trajets populaires',
+    'routes.enfidha_hammamet': 'Enfidha → Hammamet',
+    'routes.tunis_hammamet': 'Tunis → Hammamet',
+    'routes.monastir_sousse': 'Monastir → Sousse',
+    'routes.djerba_midoun': 'Djerba → Midoun',
+
+    'why_choose.title': 'Pourquoi nous choisir',
+    'why_choose.ontime': 'Prise en charge ponctuelle',
+    'why_choose.vetted': 'Chauffeurs vérifiés',
+    'why_choose.family': 'Familles bienvenues',
+    'why_choose.support': 'Support WhatsApp',
+
+    // FAQs
     'faq.title': 'Questions fréquemment posées',
+    'faq.cancellation.q': 'Quelle est votre politique d\'annulation ?',
+    'faq.cancellation.a': 'Gratuite ≥24h remboursement complet ; <24h acompte non remboursable ; absence = acompte perdu.',
+    'faq.payment.q': 'Comment puis-je payer ?',
+    'faq.payment.a': '25 % acompte en ligne, solde en espèces au chauffeur.',
+    'faq.flight.q': 'Suivez-vous les vols ?',
+    'faq.flight.a': 'Oui, indiquez simplement votre numéro de vol.',
+
+    // Footer
     'footer.contact_tunisia': 'Contact Tunisie',
     'footer.contact_uk': 'Contact UK',
+    'footer.email': 'info@get-transfer-tunisia.com',
+    'footer.payment_methods': 'Méthodes de paiement',
+    'footer.revolut': 'Revolut',
+    'footer.paypal': 'PayPal',
+    'footer.cash': 'Espèces',
+    'footer.service_desc': 'Services de transfert aéroport professionnels à travers la Tunisie',
+    'footer.pricing_note': 'Tous les prix incluent les taxes et péages. Pas de frais cachés.',
+    'footer.copyright': '© 2024 Get Transfer Tunisia. Tous droits réservés.',
+
+    // Driver Recruitment
+    'driver_recruitment.title': 'Chauffeurs : obtenez plus de courses d\'aéroport. Postulez maintenant.',
   },
 
   ar: {
@@ -165,12 +237,84 @@ const translations = {
     'hero.book_email': 'احجز عبر البريد الإلكتروني',
     'hero.trust_badges': '🧾 ضمان أفضل الأسعار • 🚖 سيارات أجرة محلية موثوقة • 📲 دعم 24/7',
 
-    // Same structure for Arabic translations...
+    // Booking Form
     'booking.title': 'احجز رحلتك',
     'booking.description': 'املأ النموذج أدناه للحصول على عرض الأسعار',
+    'booking.name': 'الاسم',
+    'booking.email': 'البريد الإلكتروني',
+    'booking.phone': 'الهاتف/واتساب',
+    'booking.from_airport': 'من المطار',
+    'booking.destination': 'منطقة الوجهة',
+    'booking.pickup_datetime': 'تاريخ ووقت الاستلام',
+    'booking.flight_number': 'رقم الرحلة (اختياري)',
+    'booking.one_way': 'ذهاب فقط',
+    'booking.return': 'ذهاب وإياب',
+    'booking.passengers': 'الركاب',
+    'booking.bags': 'الحقائب',
+    'booking.child_seats': 'مقاعد الأطفال',
+    'booking.vehicle_type': 'نوع المركبة',
+    'booking.notes': 'ملاحظات',
+    'booking.consent': 'أوافق على سياسة الإلغاء',
+    'booking.submit': 'احصل على أفضل سعر',
+    'booking.success': 'شكرًا لحجزك مع Get Tunisia Transfer! رقم الحجز GT-{{ID}}. سنؤكد السعر ورابط الدفع قريبًا. الإلغاء: مجاني قبل 24 ساعة مع استرداد كامل؛ أقل من 24 ساعة المقدم غير قابل للاسترداد؛ عدم الحضور = مصادرة المقدم.',
+
+    // Driver Form
+    'driver.title': 'انضم كسائق',
+    'driver.name': 'الاسم',
+    'driver.email': 'البريد الإلكتروني',
+    'driver.phone': 'الهاتف/واتساب',
+    'driver.service_zones': 'مناطق الخدمة',
+    'driver.vehicle_details': 'تفاصيل المركبة',
+    'driver.vehicle_photos': 'صور المركبة',
+    'driver.documents': 'الهوية / رخصة القيادة / التأمين',
+    'driver.availability': 'ملاحظات التوفر',
+    'driver.consent': 'أوافق على الشروط والأحكام',
+    'driver.submit': 'قدّم الآن',
+    'driver.success': 'شكرًا! سنقوم بالمراجعة خلال 24–48 ساعة.',
+
+    // Sections
     'how_it_works.title': 'كيف يعمل',
+    'how_it_works.step1': 'أدخل تفاصيل رحلتك',
+    'how_it_works.step2': 'ادفع 25٪ مقدمًا',
+    'how_it_works.step3': 'قابل سائقك',
+
+    'guarantee.title': 'ضمان أفضل الأسعار',
+    'guarantee.content': 'أسعار ثابتة وعادلة مع سائقي سيارات أجرة محليين موثوقين. لا رسوم خفية. لا رسوم ليلية. مقاعد الأطفال مجانًا. الانتظار في المطار مجانًا. السعر المقدم هو السعر الذي تدفعه.',
+
+    'routes.title': 'الطرق الشائعة',
+    'routes.enfidha_hammamet': 'إنفيذا → الحمامات',
+    'routes.tunis_hammamet': 'تونس → الحمامات',
+    'routes.monastir_sousse': 'المنستير → سوسة',
+    'routes.djerba_midoun': 'جربة → ميدون',
+
+    'why_choose.title': 'لماذا تختارنا',
+    'why_choose.ontime': 'التوصيل في الوقت المحدد',
+    'why_choose.vetted': 'سائقون معتمدون',
+    'why_choose.family': 'مناسب للعائلات',
+    'why_choose.support': 'دعم عبر واتساب',
+
+    // FAQs
     'faq.title': 'الأسئلة المتكررة',
+    'faq.cancellation.q': 'ما هي سياسة الإلغاء؟',
+    'faq.cancellation.a': 'مجاني قبل 24 ساعة مع استرداد كامل؛ أقل من 24 ساعة المقدم غير قابل للاسترداد؛ عدم الحضور = مصادرة المقدم.',
+    'faq.payment.q': 'كيف أدفع؟',
+    'faq.payment.a': '25٪ عبر الإنترنت، والباقي نقدًا للسائق.',
+    'faq.flight.q': 'هل تتتبعون الرحلات؟',
+    'faq.flight.a': 'نعم، أضف رقم رحلتك.',
+
+    // Footer
     'footer.contact_tunisia': 'التواصل تونس',
     'footer.contact_uk': 'التواصل المملكة المتحدة',
+    'footer.email': 'info@get-transfer-tunisia.com',
+    'footer.payment_methods': 'طرق الدفع',
+    'footer.revolut': 'Revolut',
+    'footer.paypal': 'PayPal',
+    'footer.cash': 'النقد',
+    'footer.service_desc': 'خدمات نقل المطار المهنية عبر تونس',
+    'footer.pricing_note': 'جميع الأسعار تشمل الضرائب والرسوم. لا رسوم خفية.',
+    'footer.copyright': '© 2024 Get Transfer Tunisia. جميع الحقوق محفوظة.',
+
+    // Driver Recruitment
+    'driver_recruitment.title': 'السائقون: احصلوا على المزيد من رحلات المطار. قدّم الآن.',
   }
 };
