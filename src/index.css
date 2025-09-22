@@ -21,9 +21,13 @@ All colors MUST be HSL.
     --popover: 25 15% 96%;
     --popover-foreground: 208 88% 20%;
 
-    /* Deep Ocean Blue - Darker */
-    --primary: 199 95% 28%;
+    /* Bright Primary Colors */
+    --primary: 14 100% 60%;  /* #FF6A3D */
     --primary-foreground: 0 0% 100%;
+    
+    /* Alternative Primary */
+    --primary-alt: 180 100% 33%;  /* #0EA5A5 */
+    --primary-alt-foreground: 0 0% 100%;
 
     /* Darker Sand */
     --secondary: 35 60% 75%;

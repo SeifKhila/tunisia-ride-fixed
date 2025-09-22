@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Header from "@/components/Header";
 import BookingForm from "@/components/BookingForm";
 import DriverForm from "@/components/DriverForm";
-import CurrencyWidget from "@/components/CurrencyWidget";
+import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
 import FAQ from "@/components/FAQ";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Phone, Mail, MessageCircle, MapPin, Users, Shield, Clock } from "lucide-react";
@@ -74,7 +74,8 @@ const Index = () => {
           <div className={`flex flex-col md:flex-row gap-6 mb-8 justify-center items-center ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
             <Button 
               onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-              className="min-w-[200px] min-h-[56px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white text-lg font-semibold shadow-glow transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-tunisia-coral/50"
+              variant="cta"
+              className="min-w-[200px] min-h-[56px] text-lg"
               aria-label="Get the best quote for your transfer"
             >
               {t('hero.get_quote')}
@@ -82,8 +83,8 @@ const Index = () => {
             
             <Button 
               onClick={() => document.getElementById('drivers')?.scrollIntoView({ behavior: 'smooth' })}
-              variant="outline"
-              className="min-w-[200px] min-h-[56px] border-white text-white hover:bg-white hover:text-tunisia-blue text-lg font-semibold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50"
+              variant="alt"
+              className="min-w-[200px] min-h-[56px] text-lg"
               aria-label="Apply to become a driver"
             >
               {t('hero.become_driver')}
@@ -94,8 +95,8 @@ const Index = () => {
           <div className={`flex flex-col md:flex-row gap-4 mb-12 justify-center items-center ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
             <Button 
               onClick={() => window.open(generateWhatsAppLink('Hi I want to book a Tunisia airport transfer from [Airport] to [Destination] on [Date] for [Passengers]'))}
-              variant="outline"
-              className="min-w-[180px] min-h-[48px] border-white/60 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50"
+              variant="cta"
+              className="min-w-[180px] min-h-[48px] bg-white/10 backdrop-blur-sm border-white/20"
               aria-label="Book via WhatsApp"
             >
               <MessageCircle className={`${language === 'ar' ? 'ml-2' : 'mr-2'} h-5 w-5`} />
@@ -104,8 +105,8 @@ const Index = () => {
             
             <Button 
               onClick={() => window.open(generateEmailLink('Tunisia Airport Transfer Booking', 'Hello, I\'d like to book a transfer from [Airport] to [Destination] on [Date] for [Passengers].'))}
-              variant="outline"
-              className="min-w-[180px] min-h-[48px] border-white/60 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50"
+              variant="cta"
+              className="min-w-[180px] min-h-[48px] bg-white/10 backdrop-blur-sm border-white/20"
               aria-label="Book via Email"
             >
               <Mail className={`${language === 'ar' ? 'ml-2' : 'mr-2'} h-5 w-5`} />
@@ -190,7 +191,8 @@ const Index = () => {
                   <div className="text-2xl font-bold text-tunisia-blue mb-3">{route.price}</div>
                   <Button
                     onClick={() => window.open(generateWhatsAppLink(`Hi, I want to book ${route.route} transfer`))}
-                    className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 min-h-[48px]"
+                    variant="cta"
+                    className="w-full min-h-[48px]"
                   >
                     Book Now
                   </Button>
@@ -237,7 +239,7 @@ const Index = () => {
 
         {/* Live Currency Exchange */}
         <section className="space-y-8">
-          <CurrencyWidget />
+          <InteractiveCurrencyConverter />
         </section>
 
         {/* FAQ Section */}
@@ -254,8 +256,8 @@ const Index = () => {
               </h2>
               <Button
                 onClick={() => document.getElementById('drivers')?.scrollIntoView({ behavior: 'smooth' })}
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-tunisia-blue font-semibold min-h-[48px]"
+                variant="cta"
+                className="bg-white/10 backdrop-blur-sm border-white/20 min-h-[48px]"
               >
                 Apply Now
               </Button>
@@ -270,71 +272,45 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className={`bg-tunisia-blue text-white py-16 ${language === 'ar' ? 'font-arabic' : ''}`}>
+      <footer className={`bg-tunisia-blue text-white py-8 ${language === 'ar' ? 'font-arabic' : ''}`}>
         <div className="container mx-auto px-4">
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-12 ${language === 'ar' ? 'text-right' : ''}`}>
-            {/* Contact Tunisia */}
-            <div>
-              <h3 className="text-xl font-semibold mb-6 text-tunisia-gold">{t('footer.contact_tunisia')}</h3>
-              <div className="space-y-4">
-                <div className={`flex items-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <Phone className="h-5 w-5 text-tunisia-coral" />
-                  <a 
-                    href="https://wa.me/21698123456"
-                    className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
-                    aria-label="Contact via WhatsApp Tunisia"
-                  >
-                    +216 98 123 456
-                  </a>
-                </div>
-              </div>
-            </div>
-            
+          <div className={`text-center ${language === 'ar' ? 'text-right' : ''}`}>
             {/* Contact UK */}
-            <div>
-              <h3 className="text-xl font-semibold mb-6 text-tunisia-gold">{t('footer.contact_uk')}</h3>
-              <div className="space-y-4">
-                <div className={`flex items-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <Phone className="h-5 w-5 text-tunisia-coral" />
-                  <a 
-                    href="https://wa.me/447956643662"
-                    className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
-                    aria-label="Contact via WhatsApp UK"
-                  >
-                    +44 795 664 3662
-                  </a>
-                </div>
+            <div className="space-y-4 mb-6">
+              <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <Phone className="h-5 w-5 text-tunisia-coral" />
+                <a 
+                  href="tel:+447956643662"
+                  className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded text-lg"
+                  aria-label="Call UK office"
+                >
+                  +44 7956 643 662
+                </a>
               </div>
-            </div>
-            
-            {/* Email & Payment */}
-            <div>
-              <h3 className="text-xl font-semibold mb-6 text-tunisia-gold">Email</h3>
-              <div className="space-y-4 mb-6">
-                <div className={`flex items-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <Mail className="h-5 w-5 text-tunisia-coral" />
-                  <a 
-                    href="mailto:info@get-transfer-tunisia.com"
-                    className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
-                    aria-label="Send email"
-                  >
-                    {t('footer.email')}
-                  </a>
-                </div>
+              <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <MessageCircle className="h-5 w-5 text-tunisia-coral" />
+                <a 
+                  href="https://wa.me/447956643662?text=Hi%20I%20want%20to%20book%20a%20Tunisia%20airport%20transfer"
+                  className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
+                  aria-label="Contact via WhatsApp"
+                >
+                  WhatsApp
+                </a>
               </div>
-              
-              <h4 className="font-semibold mb-3 text-tunisia-sand">{t('footer.payment_methods')}</h4>
-              <div className={`flex flex-wrap gap-2 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                <span className="bg-tunisia-coral/20 px-3 py-1 rounded-full text-sm">{t('footer.revolut')}</span>
-                <span className="bg-tunisia-coral/20 px-3 py-1 rounded-full text-sm">{t('footer.paypal')}</span>
-                <span className="bg-tunisia-coral/20 px-3 py-1 rounded-full text-sm">{t('footer.cash')}</span>
+              <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <Mail className="h-5 w-5 text-tunisia-coral" />
+                <a 
+                  href="mailto:info@get-transfer-tunisia.com"
+                  className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
+                  aria-label="Send email"
+                >
+                  info@get-transfer-tunisia.com
+                </a>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-tunisia-sand/20 mt-12 pt-8 text-center space-y-4">
-            <p className="text-tunisia-sand">{t('footer.service_desc')}</p>
-            <p className="text-tunisia-sand/80 text-sm">{t('footer.pricing_note')}</p>
+          <div className="border-t border-tunisia-sand/20 mt-6 pt-6 text-center">
             <p className="text-tunisia-sand/60 text-sm">
               {t('footer.copyright')}
             </p>
@@ -346,7 +322,8 @@ const Index = () => {
       <div className="fixed bottom-6 right-6 z-40 md:hidden">
         <Button
           onClick={() => window.open('https://wa.me/447956643662')}
-          className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white rounded-full p-4 shadow-glow animate-pulse focus:outline-none focus:ring-4 focus:ring-tunisia-coral/50"
+          variant="cta"
+          className="rounded-full p-4 shadow-glow animate-pulse"
           aria-label="Quick WhatsApp contact"
         >
           <MessageCircle className="h-6 w-6" />
