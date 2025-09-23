@@ -140,7 +140,7 @@ const translations = {
     // Footer
     'footer.contact_tunisia': 'Tunisia Contact',
     'footer.contact_uk': 'UK Contact',
-    'footer.email': 'info@get-transfer-tunisia.com',
+    'footer.email': 'info@get-tunisia-transfer.com',
     'footer.payment_methods': 'Payment Methods',
     'footer.revolut': 'Revolut',
     'footer.paypal': 'PayPal',
@@ -259,7 +259,7 @@ const translations = {
     // Footer
     'footer.contact_tunisia': 'Contact Tunisie',
     'footer.contact_uk': 'Contact UK',
-    'footer.email': 'info@get-transfer-tunisia.com',
+    'footer.email': 'info@get-tunisia-transfer.com',
     'footer.payment_methods': 'Méthodes de paiement',
     'footer.revolut': 'Revolut',
     'footer.paypal': 'PayPal',
@@ -380,7 +380,7 @@ const translations = {
     // Footer
     'footer.contact_tunisia': 'التواصل تونس',
     'footer.contact_uk': 'التواصل المملكة المتحدة',
-    'footer.email': 'info@get-transfer-tunisia.com',
+    'footer.email': 'info@get-tunisia-transfer.com',
     'footer.payment_methods': 'طرق الدفع',
     'footer.revolut': 'Revolut',
     'footer.paypal': 'PayPal',

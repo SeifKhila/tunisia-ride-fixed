@@ -20,7 +20,7 @@ const Index = () => {
   const generateEmailLink = (subject: string, body: string) => {
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
-    return `mailto:info@get-transfer-tunisia.com?subject=${encodedSubject}&body=${encodedBody}`;
+    return `mailto:info@get-tunisia-transfer.com?subject=${encodedSubject}&body=${encodedBody}`;
   };
 
   const topRoutes = [
@@ -383,11 +383,11 @@ const Index = () => {
               <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
                 <Mail className="h-5 w-5 text-tunisia-coral" />
                 <a 
-                  href="mailto:info@get-transfer-tunisia.com"
+                  href="mailto:info@get-tunisia-transfer.com"
                   className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
                   aria-label="Send email"
                 >
-                  info@get-transfer-tunisia.com
+                  info@get-tunisia-transfer.com
                 </a>
               </div>
             </div>
