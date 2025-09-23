@@ -36,8 +36,7 @@ const Index = () => {
     { name: 'Yasmine Hammamet → El Jem Amphitheatre', duration: 'full-day', price: '500 TND' },
     { name: 'Sousse → Kairouan Historical Tour', duration: '', price: '350 TND' },
     { name: 'Monastir → Sousse + Monastir City Tour', duration: '', price: '140 TND' },
-    { name: 'El Jem → City & Amphitheatre Tour', duration: 'half-day', price: '100 TND' },
-    { name: 'Sousse/Hammamet/Monastir → Sahara Desert', duration: '2 days, 1 night', price: 'from 900 TND (car) or 1200 TND (minivan)' }
+    { name: 'El Jem → City & Amphitheatre Tour', duration: 'half-day', price: '100 TND' }
   ];
 
   return (

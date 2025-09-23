@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { ArrowLeftRight, MapPin, Calculator, MessageCircle, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -40,14 +41,14 @@ const routePrices: RoutePrice[] = [
   // From Enfidha Airport
   { from: 'enfidha-airport', to: 'hammamet', price: 120 },
   { from: 'enfidha-airport', to: 'yasmine-hammamet', price: 110 },
-  { from: 'enfidha-airport', to: 'sousse', price: 130 },
+  { from: 'enfidha-airport', to: 'sousse', price: 120 },
   { from: 'enfidha-airport', to: 'monastir', price: 150 },
   { from: 'enfidha-airport', to: 'mahdia', price: 180 },
   
   // From Tunis Airport
   { from: 'tunis-airport', to: 'hammamet', price: 130 },
   { from: 'tunis-airport', to: 'yasmine-hammamet', price: 140 },
-  { from: 'tunis-airport', to: 'sousse', price: 160 },
+  { from: 'tunis-airport', to: 'sousse', price: 140 },
   { from: 'tunis-airport', to: 'monastir', price: 180 },
   { from: 'tunis-airport', to: 'mahdia', price: 200 },
   
@@ -60,13 +61,13 @@ const routePrices: RoutePrice[] = [
   
   { from: 'hammamet', to: 'enfidha-airport', price: 120 },
   { from: 'yasmine-hammamet', to: 'enfidha-airport', price: 110 },
-  { from: 'sousse', to: 'enfidha-airport', price: 130 },
+  { from: 'sousse', to: 'enfidha-airport', price: 120 },
   { from: 'monastir', to: 'enfidha-airport', price: 150 },
   { from: 'mahdia', to: 'enfidha-airport', price: 180 },
   
   { from: 'hammamet', to: 'tunis-airport', price: 130 },
   { from: 'yasmine-hammamet', to: 'tunis-airport', price: 140 },
-  { from: 'sousse', to: 'tunis-airport', price: 160 },
+  { from: 'sousse', to: 'tunis-airport', price: 140 },
   { from: 'monastir', to: 'tunis-airport', price: 180 },
   { from: 'mahdia', to: 'tunis-airport', price: 200 },
 ];
@@ -75,6 +76,7 @@ export default function BookingCalculator() {
   const { t } = useLanguage();
   const [pickup, setPickup] = useState<string>('');
   const [dropoff, setDropoff] = useState<string>('');
+  const [customDestination, setCustomDestination] = useState<string>('');
   const [isReturn, setIsReturn] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [showContactOptions, setShowContactOptions] = useState(false);
@@ -109,10 +111,14 @@ export default function BookingCalculator() {
     const pickupLoc = locations.find(l => l.id === pickup);
     const dropoffLoc = locations.find(l => l.id === dropoff);
     const fromName = pickupLoc?.name || pickup;
-    const toName = dropoffLoc?.name || dropoff;
+    const toName = dropoff === 'custom' ? customDestination : (dropoffLoc?.name || dropoff);
     const currentPricing = calculatePrice();
     const price = tripType === 'oneway' ? currentPricing.oneWay : Math.round(currentPricing.return);
     const discount = tripType === 'return' ? ' (10% discount applied)' : '';
+    
+    if (dropoff === 'custom') {
+      return `Hi! I want to book a ${tripType === 'oneway' ? 'one-way' : 'return'} transfer from ${fromName} to ${toName}. Please provide a quote.`;
+    }
     
     return `Hi! I want to book a ${tripType === 'oneway' ? 'one-way' : 'return'} transfer from ${fromName} to ${toName}. Price: ${price} TND${discount}. Please confirm availability.`;
   };
@@ -120,7 +126,7 @@ export default function BookingCalculator() {
   const generateEmailLink = (tripType: 'oneway' | 'return') => {
     const subject = encodeURIComponent(`Tunisia Transfer Booking - ${tripType === 'oneway' ? 'One Way' : 'Return'}`);
     const body = encodeURIComponent(generateBookingMessage(tripType));
-    return `mailto:khilas592@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:info@get-tunisia-transfer.com?subject=${subject}&body=${body}`;
   };
 
   const handleSwapLocations = () => {
@@ -130,7 +136,7 @@ export default function BookingCalculator() {
   };
 
   const handleCalculate = () => {
-    if (pickup && dropoff) {
+    if (pickup && (dropoff && dropoff !== 'custom' || dropoff === 'custom' && customDestination)) {
       setShowResult(true);
     }
   };
@@ -208,57 +214,97 @@ export default function BookingCalculator() {
                           </span>
                         </SelectItem>
                       ))}
+                      <SelectItem value="custom" className="hover:bg-tunisia-blue/10 focus:bg-tunisia-blue/10">
+                        <span className="flex items-center gap-2">
+                          🏨 Custom Destination
+                        </span>
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
+                </div>
+
+                {/* Custom Destination Input */}
+                {dropoff === 'custom' && (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-tunisia-coral" />
+                      Specify Your Destination
+                    </label>
+                    <Input
+                      type="text"
+                      placeholder="e.g., Hotel Name, Specific Address in Hammamet/Sousse..."
+                      value={customDestination}
+                      onChange={(e) => setCustomDestination(e.target.value)}
+                      className="border-tunisia-gold/20 focus:ring-2 focus:ring-tunisia-blue/50 min-h-[48px]"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      For custom destinations, we'll provide a quote via WhatsApp
+                    </p>
+                  </div>
+                )}
 
               {/* Calculate Button */}
               <Button 
                 onClick={handleCalculate}
-                disabled={!pickup || !dropoff}
+                disabled={!pickup || (!dropoff || (dropoff === 'custom' && !customDestination))}
                 className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90 text-white focus:outline-none focus:ring-4 focus:ring-tunisia-blue/50 focus:ring-offset-2 min-h-[48px]"
                 aria-label="Calculate transfer price between selected locations"
               >
-                Calculate Price
+                {dropoff === 'custom' ? 'Get Custom Quote' : 'Calculate Price'}
               </Button>
 
               {/* Results */}
-              {showResult && pricing.oneWay > 0 && (
+              {showResult && (dropoff === 'custom' || pricing.oneWay > 0) && (
                 <div className="space-y-4 p-4 bg-muted/50 rounded-lg border border-tunisia-gold/20">
-                  <div className="text-center">
-                    <h3 className="font-semibold text-foreground mb-2">Transfer Pricing</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {pickupLocation?.name} → {dropoffLocation?.name}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-background/50 rounded border">
-                      <span className="text-foreground">One Way</span>
-                      <span className="font-bold text-tunisia-blue text-lg">{pricing.oneWay} TND</span>
+                  {dropoff === 'custom' ? (
+                    <div className="text-center">
+                      <h3 className="font-semibold text-foreground mb-2">Custom Quote Request</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {pickupLocation?.name} → {customDestination}
+                      </p>
+                      <p className="text-tunisia-blue font-medium mt-2">
+                        We'll provide a custom quote via WhatsApp
+                      </p>
                     </div>
-
-                    <div className="flex justify-between items-center p-3 bg-background/50 rounded border border-tunisia-gold/30">
-                      <div className="flex items-center gap-2">
-                        <span className="text-foreground">Return Trip</span>
-                        <Badge variant="secondary" className="bg-tunisia-coral/20 text-tunisia-coral text-xs">
-                          10% OFF
-                        </Badge>
+                  ) : (
+                    <>
+                      <div className="text-center">
+                        <h3 className="font-semibold text-foreground mb-2">Transfer Pricing</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {pickupLocation?.name} → {dropoffLocation?.name}
+                        </p>
                       </div>
-                      <div className="text-right">
-                        <div className="font-bold text-tunisia-blue text-lg">{Math.round(pricing.return)} TND</div>
-                        <div className="text-xs text-muted-foreground line-through">
-                          {pricing.oneWay * 2} TND
+
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center p-3 bg-background/50 rounded border">
+                          <span className="text-foreground">One Way</span>
+                          <span className="font-bold text-tunisia-blue text-lg">{pricing.oneWay} TND</span>
+                        </div>
+
+                        <div className="flex justify-between items-center p-3 bg-background/50 rounded border border-tunisia-gold/30">
+                          <div className="flex items-center gap-2">
+                            <span className="text-foreground">Return Trip</span>
+                            <Badge variant="secondary" className="bg-tunisia-coral/20 text-tunisia-coral text-xs">
+                              10% OFF
+                            </Badge>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-bold text-tunisia-blue text-lg">{Math.round(pricing.return)} TND</div>
+                            <div className="text-xs text-muted-foreground line-through">
+                              {pricing.oneWay * 2} TND
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="text-center p-2 bg-tunisia-gold/10 rounded border border-tunisia-gold/30">
+                          <p className="text-sm text-tunisia-coral font-medium">
+                            💰 Save {Math.round(pricing.savings)} TND with return booking!
+                          </p>
                         </div>
                       </div>
-                    </div>
-
-                  <div className="text-center p-2 bg-tunisia-gold/10 rounded border border-tunisia-gold/30">
-                    <p className="text-sm text-tunisia-coral font-medium">
-                      💰 Save {Math.round(pricing.savings)} TND with return booking!
-                    </p>
-                  </div>
+                    </>
+                  )}
 
                   {/* Payment Info */}
                   <div className="p-3 bg-tunisia-blue/10 rounded border border-tunisia-blue/20">
@@ -268,7 +314,6 @@ export default function BookingCalculator() {
                     <p className="text-xs text-muted-foreground">
                       Pay 30% deposit via Revolut or PayPal after confirmation. Balance to driver on pickup.
                     </p>
-                  </div>
                   </div>
 
                   {/* Contact Options Modal */}
