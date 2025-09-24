@@ -19,17 +19,17 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
   onPaymentInitiated 
 }) => {
   const { t, language } = useLanguage();
-  const { currency: globalCurrency, convertPrice } = useCurrency();
+  const { currency: globalCurrency, convertFromEUR } = useCurrency();
   const { bookingReference, copyToClipboard } = useBookingReference();
   const [currency, setCurrency] = useState<'EUR' | 'GBP'>('EUR');
   const [amount, setAmount] = useState(defaultAmount);
 
   // Update amount when global currency changes
   useEffect(() => {
-    const convertedAmount = convertPrice(defaultAmount, 'EUR', globalCurrency === 'TND' ? 'EUR' : globalCurrency);
+    const convertedAmount = convertFromEUR(defaultAmount, globalCurrency === 'TND' ? 'EUR' : globalCurrency);
     setAmount(convertedAmount);
     setCurrency(globalCurrency === 'TND' ? 'EUR' : globalCurrency);
-  }, [globalCurrency, defaultAmount, convertPrice]);
+  }, [globalCurrency, defaultAmount, convertFromEUR]);
 
   const copyReference = async () => {
     const success = await copyToClipboard();

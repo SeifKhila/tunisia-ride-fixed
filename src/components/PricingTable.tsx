@@ -7,12 +7,13 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 
 const PricingTable = () => {
   const { t, language } = useLanguage();
-  const { formatPrice, convertPrice } = useCurrency();
+  const { formatPrice } = useCurrency();
 
+  // All base prices are in EUR
   const routes = [
-    { from: 'Enfidha', to: 'Hammamet', basePrice: 35, baseCurrency: 'EUR' as const },
-    { from: 'Enfidha', to: 'Sousse', basePrice: 40, baseCurrency: 'EUR' as const },
-    { from: 'Tunis', to: 'Hammamet', basePrice: 45, baseCurrency: 'EUR' as const }
+    { from: 'Enfidha', to: 'Hammamet', basePriceEUR: 35 },
+    { from: 'Enfidha', to: 'Sousse', basePriceEUR: 40 },
+    { from: 'Tunis', to: 'Hammamet', basePriceEUR: 45 }
   ];
 
   const generateWhatsAppLink = (route: string) => {
@@ -31,29 +32,26 @@ const PricingTable = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {routes.map((route, index) => {
-          const convertedPrice = convertPrice(route.basePrice, route.baseCurrency, 'EUR');
-          return (
-            <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <MapPin className="h-4 w-4 text-tunisia-coral" />
-                  <span className="font-semibold">{route.from} ⇄ {route.to}</span>
-                </div>
-                <div className="text-3xl font-bold text-tunisia-blue mb-4">
-                  {formatPrice(convertedPrice)}
-                </div>
-                <Button
-                  onClick={() => window.open(generateWhatsAppLink(`${route.from} ⇄ ${route.to}`))}
-                  variant="default"
-                  className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
-                >
-                  Book Now
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {routes.map((route, index) => (
+          <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+            <CardContent className="p-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <MapPin className="h-4 w-4 text-tunisia-coral" />
+                <span className="font-semibold">{route.from} ⇄ {route.to}</span>
+              </div>
+              <div className="text-3xl font-bold text-tunisia-blue mb-4">
+                {formatPrice(route.basePriceEUR)}
+              </div>
+              <Button
+                onClick={() => window.open(generateWhatsAppLink(`${route.from} ⇄ ${route.to}`))}
+                variant="default"
+                className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+              >
+                Book Now
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </section>
   );

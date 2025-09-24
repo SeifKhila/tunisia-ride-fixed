@@ -18,7 +18,7 @@ import { Helmet } from "react-helmet";
 
 const Index = () => {
   const { t, language } = useLanguage();
-  const { formatPrice, convertPrice } = useCurrency();
+  const { formatPrice, convertFromEUR } = useCurrency();
 
   // SEO Meta Tags based on language
   const getMetaTags = () => {
@@ -239,7 +239,7 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {topRoutes.map((route, index) => {
-              const convertedPrice = convertPrice(route.basePrice, route.baseCurrency, 'EUR'); // Convert to current currency context
+              const convertedPrice = convertFromEUR(route.basePrice, 'EUR'); // Already in EUR, no conversion needed
               return (
                 <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
                   <CardContent className="p-6 text-center">
@@ -248,7 +248,7 @@ const Index = () => {
                       <span className="font-semibold">{route.route}</span>
                     </div>
                     <div className="text-2xl font-bold text-tunisia-blue mb-3">
-                      {formatPrice(convertedPrice)}
+                      {formatPrice(route.basePrice)}
                     </div>
                     <p className="text-sm text-muted-foreground mb-3">{t('routes.guarantee')}</p>
                     <Button
