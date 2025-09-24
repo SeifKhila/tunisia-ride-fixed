@@ -76,65 +76,80 @@ const handler = async (req: Request): Promise<Response> => {
     // Send notification emails to administrators
     const adminEmails = ["info@get-tunisia-transfer.com", "khilas592@gmail.com"];
     
+    console.log(`Attempting to send admin notifications to: ${adminEmails.join(', ')}`);
+    
     for (const adminEmail of adminEmails) {
-      await resend.emails.send({
+      try {
+        const adminResult = await resend.emails.send({
+          from: "Tunisia Transfer <onboarding@resend.dev>",
+          to: [adminEmail],
+          subject: `New Booking Request - ${bookingId}`,
+          html: `
+            <h2>New Booking Request Received</h2>
+            <p><strong>Booking ID:</strong> ${bookingId}</p>
+            <p><strong>Customer:</strong> ${bookingData.name}</p>
+            <p><strong>Email:</strong> ${bookingData.email}</p>
+            <p><strong>Phone:</strong> ${bookingData.phone}</p>
+            
+            <h3>Trip Details</h3>
+            <p><strong>From:</strong> ${bookingData.fromAirport} Airport</p>
+            <p><strong>To:</strong> ${bookingData.destination === 'Other' ? bookingData.customDestination : bookingData.destination}</p>
+            <p><strong>Date:</strong> ${bookingData.pickupDate}</p>
+            <p><strong>Time:</strong> ${bookingData.pickupTime}</p>
+            <p><strong>Flight:</strong> ${bookingData.flightNumber || 'Not provided'}</p>
+            <p><strong>Trip Type:</strong> ${bookingData.tripType}</p>
+            ${bookingData.returnDate ? `<p><strong>Return Date:</strong> ${bookingData.returnDate}</p>` : ''}
+            
+            <h3>Additional Info</h3>
+            <p><strong>Passengers:</strong> ${bookingData.passengers}</p>
+            <p><strong>Luggage:</strong> ${bookingData.bags}</p>
+            <p><strong>Child Seats:</strong> ${bookingData.childSeats}</p>
+            <p><strong>Vehicle Type:</strong> ${bookingData.vehicleType}</p>
+            ${bookingData.notes ? `<p><strong>Notes:</strong> ${bookingData.notes}</p>` : ''}
+            
+            <p><em>Please respond to the customer as soon as possible.</em></p>
+          `,
+        });
+        console.log(`Admin email sent successfully to ${adminEmail}:`, adminResult);
+      } catch (emailError) {
+        console.error(`Failed to send admin email to ${adminEmail}:`, emailError);
+        throw emailError;
+      }
+    }
+
+    // Send autoresponder to customer
+    console.log(`Sending autoresponder to customer: ${bookingData.email}`);
+    try {
+      const customerResult = await resend.emails.send({
         from: "Tunisia Transfer <onboarding@resend.dev>",
-        to: [adminEmail],
-        subject: `New Booking Request - ${bookingId}`,
+        to: [bookingData.email],
+        subject: "Booking Request Received - Tunisia Transfer",
         html: `
-          <h2>New Booking Request Received</h2>
-          <p><strong>Booking ID:</strong> ${bookingId}</p>
-          <p><strong>Customer:</strong> ${bookingData.name}</p>
-          <p><strong>Email:</strong> ${bookingData.email}</p>
-          <p><strong>Phone:</strong> ${bookingData.phone}</p>
+          <h2>Thank you for your booking request!</h2>
+          <p>Dear ${bookingData.name},</p>
           
-          <h3>Trip Details</h3>
+          <p>We have successfully received your transfer booking request with ID: <strong>${bookingId}</strong></p>
+          
+          <p>Our team will review your request and get back to you shortly with a quote and confirmation details.</p>
+          
+          <h3>Your Booking Details</h3>
           <p><strong>From:</strong> ${bookingData.fromAirport} Airport</p>
           <p><strong>To:</strong> ${bookingData.destination === 'Other' ? bookingData.customDestination : bookingData.destination}</p>
           <p><strong>Date:</strong> ${bookingData.pickupDate}</p>
           <p><strong>Time:</strong> ${bookingData.pickupTime}</p>
-          <p><strong>Flight:</strong> ${bookingData.flightNumber || 'Not provided'}</p>
-          <p><strong>Trip Type:</strong> ${bookingData.tripType}</p>
-          ${bookingData.returnDate ? `<p><strong>Return Date:</strong> ${bookingData.returnDate}</p>` : ''}
-          
-          <h3>Additional Info</h3>
           <p><strong>Passengers:</strong> ${bookingData.passengers}</p>
-          <p><strong>Luggage:</strong> ${bookingData.bags}</p>
-          <p><strong>Child Seats:</strong> ${bookingData.childSeats}</p>
-          <p><strong>Vehicle Type:</strong> ${bookingData.vehicleType}</p>
-          ${bookingData.notes ? `<p><strong>Notes:</strong> ${bookingData.notes}</p>` : ''}
           
-          <p><em>Please respond to the customer as soon as possible.</em></p>
+          <p>If you have any urgent questions, please contact us at info@get-tunisia-transfer.com or call us.</p>
+          
+          <p>Best regards,<br>
+          Tunisia Transfer Team</p>
         `,
       });
+      console.log(`Customer autoresponder sent successfully:`, customerResult);
+    } catch (emailError) {
+      console.error(`Failed to send customer autoresponder:`, emailError);
+      // Don't throw here as admin notifications are more critical
     }
-
-    // Send autoresponder to customer
-    await resend.emails.send({
-      from: "Tunisia Transfer <onboarding@resend.dev>",
-      to: [bookingData.email],
-      subject: "Booking Request Received - Tunisia Transfer",
-      html: `
-        <h2>Thank you for your booking request!</h2>
-        <p>Dear ${bookingData.name},</p>
-        
-        <p>We have successfully received your transfer booking request with ID: <strong>${bookingId}</strong></p>
-        
-        <p>Our team will review your request and get back to you shortly with a quote and confirmation details.</p>
-        
-        <h3>Your Booking Details</h3>
-        <p><strong>From:</strong> ${bookingData.fromAirport} Airport</p>
-        <p><strong>To:</strong> ${bookingData.destination === 'Other' ? bookingData.customDestination : bookingData.destination}</p>
-        <p><strong>Date:</strong> ${bookingData.pickupDate}</p>
-        <p><strong>Time:</strong> ${bookingData.pickupTime}</p>
-        <p><strong>Passengers:</strong> ${bookingData.passengers}</p>
-        
-        <p>If you have any urgent questions, please contact us at info@get-tunisia-transfer.com or call us.</p>
-        
-        <p>Best regards,<br>
-        Tunisia Transfer Team</p>
-      `,
-    });
 
     console.log("Booking processed successfully");
 
