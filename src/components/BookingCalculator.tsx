@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ArrowLeftRight, MapPin, Calculator, MessageCircle, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import PaymentDeposit from "@/components/PaymentDeposit";
+import { toast } from "sonner";
 
 interface Location {
   id: string;
@@ -306,14 +308,14 @@ export default function BookingCalculator() {
                     </>
                   )}
 
-                  {/* Payment Info */}
-                  <div className="p-3 bg-tunisia-blue/10 rounded border border-tunisia-blue/20">
-                    <h4 className="text-sm font-semibold text-tunisia-blue mb-2 flex items-center gap-2">
-                      💳 Payment Information
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      Pay 30% deposit via Revolut or PayPal after confirmation. Balance to driver on pickup.
-                    </p>
+                  {/* Payment Deposit Section */}
+                  <div className="mt-6">
+                    <PaymentDeposit 
+                      defaultAmount={Math.round((dropoff === 'custom' ? 50 : pricing.oneWay) * 0.25)}
+                      onPaymentInitiated={(method, amount, currency) => {
+                        toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);
+                      }}
+                    />
                   </div>
 
                   {/* Contact Options Modal */}

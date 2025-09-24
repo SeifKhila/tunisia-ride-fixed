@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
+import PaymentDeposit from "@/components/PaymentDeposit";
 
 
 const airports = [
@@ -104,18 +105,27 @@ const BookingForm = () => {
 
   if (isSubmitted) {
     return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardContent className="p-8 text-center">
-          <div className="text-6xl mb-4">✅</div>
-          <h3 className="text-2xl font-bold text-tunisia-blue mb-4">Booking Submitted!</h3>
-          <p className="text-muted-foreground">
-            Thanks for booking with Get Tunisia Transfer. We've received your request and will confirm your price and deposit link shortly.
-          </p>
-          <p className="text-sm text-muted-foreground mt-2">
-            Booking ID: {submissionResult?.bookingId || 'GT-XXXXXXX'}
-          </p>
-        </CardContent>
-      </Card>
+      <div className="w-full max-w-2xl mx-auto space-y-6">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <div className="text-6xl mb-4">✅</div>
+            <h3 className="text-2xl font-bold text-tunisia-blue mb-4">Booking Submitted!</h3>
+            <p className="text-muted-foreground mb-4">
+              Thanks for booking with Get Tunisia Transfer. We've received your request.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Booking ID: {submissionResult?.bookingId || 'GT-XXXXXXX'}
+            </p>
+          </CardContent>
+        </Card>
+        
+        <PaymentDeposit 
+          bookingReference={submissionResult?.bookingId}
+          onPaymentInitiated={(method, amount, currency) => {
+            toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);
+          }}
+        />
+      </div>
     );
   }
 
