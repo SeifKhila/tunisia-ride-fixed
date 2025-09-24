@@ -373,6 +373,30 @@ export type Database = {
         Args: { driver_id: string }
         Returns: undefined
       }
+      get_driver_visible_requests: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          distance_km: number
+          dropoff_address: string
+          dropoff_lat: number
+          dropoff_lng: number
+          estimated_duration: number
+          flight_number: string
+          id: string
+          luggage: number
+          passengers: number
+          pickup_address: string
+          pickup_date: string
+          pickup_lat: number
+          pickup_lng: number
+          pickup_time: string
+          selected_bid_id: string
+          special_requirements: string
+          status: Database["public"]["Enums"]["request_status"]
+          updated_at: string
+        }[]
+      }
     }
     Enums: {
       bid_status: "pending" | "accepted" | "rejected" | "withdrawn"
