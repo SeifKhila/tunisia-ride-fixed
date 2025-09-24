@@ -35,7 +35,7 @@ const DriverForm = () => {
                   <li>• Notes (optional)</li>
                 </ul>
               </li>
-              <li>3. Set up email notifications to: your-email@gmail.com</li>
+              <li>3. Set up email notifications to: <strong>khilas592@gmail.com</strong></li>
               <li>4. Add this autoresponder: "Thanks for applying to drive with Get Tunisia Transfer. We'll review your details and get back to you within 24 hours."</li>
               <li>5. Get the embed code and replace this placeholder</li>
             </ol>

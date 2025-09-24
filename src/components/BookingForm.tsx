@@ -69,8 +69,10 @@ const BookingForm = () => {
         }
       });
       
-      // Add autoresponder message
+      // Add autoresponder message and email destination
       formDataToSend.append('_autoresponse', 'Thanks for booking with Get Tunisia Transfer. We\'ve received your request and will confirm your price and deposit link shortly.');
+      formDataToSend.append('_replyto', formData.email);
+      formDataToSend.append('_subject', 'New Tunisia Transfer Booking Request');
       
       const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
         method: 'POST',
