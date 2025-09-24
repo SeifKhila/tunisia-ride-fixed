@@ -16,6 +16,13 @@ const FloatingWhatsApp = () => {
 
   const handleClick = () => {
     trackClick();
+    const today = new Date();
+    const date = today.getFullYear().toString() + 
+                (today.getMonth() + 1).toString().padStart(2, '0') + 
+                today.getDate().toString().padStart(2, '0');
+    const random = Math.floor(Math.random() * 99) + 1;
+    const bookingRef = `GT-${date}-${random.toString().padStart(2, '0')}`;
+    
     const message = `Hi Get Tunisia Transfer 👋
 I'd like to book a transfer:
 • Name:
@@ -24,7 +31,8 @@ I'd like to book a transfer:
 • Date/Time:
 • Pax/Bags:
 • Flight No:
-• Notes:`;
+• Notes:
+Booking Ref: ${bookingRef}`;
     
     const encodedMessage = encodeURIComponent(message);
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

@@ -1,390 +1,166 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { MessageCircle, Mail, Copy } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import PaymentDeposit from "@/components/PaymentDeposit";
 
-
-const airports = [
-  { code: 'NBE', name: 'Enfidha' },
-  { code: 'TUN', name: 'Tunis' },
-  { code: 'MIR', name: 'Monastir' },
-  { code: 'DJE', name: 'Djerba' }
-];
-
-const destinations = [
-  'Hammamet', 'Sousse', 'Tunis', 'Sfax', 'Monastir', 'Mahdia', 'Kairouan',
-  'Tozeur', 'Gafsa', 'Gabes', 'Medenine', 'Tataouine', 'Bizerte', 'Nabeul', 'Other'
-];
-
-const vehicleTypes = ['Standard', 'Minivan', 'VIP'];
-const bagTypes = ['Small', 'Medium', 'Large'];
-
 const BookingForm = () => {
   const { t, language } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    fromAirport: '',
-    destination: '',
-    customDestination: '',
-    pickupDate: '',
-    pickupTime: '',
-    flightNumber: '',
-    tripType: 'one-way',
-    returnDate: '',
-    passengers: '1',
-    bags: 'Medium',
-    childSeats: '0',
-    vehicleType: 'Standard',
-    notes: '',
-    consent: false
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [submissionResult, setSubmissionResult] = useState<{ bookingId?: string; success: boolean } | null>(null);
+  const [bookingReference, setBookingReference] = useState("");
+  const [showPayment, setShowPayment] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.consent) {
-      toast.error("Please accept the cancellation policy");
-      return;
-    }
-    
-    setIsLoading(true);
-    
+  // Generate booking reference on component mount
+  useEffect(() => {
+    const today = new Date();
+    const date = today.getFullYear().toString() + 
+                (today.getMonth() + 1).toString().padStart(2, '0') + 
+                today.getDate().toString().padStart(2, '0');
+    const random = Math.floor(Math.random() * 99) + 1;
+    const reference = `GT-${date}-${random.toString().padStart(2, '0')}`;
+    setBookingReference(reference);
+  }, []);
+
+  // Simple click tracking
+  const trackClick = (action: string) => {
     try {
-      // Create FormData for Formspree submission
-      const formDataToSend = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key !== 'consent') {
-          formDataToSend.append(key, value.toString());
-        }
-      });
-      
-      // Add autoresponder message and email destination
-      formDataToSend.append('_autoresponse', 'Thanks for booking with Get Tunisia Transfer. We\'ve received your request and will confirm your price and deposit link shortly.');
-      formDataToSend.append('_replyto', formData.email);
-      formDataToSend.append('_subject', 'New Tunisia Transfer Booking Request');
-      
-      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        body: formDataToSend,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const bookingId = 'GT-' + Date.now().toString().slice(-6);
-        setSubmissionResult({ bookingId, success: true });
-        setIsSubmitted(true);
-        toast.success('Booking submitted successfully!');
-      } else {
-        throw new Error('Failed to submit booking');
-      }
-    } catch (error: any) {
-      console.error('Booking submission error:', error);
-      toast.error('Failed to submit booking. Please try again.');
-    } finally {
-      setIsLoading(false);
+      const counts = JSON.parse(localStorage.getItem('contactClicks') || '{}');
+      counts[action] = (counts[action] || 0) + 1;
+      localStorage.setItem('contactClicks', JSON.stringify(counts));
+    } catch (e) {
+      console.log('Click tracking failed:', e);
     }
   };
 
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const copyReference = () => {
+    navigator.clipboard.writeText(bookingReference);
+    toast.success("Booking reference copied to clipboard!");
   };
 
-  if (isSubmitted) {
-    return (
-      <div className="w-full max-w-2xl mx-auto space-y-6">
-        <Card>
-          <CardContent className="p-8 text-center">
-            <div className="text-6xl mb-4">✅</div>
-            <h3 className="text-2xl font-bold text-tunisia-blue mb-4">Booking Submitted!</h3>
-            <p className="text-muted-foreground mb-4">
-              Thanks for booking with Get Tunisia Transfer. We've received your request.
+  const handleWhatsAppClick = () => {
+    trackClick('WhatsApp Book');
+    setShowPayment(true);
+    const message = `Hi Get Tunisia Transfer 👋
+I'd like to book a transfer:
+• Name:
+• Pickup:
+• Drop-off:
+• Date/Time:
+• Pax/Bags:
+• Flight No:
+• Notes:
+Booking Ref: ${bookingReference}`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    const link = isMobile 
+      ? `https://wa.me/447956643662?text=${encodedMessage}`
+      : `https://web.whatsapp.com/send?phone=447956643662&text=${encodedMessage}`;
+    
+    window.open(link, '_blank');
+  };
+
+  const handleEmailClick = () => {
+    trackClick('Email Book');
+    setShowPayment(true);
+    const subject = "New Booking Enquiry – Get Tunisia Transfer";
+    const body = `Hi Get Tunisia Transfer,
+
+I'd like to book a transfer:
+• Name:
+• Pickup:
+• Drop-off:
+• Date/Time:
+• Pax/Bags:
+• Flight No:
+• Notes:
+Booking Ref: ${bookingReference}
+
+Best regards`;
+    
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    const link = `mailto:khilas592@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+    
+    window.open(link, '_self');
+  };
+
+  return (
+    <div className="w-full max-w-2xl mx-auto space-y-6">
+      <Card className={`${language === 'ar' ? 'font-arabic text-right' : ''}`} id="booking">
+        <CardHeader>
+          <CardTitle className="text-2xl text-tunisia-blue">{t('booking.title')}</CardTitle>
+          <CardDescription>{t('booking.description')}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Booking Reference Display */}
+          <div className="p-4 bg-tunisia-blue/5 rounded-lg border border-tunisia-blue/20">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-tunisia-blue">Your Booking Reference:</span>
+              <Button
+                onClick={copyReference}
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0"
+                aria-label="Copy booking reference"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="font-mono text-lg font-bold text-tunisia-blue">{bookingReference}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Copy this reference for your payment
             </p>
-            <p className="text-sm text-muted-foreground">
-              Booking ID: {submissionResult?.bookingId || 'GT-XXXXXXX'}
+          </div>
+
+          {/* Deposit Information */}
+          <div className="p-4 bg-gradient-to-r from-tunisia-turquoise/10 to-tunisia-coral/10 rounded-lg border">
+            <p className="text-sm text-muted-foreground mb-2 text-center">
+              To confirm your ride, please pay a 25% deposit online. Balance due to the driver at pickup.
             </p>
-          </CardContent>
-        </Card>
-        
+          </div>
+
+          {/* Contact Buttons */}
+          <div className="grid grid-cols-1 gap-4">
+            <Button
+              onClick={handleWhatsAppClick}
+              className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
+            >
+              <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
+              Book via WhatsApp (Primary)
+            </Button>
+            
+            <Button
+              onClick={handleEmailClick}
+              variant="outline"
+              className="w-full min-h-[56px] text-lg border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+            >
+              <Mail className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
+              Book via Email (Secondary)
+            </Button>
+          </div>
+
+          {/* Privacy Notice */}
+          <div className="text-xs text-muted-foreground text-center p-3 bg-muted/50 rounded">
+            By contacting us you consent to us replying via WhatsApp or email.
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Payment Deposit Section - Shows after contact button click */}
+      {showPayment && (
         <PaymentDeposit 
-          bookingReference={submissionResult?.bookingId}
+          bookingReference={bookingReference}
+          defaultAmount={25}
           onPaymentInitiated={(method, amount, currency) => {
+            trackClick(`${method} Pay`);
             toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);
           }}
         />
-      </div>
-    );
-  }
-
-  return (
-    <Card className={`w-full max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="booking">
-      <CardHeader>
-        <CardTitle className="text-2xl text-tunisia-blue">{t('booking.title')}</CardTitle>
-        <CardDescription>{t('booking.description')}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Personal Info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">{t('booking.name')}</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">{t('booking.email')}</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="phone">{t('booking.phone')}</Label>
-            <Input
-              id="phone"
-              value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              required
-              className="min-h-[48px]"
-            />
-          </div>
-
-          {/* Trip Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>{t('booking.from_airport')}</Label>
-              <Select value={formData.fromAirport} onValueChange={(value) => handleInputChange('fromAirport', value)} required>
-                <SelectTrigger className="min-h-[48px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {airports.map((airport) => (
-                    <SelectItem key={airport.code} value={airport.code}>
-                      {airport.name} ({airport.code})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>{t('booking.destination')}</Label>
-              <Select value={formData.destination} onValueChange={(value) => handleInputChange('destination', value)} required>
-                <SelectTrigger className="min-h-[48px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {destinations.map((dest) => (
-                    <SelectItem key={dest} value={dest}>
-                      {dest}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {formData.destination === 'Other' && (
-            <div className="space-y-2">
-              <Label htmlFor="customDestination">Custom Destination</Label>
-              <Input
-                id="customDestination"
-                value={formData.customDestination}
-                onChange={(e) => handleInputChange('customDestination', e.target.value)}
-                placeholder="Enter your destination"
-                required
-                className="min-h-[48px]"
-              />
-            </div>
-          )}
-
-          {/* Date & Time */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="pickupDate">Pickup Date</Label>
-              <Input
-                id="pickupDate"
-                type="date"
-                value={formData.pickupDate}
-                onChange={(e) => handleInputChange('pickupDate', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="pickupTime">Pickup Time</Label>
-              <Input
-                id="pickupTime"
-                type="time"
-                value={formData.pickupTime}
-                onChange={(e) => handleInputChange('pickupTime', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="flightNumber">{t('booking.flight_number')}</Label>
-            <Input
-              id="flightNumber"
-              value={formData.flightNumber}
-              onChange={(e) => handleInputChange('flightNumber', e.target.value)}
-              placeholder="e.g. TU123"
-              className="min-h-[48px]"
-            />
-          </div>
-
-          {/* Trip Type */}
-          <div className="space-y-3">
-            <Label>Trip Type</Label>
-            <RadioGroup 
-              value={formData.tripType} 
-              onValueChange={(value) => handleInputChange('tripType', value)}
-              className={`flex gap-6 ${language === 'ar' ? 'flex-row-reverse' : ''}`}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="one-way" id="one-way" />
-                <Label htmlFor="one-way">{t('booking.one_way')}</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="return" id="return" />
-                <Label htmlFor="return">{t('booking.return')}</Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          {formData.tripType === 'return' && (
-            <div className="space-y-2">
-              <Label htmlFor="returnDate">Return Date</Label>
-              <Input
-                id="returnDate"
-                type="date"
-                value={formData.returnDate}
-                onChange={(e) => handleInputChange('returnDate', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
-            </div>
-          )}
-
-          {/* Passengers & Luggage */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label>{t('booking.passengers')} (1-8)</Label>
-              <Select value={formData.passengers} onValueChange={(value) => handleInputChange('passengers', value)}>
-                <SelectTrigger className="min-h-[48px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[1,2,3,4,5,6,7,8].map(num => (
-                    <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>{t('booking.bags')}</Label>
-              <Select value={formData.bags} onValueChange={(value) => handleInputChange('bags', value)}>
-                <SelectTrigger className="min-h-[48px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {bagTypes.map(type => (
-                    <SelectItem key={type} value={type}>{type}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>{t('booking.child_seats')} (0-3)</Label>
-              <Select value={formData.childSeats} onValueChange={(value) => handleInputChange('childSeats', value)}>
-                <SelectTrigger className="min-h-[48px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[0,1,2,3].map(num => (
-                    <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>{t('booking.vehicle_type')}</Label>
-            <Select value={formData.vehicleType} onValueChange={(value) => handleInputChange('vehicleType', value)}>
-              <SelectTrigger className="min-h-[48px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {vehicleTypes.map(type => (
-                  <SelectItem key={type} value={type}>{type}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="notes">{t('booking.notes')}</Label>
-            <Textarea
-              id="notes"
-              value={formData.notes}
-              onChange={(e) => handleInputChange('notes', e.target.value)}
-              placeholder="Any special requests or additional information..."
-              className="min-h-[80px]"
-            />
-          </div>
-
-          {/* Consent */}
-          <div className={`flex items-start space-x-2 ${language === 'ar' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-            <Checkbox
-              id="consent"
-              checked={formData.consent}
-              onCheckedChange={(checked) => handleInputChange('consent', !!checked)}
-              className="mt-1"
-            />
-            <Label htmlFor="consent" className="text-sm leading-relaxed">
-              {t('booking.consent')}
-            </Label>
-          </div>
-
-          <Button 
-            type="submit" 
-            className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-semibold"
-            disabled={!formData.consent || isLoading}
-          >
-            {isLoading ? "Submitting..." : t('booking.submit')}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
-import ContactButtons from "@/components/ContactButtons";
+import BookingForm from "@/components/BookingForm";
+import DriverForm from "@/components/DriverForm";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
 import FAQ from "@/components/FAQ";
@@ -20,7 +21,7 @@ const Index = () => {
   const generateEmailLink = (subject: string, body: string) => {
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
-    return `mailto:info@get-tunisia-transfer.com?subject=${encodedSubject}&body=${encodedBody}`;
+    return `mailto:khilas592@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
   };
 
   const topRoutes = [
@@ -132,7 +133,7 @@ const Index = () => {
       <main className="container mx-auto px-4 py-16 space-y-20">
         {/* Booking Section */}
         <section className="space-y-8">
-          <ContactButtons type="booking" />
+          <BookingForm />
         </section>
 
         {/* How It Works Section */}
@@ -350,7 +351,7 @@ const Index = () => {
 
         {/* Driver Section */}
         <section className="space-y-8">
-          <ContactButtons type="driver" />
+          <DriverForm />
         </section>
       </main>
 

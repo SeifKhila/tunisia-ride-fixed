@@ -1,110 +1,138 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MessageCircle, Mail, Copy } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { toast } from "sonner";
 
 const DriverForm = () => {
   const { t, language } = useLanguage();
+  const [bookingReference, setBookingReference] = useState("");
+
+  // Generate booking reference on component mount
+  useEffect(() => {
+    const today = new Date();
+    const date = today.getFullYear().toString() + 
+                (today.getMonth() + 1).toString().padStart(2, '0') + 
+                today.getDate().toString().padStart(2, '0');
+    const random = Math.floor(Math.random() * 99) + 1;
+    const reference = `GT-${date}-${random.toString().padStart(2, '0')}`;
+    setBookingReference(reference);
+  }, []);
+
+  // Simple click tracking
+  const trackClick = (action: string) => {
+    try {
+      const counts = JSON.parse(localStorage.getItem('contactClicks') || '{}');
+      counts[action] = (counts[action] || 0) + 1;
+      localStorage.setItem('contactClicks', JSON.stringify(counts));
+    } catch (e) {
+      console.log('Click tracking failed:', e);
+    }
+  };
+
+  const copyReference = () => {
+    navigator.clipboard.writeText(bookingReference);
+    toast.success("Application reference copied to clipboard!");
+  };
+
+  const handleWhatsAppClick = () => {
+    trackClick('WhatsApp Driver');
+    const message = `Hi Get Tunisia Transfer 👋
+I'd like to apply as a driver:
+• Name:
+• City/Zone(s):
+• Vehicle type:
+• Years experience:
+• Languages:
+• WhatsApp number:
+• Docs ready (ID/License): Yes/No
+Application Ref: ${bookingReference}`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    const link = isMobile 
+      ? `https://wa.me/447956643662?text=${encodedMessage}`
+      : `https://web.whatsapp.com/send?phone=447956643662&text=${encodedMessage}`;
+    
+    window.open(link, '_blank');
+  };
+
+  const handleEmailClick = () => {
+    trackClick('Email Driver');
+    const subject = "Driver Application – Get Tunisia Transfer";
+    const body = `Hi Get Tunisia Transfer,
+
+I'd like to apply as a driver:
+• Name:
+• City/Zone(s):
+• Vehicle type:
+• Years experience:
+• Languages:
+• WhatsApp number:
+• Docs ready (ID/License): Yes/No
+Application Ref: ${bookingReference}
+
+Best regards`;
+    
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    const link = `mailto:khilas592@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+    
+    window.open(link, '_self');
+  };
 
   return (
-    <Card className={`w-full max-w-4xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="drivers">
+    <Card className={`w-full max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="driver">
       <CardHeader>
-        <CardTitle className="text-2xl text-tunisia-blue">{t('driver.title')}</CardTitle>
-        <CardDescription>Join our network of professional drivers. Fill out the form below to apply.</CardDescription>
+        <CardTitle className="text-2xl text-tunisia-blue">Drivers Wanted – Earn with Your Car</CardTitle>
+        <CardDescription>Join our network of professional drivers. Contact us to apply and start earning.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="w-full">
-          {/* Placeholder for Tally form - User needs to replace with actual embed code */}
-          <div className="bg-muted/20 border-2 border-dashed border-muted rounded-lg p-8 text-center">
-            <div className="text-6xl mb-4">📝</div>
-            <h3 className="text-xl font-semibold mb-4">Driver Application Form</h3>
-            <p className="text-muted-foreground mb-4">
-              To complete the setup, please:
-            </p>
-            <ol className="text-left text-sm text-muted-foreground space-y-2 max-w-md mx-auto">
-              <li>1. Go to <a href="https://tally.so" target="_blank" rel="noopener noreferrer" className="text-tunisia-blue hover:underline">Tally.so</a> and create a free account</li>
-              <li>2. Create a new form with these fields:
-                <ul className="ml-4 mt-1 space-y-1">
-                  <li>• Full Name (required)</li>
-                  <li>• Email (required)</li>
-                  <li>• Phone/WhatsApp (required)</li>
-                  <li>• City/Zone(s) (required)</li>
-                  <li>• Vehicle Type (required)</li>
-                  <li>• Years Experience (required)</li>
-                  <li>• Languages (required)</li>
-                  <li>• Driver's License/ID Upload (required)</li>
-                  <li>• Notes (optional)</li>
-                </ul>
-              </li>
-              <li>3. Set up email notifications to: <strong>khilas592@gmail.com</strong></li>
-              <li>4. Add this autoresponder: "Thanks for applying to drive with Get Tunisia Transfer. We'll review your details and get back to you within 24 hours."</li>
-              <li>5. Get the embed code and replace this placeholder</li>
-            </ol>
-            
-            {/* Temporary form structure showing the expected fields */}
-            <div className="mt-8 p-6 bg-background rounded-lg border text-left">
-              <h4 className="font-semibold mb-4">Expected Form Structure:</h4>
-              <div className="space-y-4 text-sm">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Full Name *</label>
-                    <div className="h-10 bg-muted rounded border"></div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email *</label>
-                    <div className="h-10 bg-muted rounded border"></div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Phone (WhatsApp) *</label>
-                    <div className="h-10 bg-muted rounded border"></div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">City/Zone(s) *</label>
-                    <div className="h-10 bg-muted rounded border"></div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Vehicle Type *</label>
-                    <div className="h-10 bg-muted rounded border"></div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Years Experience *</label>
-                    <div className="h-10 bg-muted rounded border"></div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Languages *</label>
-                  <div className="h-10 bg-muted rounded border"></div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Driver's License/ID Upload *</label>
-                  <div className="h-20 bg-muted rounded border flex items-center justify-center">
-                    <span className="text-muted-foreground">File Upload Area</span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Notes</label>
-                  <div className="h-20 bg-muted rounded border"></div>
-                </div>
-              </div>
-            </div>
+      <CardContent className="space-y-6">
+        {/* Application Reference Display */}
+        <div className="p-4 bg-tunisia-blue/5 rounded-lg border border-tunisia-blue/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-tunisia-blue">Your Application Reference:</span>
+            <Button
+              onClick={copyReference}
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              aria-label="Copy application reference"
+            >
+              <Copy className="h-4 w-4" />
+            </Button>
           </div>
+          <div className="font-mono text-lg font-bold text-tunisia-blue">{bookingReference}</div>
+          <p className="text-xs text-muted-foreground mt-1">
+            Copy this reference for your application
+          </p>
+        </div>
+
+        {/* Contact Buttons */}
+        <div className="grid grid-cols-1 gap-4">
+          <Button
+            onClick={handleWhatsAppClick}
+            className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
+          >
+            <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
+            Apply via WhatsApp (Primary)
+          </Button>
           
-          {/* This is where the actual Tally embed will go */}
-          {/* 
-          Replace the placeholder above with your Tally embed code, something like:
-          <iframe 
-            data-tally-src="https://tally.so/embed/YOUR_FORM_ID" 
-            width="100%" 
-            height="800" 
-            frameBorder="0" 
-            marginHeight="0" 
-            marginWidth="0" 
-            title="Driver Application">
-          </iframe>
-          */}
+          <Button
+            onClick={handleEmailClick}
+            variant="outline"
+            className="w-full min-h-[56px] text-lg border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+          >
+            <Mail className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
+            Apply via Email (Secondary)
+          </Button>
+        </div>
+
+        {/* Privacy Notice */}
+        <div className="text-xs text-muted-foreground text-center p-3 bg-muted/50 rounded">
+          By contacting us you consent to us replying via WhatsApp or email.
         </div>
       </CardContent>
     </Card>
