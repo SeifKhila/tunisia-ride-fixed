@@ -388,51 +388,7 @@ const Index = () => {
       <FloatingWhatsApp />
 
       {/* Footer */}
-      <footer className={`bg-tunisia-blue text-white py-8 ${language === 'ar' ? 'font-arabic' : ''}`}>
-        <div className="container mx-auto px-4">
-          <div className={`text-center ${language === 'ar' ? 'text-right' : ''}`}>
-            {/* Contact UK */}
-            <div className="space-y-4 mb-6">
-              <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                <Phone className="h-5 w-5 text-tunisia-coral" />
-                <a 
-                  href="tel:+447956643662"
-                  className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded text-lg"
-                  aria-label="Call UK office"
-                >
-                  +44 7956 643 662
-                </a>
-              </div>
-              <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                <MessageCircle className="h-5 w-5 text-tunisia-coral" />
-                <a 
-                  href="https://wa.me/447956643662?text=Hi%20I%20want%20to%20book%20a%20Tunisia%20airport%20transfer"
-                  className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
-                  aria-label="Contact via WhatsApp"
-                >
-                  WhatsApp
-                </a>
-              </div>
-              <div className={`flex items-center justify-center gap-3 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                <Mail className="h-5 w-5 text-tunisia-coral" />
-                <a 
-                  href="mailto:info@get-tunisia-transfer.com"
-                  className="hover:text-tunisia-gold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-tunisia-gold rounded"
-                  aria-label="Send email"
-                >
-                  info@get-tunisia-transfer.com
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-tunisia-sand/20 mt-6 pt-6 text-center">
-            <p className="text-tunisia-sand/60 text-sm">
-              {t('footer.copyright')}
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
       
       {/* Sticky Quick Contact Button for Mobile */}
       <div className="fixed bottom-6 right-6 z-40 md:hidden">
