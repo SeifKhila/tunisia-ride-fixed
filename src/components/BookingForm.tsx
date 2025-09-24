@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+
 
 const airports = [
   { code: 'NBE', name: 'Enfidha' },
@@ -61,18 +61,32 @@ const BookingForm = () => {
     setIsLoading(true);
     
     try {
-      const { data, error } = await supabase.functions.invoke('submit-booking', {
-        body: formData
+      // Create FormData for Formspree submission
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'consent') {
+          formDataToSend.append(key, value.toString());
+        }
+      });
+      
+      // Add autoresponder message
+      formDataToSend.append('_autoresponse', 'Thanks for booking with Get Tunisia Transfer. We\'ve received your request and will confirm your price and deposit link shortly.');
+      
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
 
-      if (error) throw error;
-
-      if (data.success) {
-        setSubmissionResult({ bookingId: data.bookingId, success: true });
+      if (response.ok) {
+        const bookingId = 'GT-' + Date.now().toString().slice(-6);
+        setSubmissionResult({ bookingId, success: true });
         setIsSubmitted(true);
-        toast.success(t('booking.success').replace('{{ID}}', data.bookingId));
+        toast.success('Booking submitted successfully!');
       } else {
-        throw new Error(data.error || 'Failed to submit booking');
+        throw new Error('Failed to submit booking');
       }
     } catch (error: any) {
       console.error('Booking submission error:', error);
@@ -93,7 +107,10 @@ const BookingForm = () => {
           <div className="text-6xl mb-4">✅</div>
           <h3 className="text-2xl font-bold text-tunisia-blue mb-4">Booking Submitted!</h3>
           <p className="text-muted-foreground">
-            {t('booking.success').replace('{{ID}}', submissionResult?.bookingId || 'GT-XXXXXXX')}
+            Thanks for booking with Get Tunisia Transfer. We've received your request and will confirm your price and deposit link shortly.
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            Booking ID: {submissionResult?.bookingId || 'GT-XXXXXXX'}
           </p>
         </CardContent>
       </Card>

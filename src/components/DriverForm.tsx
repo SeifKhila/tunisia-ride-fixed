@@ -1,202 +1,111 @@
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 const DriverForm = () => {
   const { t, language } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    serviceZones: '',
-    vehicleDetails: '',
-    vehiclePhotos: '',
-    documents: '',
-    availability: '',
-    consent: false
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [submissionResult, setSubmissionResult] = useState<{ applicationId?: string; success: boolean } | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.consent) {
-      toast.error("Please accept the terms and conditions");
-      return;
-    }
-    
-    setIsLoading(true);
-    
-    try {
-      const { data, error } = await supabase.functions.invoke('submit-driver-application', {
-        body: formData
-      });
-
-      if (error) throw error;
-
-      if (data.success) {
-        setSubmissionResult({ applicationId: data.applicationId, success: true });
-        setIsSubmitted(true);
-        toast.success(t('driver.success'));
-      } else {
-        throw new Error(data.error || 'Failed to submit driver application');
-      }
-    } catch (error: any) {
-      console.error('Driver application submission error:', error);
-      toast.error('Failed to submit application. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  if (isSubmitted) {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardContent className="p-8 text-center">
-          <div className="text-6xl mb-4">🚗</div>
-          <h3 className="text-2xl font-bold text-tunisia-blue mb-4">Application Submitted!</h3>
-          <p className="text-muted-foreground">{t('driver.success')}</p>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
-    <Card className={`w-full max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="drivers">
+    <Card className={`w-full max-w-4xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="drivers">
       <CardHeader>
         <CardTitle className="text-2xl text-tunisia-blue">{t('driver.title')}</CardTitle>
-        <CardDescription>Join our network of professional drivers</CardDescription>
+        <CardDescription>Join our network of professional drivers. Fill out the form below to apply.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Personal Info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="driver-name">{t('driver.name')}</Label>
-              <Input
-                id="driver-name"
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
+        <div className="w-full">
+          {/* Placeholder for Tally form - User needs to replace with actual embed code */}
+          <div className="bg-muted/20 border-2 border-dashed border-muted rounded-lg p-8 text-center">
+            <div className="text-6xl mb-4">📝</div>
+            <h3 className="text-xl font-semibold mb-4">Driver Application Form</h3>
+            <p className="text-muted-foreground mb-4">
+              To complete the setup, please:
+            </p>
+            <ol className="text-left text-sm text-muted-foreground space-y-2 max-w-md mx-auto">
+              <li>1. Go to <a href="https://tally.so" target="_blank" rel="noopener noreferrer" className="text-tunisia-blue hover:underline">Tally.so</a> and create a free account</li>
+              <li>2. Create a new form with these fields:
+                <ul className="ml-4 mt-1 space-y-1">
+                  <li>• Full Name (required)</li>
+                  <li>• Email (required)</li>
+                  <li>• Phone/WhatsApp (required)</li>
+                  <li>• City/Zone(s) (required)</li>
+                  <li>• Vehicle Type (required)</li>
+                  <li>• Years Experience (required)</li>
+                  <li>• Languages (required)</li>
+                  <li>• Driver's License/ID Upload (required)</li>
+                  <li>• Notes (optional)</li>
+                </ul>
+              </li>
+              <li>3. Set up email notifications to: your-email@gmail.com</li>
+              <li>4. Add this autoresponder: "Thanks for applying to drive with Get Tunisia Transfer. We'll review your details and get back to you within 24 hours."</li>
+              <li>5. Get the embed code and replace this placeholder</li>
+            </ol>
+            
+            {/* Temporary form structure showing the expected fields */}
+            <div className="mt-8 p-6 bg-background rounded-lg border text-left">
+              <h4 className="font-semibold mb-4">Expected Form Structure:</h4>
+              <div className="space-y-4 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Full Name *</label>
+                    <div className="h-10 bg-muted rounded border"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Email *</label>
+                    <div className="h-10 bg-muted rounded border"></div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Phone (WhatsApp) *</label>
+                    <div className="h-10 bg-muted rounded border"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">City/Zone(s) *</label>
+                    <div className="h-10 bg-muted rounded border"></div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Vehicle Type *</label>
+                    <div className="h-10 bg-muted rounded border"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Years Experience *</label>
+                    <div className="h-10 bg-muted rounded border"></div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Languages *</label>
+                  <div className="h-10 bg-muted rounded border"></div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Driver's License/ID Upload *</label>
+                  <div className="h-20 bg-muted rounded border flex items-center justify-center">
+                    <span className="text-muted-foreground">File Upload Area</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Notes</label>
+                  <div className="h-20 bg-muted rounded border"></div>
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="driver-email">{t('driver.email')}</Label>
-              <Input
-                id="driver-email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                required
-                className="min-h-[48px]"
-              />
-            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="driver-phone">{t('driver.phone')}</Label>
-            <Input
-              id="driver-phone"
-              value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              required
-              className="min-h-[48px]"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="service-zones">{t('driver.service_zones')}</Label>
-            <Textarea
-              id="service-zones"
-              value={formData.serviceZones}
-              onChange={(e) => handleInputChange('serviceZones', e.target.value)}
-              placeholder="List the areas where you provide service (e.g., Tunis, Hammamet, Sousse...)"
-              className="min-h-[80px]"
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="vehicle-details">{t('driver.vehicle_details')}</Label>
-            <Textarea
-              id="vehicle-details"
-              value={formData.vehicleDetails}
-              onChange={(e) => handleInputChange('vehicleDetails', e.target.value)}
-              placeholder="Vehicle type, make, model, year, number of seats, luggage capacity..."
-              className="min-h-[80px]"
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="vehicle-photos">{t('driver.vehicle_photos')}</Label>
-            <Input
-              id="vehicle-photos"
-              type="file"
-              multiple
-              accept="image/*"
-              className="min-h-[48px]"
-            />
-            <p className="text-sm text-muted-foreground">Upload photos of your vehicle (exterior and interior)</p>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="documents">{t('driver.documents')}</Label>
-            <Input
-              id="documents"
-              type="file"
-              multiple
-              accept="image/*,.pdf"
-              className="min-h-[48px]"
-            />
-            <p className="text-sm text-muted-foreground">Upload ID, driving license, and insurance documents</p>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="availability">{t('driver.availability')}</Label>
-            <Textarea
-              id="availability"
-              value={formData.availability}
-              onChange={(e) => handleInputChange('availability', e.target.value)}
-              placeholder="Your availability (days, hours, special notes...)"
-              className="min-h-[80px]"
-            />
-          </div>
-
-          {/* Consent */}
-          <div className={`flex items-start space-x-2 ${language === 'ar' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-            <Checkbox
-              id="driver-consent"
-              checked={formData.consent}
-              onCheckedChange={(checked) => handleInputChange('consent', !!checked)}
-              className="mt-1"
-            />
-            <Label htmlFor="driver-consent" className="text-sm leading-relaxed">
-              {t('driver.consent')}
-            </Label>
-          </div>
-
-          <Button 
-            type="submit" 
-            className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-semibold"
-            disabled={!formData.consent || isLoading}
-          >
-            {isLoading ? "Submitting..." : t('driver.submit')}
-          </Button>
-        </form>
+          
+          {/* This is where the actual Tally embed will go */}
+          {/* 
+          Replace the placeholder above with your Tally embed code, something like:
+          <iframe 
+            data-tally-src="https://tally.so/embed/YOUR_FORM_ID" 
+            width="100%" 
+            height="800" 
+            frameBorder="0" 
+            marginHeight="0" 
+            marginWidth="0" 
+            title="Driver Application">
+          </iframe>
+          */}
+        </div>
       </CardContent>
     </Card>
   );
