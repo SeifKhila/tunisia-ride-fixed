@@ -39,13 +39,13 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 const translations = {
   en: {
     // Navigation
-    'nav.logo': 'Get Transfer Tunisia',
+    'nav.logo': 'Get Tunisia Transfer',
     'nav.book_now': 'Book Now',
     'nav.drivers': 'Drivers',
     
     // Hero Section
-    'hero.title': 'Reliable Airport Transfers in Tunisia',
-    'hero.subtitle': 'Book online in 60 seconds. Pay 25% deposit now — pay the rest to your driver.',
+    'hero.title': 'Fixed-Price Airport Transfers in Tunisia',
+    'hero.subtitle': 'Reliable rides from Tunis, Enfidha, Monastir & Djerba airports.',
     'hero.get_quote': 'Get the Best Quote',
     'hero.become_driver': 'Become a Driver',
     'hero.book_whatsapp': 'Book via WhatsApp',
@@ -89,9 +89,19 @@ const translations = {
 
     // Sections
     'how_it_works.title': 'How It Works',
-    'how_it_works.step1': 'Enter trip',
+    'how_it_works.step1': '1. Book online. 2. Pay 25% deposit. 3. Meet driver at airport.',
     'how_it_works.step2': 'Pay 25% deposit',
     'how_it_works.step3': 'Meet your driver',
+    
+    // Driver Recruitment
+    'driver_recruitment.headline': 'Drivers Wanted – Earn with Your Car.',
+    'driver_recruitment.subline': 'Flexible hours, earn per ride. Apply in 2 minutes.',
+    
+    // Privacy
+    'privacy.note': 'By contacting us you consent to us replying via WhatsApp or email.',
+    
+    // Pricing
+    'pricing.contact_full_list': 'Contact us for full list.',
 
     'guarantee.title': 'Best Price Guarantee',
     'guarantee.content': 'Fixed, fair rates with trusted local taxi drivers. No hidden charges. No night surcharges. Free child seats. Free airport waiting. The price you\'re quoted is the price you pay.',
@@ -158,8 +168,8 @@ const translations = {
     'nav.drivers': 'Chauffeurs',
     
     // Hero Section
-    'hero.title': 'Transferts aéroport fiables en Tunisie',
-    'hero.subtitle': 'Réservez en ligne en 60 secondes. Payez un acompte de 25 % maintenant — le reste au chauffeur.',
+    'hero.title': 'Transferts aéroport à prix fixe en Tunisie',
+    'hero.subtitle': 'Trajets fiables depuis les aéroports de Tunis, Enfidha, Monastir & Djerba.',
     'hero.get_quote': 'Obtenez le meilleur tarif',
     'hero.become_driver': 'Devenez chauffeur',
     'hero.book_whatsapp': 'Réserver via WhatsApp',
@@ -203,9 +213,19 @@ const translations = {
 
     // Sections
     'how_it_works.title': 'Comment ça marche',
-    'how_it_works.step1': 'Indiquez votre trajet',
+    'how_it_works.step1': '1. Réservez en ligne. 2. Payez un acompte de 25 %. 3. Retrouvez votre chauffeur à l\'aéroport.',
     'how_it_works.step2': 'Payez 25 % d\'acompte',
     'how_it_works.step3': 'Retrouvez votre chauffeur',
+    
+    // Driver Recruitment
+    'driver_recruitment.headline': 'Conducteurs recherchés – Gagnez avec votre voiture.',
+    'driver_recruitment.subline': 'Horaires flexibles, gagnez par trajet. Postulez en 2 minutes.',
+    
+    // Privacy
+    'privacy.note': 'En nous contactant, vous acceptez de recevoir une réponse par WhatsApp ou email.',
+    
+    // Pricing
+    'pricing.contact_full_list': 'Contactez-nous pour la liste complète.',
 
     'guarantee.title': 'Garantie du meilleur prix',
     'guarantee.content': 'Tarifs fixes et équitables avec des taxis locaux de confiance. Aucun frais caché. Pas de supplément de nuit. Sièges enfants gratuits. Attente gratuite à l\'aéroport. Le prix annoncé est le prix payé.',
@@ -279,8 +299,8 @@ const translations = {
     'nav.drivers': 'السائقون',
     
     // Hero Section
-    'hero.title': 'خدمات نقل موثوقة من وإلى المطارات في تونس',
-    'hero.subtitle': 'احجز عبر الإنترنت في 60 ثانية. ادفع 25٪ مقدمًا — والباقي للسائق.',
+    'hero.title': 'خدمات نقل من المطار بأسعار ثابتة في تونس',
+    'hero.subtitle': 'رحلات موثوقة من مطارات تونس، النفيضة، المنستير و جربة.',
     'hero.get_quote': 'احصل على أفضل سعر',
     'hero.become_driver': 'انضم كسائق',
     'hero.book_whatsapp': 'احجز عبر واتساب',
@@ -324,9 +344,19 @@ const translations = {
 
     // Sections
     'how_it_works.title': 'كيف يعمل',
-    'how_it_works.step1': 'أدخل تفاصيل رحلتك',
+    'how_it_works.step1': '١. احجز عبر الإنترنت. ٢. ادفع ٢٥٪ مقدماً. ٣. قابل السائق في المطار.',
     'how_it_works.step2': 'ادفع 25٪ مقدمًا',
     'how_it_works.step3': 'قابل سائقك',
+    
+    // Driver Recruitment
+    'driver_recruitment.headline': 'مطلوب سائقون – اربح بسيارتك.',
+    'driver_recruitment.subline': 'ساعات عمل مرنة، اربح لكل رحلة. قدّم طلبك في دقيقتين.',
+    
+    // Privacy
+    'privacy.note': 'بالتواصل معنا، فإنك توافق على أن نرد عليك عبر واتساب أو البريد الإلكتروني.',
+    
+    // Pricing
+    'pricing.contact_full_list': 'اتصل بنا للحصول على القائمة الكاملة.',
 
     'guarantee.title': 'ضمان أفضل الأسعار',
     'guarantee.content': 'أسعار ثابتة وعادلة مع سائقي سيارات أجرة محليين موثوقين. لا رسوم خفية. لا رسوم ليلية. مقاعد الأطفال مجانًا. الانتظار في المطار مجانًا. السعر المقدم هو السعر الذي تدفعه.',

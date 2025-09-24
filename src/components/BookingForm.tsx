@@ -152,7 +152,6 @@ Best regards`;
       {/* Payment Deposit Section - Shows after contact button click */}
       {showPayment && (
         <PaymentDeposit 
-          bookingReference={bookingReference}
           defaultAmount={25}
           onPaymentInitiated={(method, amount, currency) => {
             trackClick(`${method} Pay`);

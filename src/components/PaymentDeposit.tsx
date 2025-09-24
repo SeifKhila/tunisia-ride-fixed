@@ -5,42 +5,39 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Copy, CreditCard, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { useBookingReference } from "@/hooks/useBookingReference";
 import { toast } from "sonner";
 
 interface PaymentDepositProps {
-  bookingReference?: string;
   defaultAmount?: number;
   onPaymentInitiated?: (method: 'paypal' | 'revolut', amount: number, currency: string) => void;
 }
 
 const PaymentDeposit: React.FC<PaymentDepositProps> = ({ 
-  bookingReference, 
   defaultAmount = 25,
   onPaymentInitiated 
 }) => {
   const { t, language } = useLanguage();
+  const { currency: globalCurrency, convertPrice } = useCurrency();
+  const { bookingReference, copyToClipboard } = useBookingReference();
   const [currency, setCurrency] = useState<'EUR' | 'GBP'>('EUR');
   const [amount, setAmount] = useState(defaultAmount);
-  const [generatedReference, setGeneratedReference] = useState('');
 
-  // Generate booking reference if not provided
+  // Update amount when global currency changes
   useEffect(() => {
-    if (!bookingReference) {
-      const today = new Date();
-      const date = today.getFullYear().toString() + 
-                  (today.getMonth() + 1).toString().padStart(2, '0') + 
-                  today.getDate().toString().padStart(2, '0');
-      const random = Math.floor(Math.random() * 99) + 1;
-      const reference = `GT-${date}-${random.toString().padStart(2, '0')}`;
-      setGeneratedReference(reference);
+    const convertedAmount = convertPrice(defaultAmount, 'EUR', globalCurrency === 'TND' ? 'EUR' : globalCurrency);
+    setAmount(convertedAmount);
+    setCurrency(globalCurrency === 'TND' ? 'EUR' : globalCurrency);
+  }, [globalCurrency, defaultAmount, convertPrice]);
+
+  const copyReference = async () => {
+    const success = await copyToClipboard();
+    if (success) {
+      toast.success(t('booking.reference_copied') || 'Booking reference copied to clipboard');
+    } else {
+      toast.error('Failed to copy reference');
     }
-  }, [bookingReference]);
-
-  const displayReference = bookingReference || generatedReference;
-
-  const copyReference = () => {
-    navigator.clipboard.writeText(displayReference);
-    toast.success('Booking reference copied to clipboard');
   };
 
   const handlePayPalPayment = () => {
@@ -60,25 +57,25 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
       <CardHeader>
         <CardTitle className="text-tunisia-blue text-center flex items-center justify-center gap-2">
           <CreditCard className="w-5 h-5" />
-          Pay Deposit
+          {t('payment.pay_deposit') || 'Pay Deposit'}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Deposit Message */}
         <div className="text-center p-4 bg-tunisia-blue/10 rounded-lg">
           <p className="text-sm text-tunisia-blue font-medium leading-relaxed">
-            To confirm your ride, please pay a 25% deposit online. Balance due to the driver at pickup.
+            {t('payment.deposit_message') || 'To confirm your ride, please pay a 25% deposit online. Balance due to the driver at pickup.'}
           </p>
         </div>
 
         {/* Booking Reference */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">
-            Booking Reference:
+            {t('payment.booking_reference') || 'Booking Reference:'}
           </label>
           <div className="flex items-center gap-2 p-3 bg-muted rounded border">
             <code className="flex-1 font-mono text-sm text-tunisia-blue font-bold">
-              {displayReference}
+              {bookingReference}
             </code>
             <Button
               variant="ghost"
@@ -90,14 +87,14 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Copy this reference for your payment
+            {t('payment.copy_reference') || 'Copy this reference for your payment'}
           </p>
         </div>
 
         {/* Currency Selection */}
         <div className="flex items-center gap-4">
           <label className="text-sm font-medium text-foreground">
-            Currency:
+            {t('payment.currency') || 'Currency:'}
           </label>
           <Select value={currency} onValueChange={(value) => setCurrency(value as 'EUR' | 'GBP')}>
             <SelectTrigger className="w-20">
@@ -122,7 +119,7 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
             <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
               <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.928C5.026 2.407 5.474 2 5.998 2h7.46c2.57 0 4.578.543 5.69 1.531 1.05.93 1.51 2.188 1.51 3.501 0 1.998-.797 3.592-2.314 4.632-.454.312-.956.55-1.483.709-.263.08-.53.148-.797.201-.05.01-.101.02-.152.029L15.814 13l-2.076-.001c-1.622 0-2.688.35-3.24 1.078-.264.348-.404.74-.404 1.143 0 .804.294 1.482.876 2.024.579.54 1.365.812 2.344.812 1.197 0 2.168-.272 2.883-.81.296-.223.537-.495.719-.81l.017-.032c.132-.256.2-.537.2-.837 0-.622-.186-1.117-.557-1.48-.372-.366-.867-.548-1.486-.548-.273 0-.525.04-.756.119-.232.079-.438.195-.616.347l-.015.013c-.177.152-.266.337-.266.553 0 .216.089.401.266.553.177.152.383.268.615.347.231.079.483.119.756.119.619 0 1.114.182 1.486.548.371.363.557.858.557 1.48 0 .3-.068.581-.2.837l-.017.032c-.182.315-.423.587-.719.81-.715.538-1.686.81-2.883.81-.979 0-1.765-.272-2.344-.812-.582-.542-.876-1.22-.876-2.024 0-.403.14-.795.404-1.143.552-.728 1.618-1.078 3.24-1.078L15.814 13l.1-.001z"/>
             </svg>
-            Pay with PayPal
+            {t('payment.pay_with_paypal') || 'Pay with PayPal'}
             <ExternalLink className="w-4 h-4" />
           </Button>
 
@@ -133,7 +130,7 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
             <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
               <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 13.5h-9v-3h9v3zm0-4.5h-9V8h9v3z"/>
             </svg>
-            Pay with Revolut
+            {t('payment.pay_with_revolut') || 'Pay with Revolut'}
             <ExternalLink className="w-4 h-4" />
           </Button>
         </div>
@@ -141,16 +138,16 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
         {/* Payment Instructions */}
         <div className="space-y-3 text-sm">
           <div className="p-3 bg-muted/50 rounded border">
-            <p className="font-medium text-tunisia-blue mb-1">PayPal Instructions:</p>
+            <p className="font-medium text-tunisia-blue mb-1">{t('payment.paypal_instructions') || 'PayPal Instructions:'}</p>
             <p className="text-muted-foreground">
-              Please paste your booking reference in the note field during payment.
+              {t('payment.paste_reference_note') || 'Paste your Booking Ref in the PayPal Note.'}
             </p>
           </div>
           
           <div className="p-3 bg-muted/50 rounded border">
-            <p className="font-medium text-tunisia-blue mb-1">Revolut Instructions:</p>
+            <p className="font-medium text-tunisia-blue mb-1">{t('payment.revolut_instructions') || 'Revolut Instructions:'}</p>
             <p className="text-muted-foreground">
-              Please paste your booking reference in the message field during payment.
+              {t('payment.paste_reference_message') || 'Paste your Booking Ref in the Revolut Message.'}
             </p>
           </div>
         </div>
@@ -174,7 +171,7 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
         {/* Disclaimer */}
         <div className="text-xs text-muted-foreground text-center p-3 bg-muted/30 rounded">
           <p>
-            Payments processed by PayPal or Revolut. We do not store card details.
+            {t('payment.disclaimer') || 'Payments processed by PayPal or Revolut. We do not store card details.'}
           </p>
         </div>
       </CardContent>
