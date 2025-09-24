@@ -36,18 +36,47 @@ const DriverForm = () => {
     toast.success("Application reference copied to clipboard!");
   };
 
-  const handleWhatsAppClick = () => {
-    trackClick('WhatsApp Driver');
-    const message = `Hi Get Tunisia Transfer 👋
+  const getDriverMessage = () => {
+    switch(language) {
+      case 'fr':
+        return `Bonjour Get Tunisia Transfer 👋
+Je souhaite postuler comme conducteur :
+• Nom
+• Ville/Zone(s)
+• Type de véhicule
+• Années d'expérience
+• Langues parlées
+• Numéro WhatsApp
+• Documents prêts (ID/Permis): Oui/Non
+Application Ref: ${bookingReference}`;
+      case 'ar':
+        return `مرحباً Get Tunisia Transfer 👋
+أود التقدم كسائق:
+• الاسم
+• المدينة/المنطقة
+• نوع السيارة
+• سنوات الخبرة
+• اللغات
+• رقم واتساب
+• الوثائق جاهزة (هوية/رخصة): نعم/لا
+Application Ref: ${bookingReference}`;
+      default:
+        return `Hi Get Tunisia Transfer 👋
 I'd like to apply as a driver:
-• Name:
-• City/Zone(s):
-• Vehicle type:
-• Years experience:
-• Languages:
-• WhatsApp number:
+• Name
+• City/Zone(s)
+• Vehicle type
+• Years experience
+• Languages
+• WhatsApp number
 • Docs ready (ID/License): Yes/No
 Application Ref: ${bookingReference}`;
+    }
+  };
+
+  const handleWhatsAppClick = () => {
+    trackClick('WhatsApp Driver');
+    const message = getDriverMessage();
     
     const encodedMessage = encodeURIComponent(message);
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -62,19 +91,7 @@ Application Ref: ${bookingReference}`;
   const handleEmailClick = () => {
     trackClick('Email Driver');
     const subject = "Driver Application – Get Tunisia Transfer";
-    const body = `Hi Get Tunisia Transfer,
-
-I'd like to apply as a driver:
-• Name:
-• City/Zone(s):
-• Vehicle type:
-• Years experience:
-• Languages:
-• WhatsApp number:
-• Docs ready (ID/License): Yes/No
-Application Ref: ${bookingReference}
-
-Best regards`;
+    const body = getDriverMessage();
     
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
@@ -86,8 +103,8 @@ Best regards`;
   return (
     <Card className={`w-full max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="driver">
       <CardHeader>
-        <CardTitle className="text-2xl text-tunisia-blue">Drivers Wanted – Earn with Your Car</CardTitle>
-        <CardDescription>Join our network of professional drivers. Contact us to apply and start earning.</CardDescription>
+        <CardTitle className="text-2xl text-tunisia-blue">{t('driver_recruitment.headline')}</CardTitle>
+        <CardDescription>{t('driver_recruitment.subline')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Application Reference Display */}
@@ -130,10 +147,10 @@ Best regards`;
           </Button>
         </div>
 
-        {/* Privacy Notice */}
-        <div className="text-xs text-muted-foreground text-center p-3 bg-muted/50 rounded">
-          By contacting us you consent to us replying via WhatsApp or email.
-        </div>
+          {/* Privacy Notice */}
+          <div className="text-xs text-muted-foreground text-center p-3 bg-muted/50 rounded">
+            {t('privacy.note')}
+          </div>
       </CardContent>
     </Card>
   );

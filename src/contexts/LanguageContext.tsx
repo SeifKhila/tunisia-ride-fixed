@@ -147,6 +147,20 @@ const translations = {
     // Routes
     'routes.guarantee': 'Best price guaranteed • No hidden fees • Free waiting & child seats',
 
+    // Payment
+    'payment.pay_deposit': 'Pay Deposit',
+    'payment.deposit_message': 'To confirm your ride, please pay a 25% deposit online. Balance due to the driver at pickup.',
+    'payment.booking_reference': 'Booking Reference:',
+    'payment.copy_reference': 'Copy this reference for your payment',
+    'payment.currency': 'Currency:',
+    'payment.pay_with_paypal': 'Pay with PayPal',
+    'payment.pay_with_revolut': 'Pay with Revolut',
+    'payment.paypal_instructions': 'PayPal Instructions:',
+    'payment.revolut_instructions': 'Revolut Instructions:',
+    'payment.paste_reference_note': 'Paste your Booking Ref in the PayPal Note.',
+    'payment.paste_reference_message': 'Paste your Booking Ref in the Revolut Message.',
+    'payment.disclaimer': 'Payments processed by PayPal or Revolut. We do not store card details.',
+
     // Footer
     'footer.contact_tunisia': 'Tunisia Contact',
     'footer.contact_uk': 'UK Contact',
@@ -276,6 +290,20 @@ const translations = {
     // Routes
     'routes.guarantee': 'Meilleur prix garanti • Pas de frais cachés • Attente et sièges enfant gratuits',
 
+    // Payment
+    'payment.pay_deposit': 'Payer l\'acompte',
+    'payment.deposit_message': 'Pour confirmer votre trajet, veuillez payer un acompte de 25% en ligne. Solde dû au chauffeur lors de la prise en charge.',
+    'payment.booking_reference': 'Référence de réservation :',
+    'payment.copy_reference': 'Copiez cette référence pour votre paiement',
+    'payment.currency': 'Devise :',
+    'payment.pay_with_paypal': 'Payer avec PayPal',
+    'payment.pay_with_revolut': 'Payer avec Revolut',
+    'payment.paypal_instructions': 'Instructions PayPal :',
+    'payment.revolut_instructions': 'Instructions Revolut :',
+    'payment.paste_reference_note': 'Collez votre réf. de réservation dans la note PayPal.',
+    'payment.paste_reference_message': 'Collez votre réf. de réservation dans le message Revolut.',
+    'payment.disclaimer': 'Paiements traités par PayPal ou Revolut. Nous ne stockons pas les détails de carte.',
+
     // Footer
     'footer.contact_tunisia': 'Contact Tunisie',
     'footer.contact_uk': 'Contact UK',
@@ -404,22 +432,36 @@ const translations = {
     'excursions.plan_button': 'خطط لرحلتي',
     'excursions.custom_note': 'توقفات مخصصة ورحلات جماعية متاحة عند الطلب',
     
+    // Payment
+    'payment.pay_deposit': 'ادفع المقدم',
+    'payment.deposit_message': 'لتأكيد رحلتك، يرجى دفع مقدم 25٪ عبر الإنترنت. الرصيد مستحق للسائق عند الاستلام.',
+    'payment.booking_reference': 'مرجع الحجز:',
+    'payment.copy_reference': 'انسخ هذا المرجع لدفعتك',
+    'payment.currency': 'العملة:',
+    'payment.pay_with_paypal': 'ادفع بـ PayPal',
+    'payment.pay_with_revolut': 'ادفع بـ Revolut',
+    'payment.paypal_instructions': 'تعليمات PayPal:',
+    'payment.revolut_instructions': 'تعليمات Revolut:',
+    'payment.paste_reference_note': 'الصق مرجع حجزك في ملاحظة PayPal.',
+    'payment.paste_reference_message': 'الصق مرجع حجزك في رسالة Revolut.',
+    'payment.disclaimer': 'المدفوعات تتم معالجتها بواسطة PayPal أو Revolut. نحن لا نحفظ تفاصيل البطاقة.',
+
     // Routes
     'routes.guarantee': 'أفضل سعر مضمون • لا رسوم خفية • انتظار ومقاعد أطفال مجانية',
 
     // Footer
-    'footer.contact_tunisia': 'التواصل تونس',
-    'footer.contact_uk': 'التواصل المملكة المتحدة',
+    'footer.contact_tunisia': 'اتصال تونس',
+    'footer.contact_uk': 'اتصال المملكة المتحدة',
     'footer.email': 'info@get-tunisia-transfer.com',
     'footer.payment_methods': 'طرق الدفع',
     'footer.revolut': 'Revolut',
     'footer.paypal': 'PayPal',
-    'footer.cash': 'النقد',
-    'footer.service_desc': 'خدمات نقل المطار المهنية عبر تونس',
-    'footer.pricing_note': 'جميع الأسعار تشمل الضرائب والرسوم. لا رسوم خفية.',
+    'footer.cash': 'نقداً',
+    'footer.service_desc': 'خدمات نقل المطار المهنية في جميع أنحاء تونس',
+    'footer.pricing_note': 'جميع الأسعار تشمل الضرائب والرسوم. لا توجد رسوم خفية.',
     'footer.copyright': '© 2024 Get Transfer Tunisia. جميع الحقوق محفوظة.',
 
     // Driver Recruitment
-    'driver_recruitment.title': 'السائقون: احصلوا على المزيد من رحلات المطار. قدّم الآن.',
+    'driver_recruitment.title': 'السائقون: احصلوا على المزيد من وظائف المطار. قدموا الآن.',
   }
 };

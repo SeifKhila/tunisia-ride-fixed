@@ -38,10 +38,32 @@ const BookingForm = () => {
     toast.success("Booking reference copied to clipboard!");
   };
 
-  const handleWhatsAppClick = () => {
-    trackClick('WhatsApp Book');
-    setShowPayment(true);
-    const message = `Hi Get Tunisia Transfer 👋
+  const getBookingMessage = () => {
+    switch(language) {
+      case 'fr':
+        return `Bonjour Get Tunisia Transfer 👋
+Je souhaite réserver un transfert :
+• Nom :
+• Lieu de prise en charge :
+• Destination :
+• Date/Heure :
+• Passagers/Bagages :
+• Numéro de vol :
+• Remarques :
+Réf réservation : ${bookingReference}`;
+      case 'ar':
+        return `مرحباً Get Tunisia Transfer 👋
+أرغب في حجز نقل:
+• الاسم:
+• موقع الانطلاق:
+• الوجهة:
+• التاريخ/الوقت:
+• عدد الركاب/الأمتعة:
+• رقم الرحلة:
+• ملاحظات:
+رقم الحجز: ${bookingReference}`;
+      default:
+        return `Hi Get Tunisia Transfer 👋
 I'd like to book a transfer:
 • Name:
 • Pickup:
@@ -51,6 +73,13 @@ I'd like to book a transfer:
 • Flight No:
 • Notes:
 Booking Ref: ${bookingReference}`;
+    }
+  };
+
+  const handleWhatsAppClick = () => {
+    trackClick('WhatsApp Book');
+    setShowPayment(true);
+    const message = getBookingMessage();
     
     const encodedMessage = encodeURIComponent(message);
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -66,19 +95,7 @@ Booking Ref: ${bookingReference}`;
     trackClick('Email Book');
     setShowPayment(true);
     const subject = "New Booking Enquiry – Get Tunisia Transfer";
-    const body = `Hi Get Tunisia Transfer,
-
-I'd like to book a transfer:
-• Name:
-• Pickup:
-• Drop-off:
-• Date/Time:
-• Pax/Bags:
-• Flight No:
-• Notes:
-Booking Ref: ${bookingReference}
-
-Best regards`;
+    const body = getBookingMessage();
     
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
@@ -144,21 +161,19 @@ Best regards`;
 
           {/* Privacy Notice */}
           <div className="text-xs text-muted-foreground text-center p-3 bg-muted/50 rounded">
-            By contacting us you consent to us replying via WhatsApp or email.
+            {t('privacy.note')}
           </div>
         </CardContent>
       </Card>
 
-      {/* Payment Deposit Section - Shows after contact button click */}
-      {showPayment && (
-        <PaymentDeposit 
-          defaultAmount={25}
-          onPaymentInitiated={(method, amount, currency) => {
-            trackClick(`${method} Pay`);
-            toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);
-          }}
-        />
-      )}
+      {/* Payment Deposit Section - Always visible */}
+      <PaymentDeposit 
+        defaultAmount={25}
+        onPaymentInitiated={(method, amount, currency) => {
+          trackClick(`${method} Pay`);
+          toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);
+        }}
+      />
     </div>
   );
 };
