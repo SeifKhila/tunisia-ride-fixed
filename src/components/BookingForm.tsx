@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const airports = [
   { code: 'NBE', name: 'Enfidha' },
@@ -47,17 +48,38 @@ const BookingForm = () => {
     consent: false
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submissionResult, setSubmissionResult] = useState<{ bookingId?: string; success: boolean } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.consent) {
       toast.error("Please accept the cancellation policy");
       return;
     }
     
-    const bookingId = Math.random().toString(36).substr(2, 9).toUpperCase();
-    setIsSubmitted(true);
-    toast.success(t('booking.success').replace('{{ID}}', bookingId));
+    setIsLoading(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('submit-booking', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        setSubmissionResult({ bookingId: data.bookingId, success: true });
+        setIsSubmitted(true);
+        toast.success(t('booking.success').replace('{{ID}}', data.bookingId));
+      } else {
+        throw new Error(data.error || 'Failed to submit booking');
+      }
+    } catch (error: any) {
+      console.error('Booking submission error:', error);
+      toast.error('Failed to submit booking. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -71,7 +93,7 @@ const BookingForm = () => {
           <div className="text-6xl mb-4">✅</div>
           <h3 className="text-2xl font-bold text-tunisia-blue mb-4">Booking Submitted!</h3>
           <p className="text-muted-foreground">
-            {t('booking.success').replace('{{ID}}', 'GT-' + Math.random().toString(36).substr(2, 9).toUpperCase())}
+            {t('booking.success').replace('{{ID}}', submissionResult?.bookingId || 'GT-XXXXXXX')}
           </p>
         </CardContent>
       </Card>
@@ -327,9 +349,9 @@ const BookingForm = () => {
           <Button 
             type="submit" 
             className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-semibold"
-            disabled={!formData.consent}
+            disabled={!formData.consent || isLoading}
           >
-            {t('booking.submit')}
+            {isLoading ? "Submitting..." : t('booking.submit')}
           </Button>
         </form>
       </CardContent>

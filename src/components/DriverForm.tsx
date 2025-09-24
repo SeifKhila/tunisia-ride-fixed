@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const DriverForm = () => {
   const { t, language } = useLanguage();
@@ -22,16 +23,38 @@ const DriverForm = () => {
     consent: false
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submissionResult, setSubmissionResult] = useState<{ applicationId?: string; success: boolean } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.consent) {
       toast.error("Please accept the terms and conditions");
       return;
     }
     
-    setIsSubmitted(true);
-    toast.success(t('driver.success'));
+    setIsLoading(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('submit-driver-application', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        setSubmissionResult({ applicationId: data.applicationId, success: true });
+        setIsSubmitted(true);
+        toast.success(t('driver.success'));
+      } else {
+        throw new Error(data.error || 'Failed to submit driver application');
+      }
+    } catch (error: any) {
+      console.error('Driver application submission error:', error);
+      toast.error('Failed to submit application. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -169,9 +192,9 @@ const DriverForm = () => {
           <Button 
             type="submit" 
             className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-semibold"
-            disabled={!formData.consent}
+            disabled={!formData.consent || isLoading}
           >
-            {t('driver.submit')}
+            {isLoading ? "Submitting..." : t('driver.submit')}
           </Button>
         </form>
       </CardContent>
