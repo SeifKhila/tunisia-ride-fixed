@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
-import BookingForm from "@/components/BookingForm";
-import DriverForm from "@/components/DriverForm";
+import ContactButtons from "@/components/ContactButtons";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
 import FAQ from "@/components/FAQ";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -91,7 +91,7 @@ const Index = () => {
             </Button>
             
             <Button 
-              onClick={() => document.getElementById('drivers')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('driver')?.scrollIntoView({ behavior: 'smooth' })}
               variant="alt"
               className="min-w-[200px] min-h-[56px] text-lg"
               aria-label="Apply to become a driver"
@@ -130,9 +130,9 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16 space-y-20">
-        {/* Booking Form Section */}
+        {/* Booking Section */}
         <section className="space-y-8">
-          <BookingForm />
+          <ContactButtons type="booking" />
         </section>
 
         {/* How It Works Section */}
@@ -338,7 +338,7 @@ const Index = () => {
                 {t('driver_recruitment.title')}
               </h2>
               <Button
-                onClick={() => document.getElementById('drivers')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('driver')?.scrollIntoView({ behavior: 'smooth' })}
                 variant="cta"
                 className="bg-white/10 backdrop-blur-sm border-white/20 min-h-[48px]"
               >
@@ -348,11 +348,14 @@ const Index = () => {
           </Card>
         </section>
 
-        {/* Driver Form Section */}
+        {/* Driver Section */}
         <section className="space-y-8">
-          <DriverForm />
+          <ContactButtons type="driver" />
         </section>
       </main>
+
+      {/* Floating WhatsApp Button */}
+      <FloatingWhatsApp />
 
       {/* Footer */}
       <footer className={`bg-tunisia-blue text-white py-8 ${language === 'ar' ? 'font-arabic' : ''}`}>
