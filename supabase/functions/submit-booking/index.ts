@@ -8,6 +8,26 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+// Input validation schema
+const bookingSchema = {
+  name: { required: true, maxLength: 100 },
+  email: { required: true, maxLength: 255, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+  phone: { required: true, maxLength: 20 },
+  fromAirport: { required: true, maxLength: 100 },
+  destination: { required: true, maxLength: 200 },
+  customDestination: { maxLength: 200 },
+  pickupDate: { required: true },
+  pickupTime: { required: true },
+  flightNumber: { maxLength: 20 },
+  tripType: { required: true, maxLength: 50 },
+  returnDate: { maxLength: 20 },
+  passengers: { required: true, pattern: /^[1-8]$/ },
+  bags: { required: true, maxLength: 50 },
+  childSeats: { required: true, maxLength: 50 },
+  vehicleType: { required: true, maxLength: 50 },
+  notes: { maxLength: 1000 }
+};
+
 interface BookingRequest {
   name: string;
   email: string;
@@ -27,12 +47,53 @@ interface BookingRequest {
   notes?: string;
 }
 
+// Input validation function
+function validateBookingRequest(data: any): { isValid: boolean; errors: string[] } {
+  const errors: string[] = [];
+  
+  for (const [field, rules] of Object.entries(bookingSchema)) {
+    const value = data[field];
+    
+    if (rules.required && (value === undefined || value === null || value === '')) {
+      errors.push(`${field} is required`);
+      continue;
+    }
+    
+    if (value !== undefined && value !== null && value !== '') {
+      if (rules.maxLength && String(value).length > rules.maxLength) {
+        errors.push(`${field} must be less than ${rules.maxLength} characters`);
+      }
+      
+      if (rules.pattern && !rules.pattern.test(String(value))) {
+        errors.push(`${field} format is invalid`);
+      }
+    }
+  }
+  
+  return { isValid: errors.length === 0, errors };
+}
+
+// Sanitize input to prevent injection
+function sanitizeInput(input: string): string {
+  return input.replace(/[<>]/g, '').trim();
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Check request size limit (1MB)
+    const contentLength = req.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 1024 * 1024) {
+      console.log('Request too large');
+      return new Response(
+        JSON.stringify({ error: 'Request too large' }), 
+        { status: 413, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -41,25 +102,49 @@ const handler = async (req: Request): Promise<Response> => {
     const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
     const bookingData: BookingRequest = await req.json();
-    console.log("Received booking request:", bookingData);
+    
+    // Validate input
+    const validation = validateBookingRequest(bookingData);
+    if (!validation.isValid) {
+      console.log('Validation failed:', validation.errors);
+      return new Response(
+        JSON.stringify({ error: 'Invalid input', details: validation.errors }), 
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    console.log("Received booking request:", { ...bookingData, phone: '[REDACTED]' });
 
     // Generate booking ID
     const bookingId = 'GT-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+    // Sanitize inputs
+    const sanitizedData = {
+      ...bookingData,
+      name: sanitizeInput(bookingData.name),
+      email: sanitizeInput(bookingData.email),
+      phone: sanitizeInput(bookingData.phone),
+      fromAirport: sanitizeInput(bookingData.fromAirport),
+      destination: sanitizeInput(bookingData.destination),
+      customDestination: bookingData.customDestination ? sanitizeInput(bookingData.customDestination) : undefined,
+      flightNumber: bookingData.flightNumber ? sanitizeInput(bookingData.flightNumber) : undefined,
+      notes: bookingData.notes ? sanitizeInput(bookingData.notes) : undefined
+    };
 
     // Store in transfer_requests table
     const { data: request, error: dbError } = await supabase
       .from('transfer_requests')
       .insert({
-        customer_email: bookingData.email,
-        customer_phone: bookingData.phone,
-        pickup_address: `${bookingData.fromAirport} Airport`,
-        dropoff_address: bookingData.destination === 'Other' ? bookingData.customDestination : bookingData.destination,
-        pickup_date: bookingData.pickupDate,
-        pickup_time: bookingData.pickupTime,
-        flight_number: bookingData.flightNumber,
-        passengers: parseInt(bookingData.passengers),
-        luggage: bookingData.bags === 'Small' ? 1 : bookingData.bags === 'Medium' ? 2 : 3,
-        special_requirements: `Name: ${bookingData.name}\nTrip Type: ${bookingData.tripType}\nReturn Date: ${bookingData.returnDate || 'N/A'}\nVehicle Type: ${bookingData.vehicleType}\nChild Seats: ${bookingData.childSeats}\nNotes: ${bookingData.notes || 'None'}`,
+        customer_email: sanitizedData.email,
+        customer_phone: sanitizedData.phone,
+        pickup_address: `${sanitizedData.fromAirport} Airport`,
+        dropoff_address: sanitizedData.destination === 'Other' ? sanitizedData.customDestination : sanitizedData.destination,
+        pickup_date: sanitizedData.pickupDate,
+        pickup_time: sanitizedData.pickupTime,
+        flight_number: sanitizedData.flightNumber,
+        passengers: parseInt(sanitizedData.passengers),
+        luggage: sanitizedData.bags === 'Small' ? 1 : sanitizedData.bags === 'Medium' ? 2 : 3,
+        special_requirements: `Name: ${sanitizedData.name}\nTrip Type: ${sanitizedData.tripType}\nReturn Date: ${sanitizedData.returnDate || 'N/A'}\nVehicle Type: ${sanitizedData.vehicleType}\nChild Seats: ${sanitizedData.childSeats}\nNotes: ${sanitizedData.notes || 'None'}`,
         pickup_lat: 0, // Will be updated with actual coordinates later
         pickup_lng: 0,
         dropoff_lat: 0,
@@ -87,25 +172,25 @@ const handler = async (req: Request): Promise<Response> => {
           html: `
             <h2>New Booking Request Received</h2>
             <p><strong>Booking ID:</strong> ${bookingId}</p>
-            <p><strong>Customer:</strong> ${bookingData.name}</p>
-            <p><strong>Email:</strong> ${bookingData.email}</p>
-            <p><strong>Phone:</strong> ${bookingData.phone}</p>
+            <p><strong>Customer:</strong> ${sanitizedData.name}</p>
+            <p><strong>Email:</strong> ${sanitizedData.email}</p>
+            <p><strong>Phone:</strong> ${sanitizedData.phone}</p>
             
             <h3>Trip Details</h3>
-            <p><strong>From:</strong> ${bookingData.fromAirport} Airport</p>
-            <p><strong>To:</strong> ${bookingData.destination === 'Other' ? bookingData.customDestination : bookingData.destination}</p>
-            <p><strong>Date:</strong> ${bookingData.pickupDate}</p>
-            <p><strong>Time:</strong> ${bookingData.pickupTime}</p>
-            <p><strong>Flight:</strong> ${bookingData.flightNumber || 'Not provided'}</p>
-            <p><strong>Trip Type:</strong> ${bookingData.tripType}</p>
-            ${bookingData.returnDate ? `<p><strong>Return Date:</strong> ${bookingData.returnDate}</p>` : ''}
+            <p><strong>From:</strong> ${sanitizedData.fromAirport} Airport</p>
+            <p><strong>To:</strong> ${sanitizedData.destination === 'Other' ? sanitizedData.customDestination : sanitizedData.destination}</p>
+            <p><strong>Date:</strong> ${sanitizedData.pickupDate}</p>
+            <p><strong>Time:</strong> ${sanitizedData.pickupTime}</p>
+            <p><strong>Flight:</strong> ${sanitizedData.flightNumber || 'Not provided'}</p>
+            <p><strong>Trip Type:</strong> ${sanitizedData.tripType}</p>
+            ${sanitizedData.returnDate ? `<p><strong>Return Date:</strong> ${sanitizedData.returnDate}</p>` : ''}
             
             <h3>Additional Info</h3>
-            <p><strong>Passengers:</strong> ${bookingData.passengers}</p>
-            <p><strong>Luggage:</strong> ${bookingData.bags}</p>
-            <p><strong>Child Seats:</strong> ${bookingData.childSeats}</p>
-            <p><strong>Vehicle Type:</strong> ${bookingData.vehicleType}</p>
-            ${bookingData.notes ? `<p><strong>Notes:</strong> ${bookingData.notes}</p>` : ''}
+            <p><strong>Passengers:</strong> ${sanitizedData.passengers}</p>
+            <p><strong>Luggage:</strong> ${sanitizedData.bags}</p>
+            <p><strong>Child Seats:</strong> ${sanitizedData.childSeats}</p>
+            <p><strong>Vehicle Type:</strong> ${sanitizedData.vehicleType}</p>
+            ${sanitizedData.notes ? `<p><strong>Notes:</strong> ${sanitizedData.notes}</p>` : ''}
             
             <p><em>Please respond to the customer as soon as possible.</em></p>
           `,
@@ -118,26 +203,26 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Send autoresponder to customer
-    console.log(`Sending autoresponder to customer: ${bookingData.email}`);
+    console.log(`Sending autoresponder to customer: ${sanitizedData.email}`);
     try {
       const customerResult = await resend.emails.send({
         from: "Tunisia Transfer <onboarding@resend.dev>",
-        to: [bookingData.email],
+        to: [sanitizedData.email],
         subject: "Booking Request Received - Tunisia Transfer",
         html: `
           <h2>Thank you for your booking request!</h2>
-          <p>Dear ${bookingData.name},</p>
+          <p>Dear ${sanitizedData.name},</p>
           
           <p>We have successfully received your transfer booking request with ID: <strong>${bookingId}</strong></p>
           
           <p>Our team will review your request and get back to you shortly with a quote and confirmation details.</p>
           
           <h3>Your Booking Details</h3>
-          <p><strong>From:</strong> ${bookingData.fromAirport} Airport</p>
-          <p><strong>To:</strong> ${bookingData.destination === 'Other' ? bookingData.customDestination : bookingData.destination}</p>
-          <p><strong>Date:</strong> ${bookingData.pickupDate}</p>
-          <p><strong>Time:</strong> ${bookingData.pickupTime}</p>
-          <p><strong>Passengers:</strong> ${bookingData.passengers}</p>
+          <p><strong>From:</strong> ${sanitizedData.fromAirport} Airport</p>
+          <p><strong>To:</strong> ${sanitizedData.destination === 'Other' ? sanitizedData.customDestination : sanitizedData.destination}</p>
+          <p><strong>Date:</strong> ${sanitizedData.pickupDate}</p>
+          <p><strong>Time:</strong> ${sanitizedData.pickupTime}</p>
+          <p><strong>Passengers:</strong> ${sanitizedData.passengers}</p>
           
           <p>If you have any urgent questions, please contact us at info@get-tunisia-transfer.com or call us.</p>
           
@@ -169,7 +254,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message || "An error occurred processing your booking" 
+        error: "An error occurred processing your booking" 
       }),
       {
         status: 500,
