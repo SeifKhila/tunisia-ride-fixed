@@ -26,7 +26,10 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
   // Generate booking reference if not provided
   useEffect(() => {
     if (!bookingReference) {
-      const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const today = new Date();
+      const date = today.getFullYear().toString() + 
+                  (today.getMonth() + 1).toString().padStart(2, '0') + 
+                  today.getDate().toString().padStart(2, '0');
       const random = Math.floor(Math.random() * 99) + 1;
       const reference = `GT-${date}-${random.toString().padStart(2, '0')}`;
       setGeneratedReference(reference);
@@ -87,7 +90,7 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Please include this reference in your payment message
+            Copy this reference for your payment
           </p>
         </div>
 
@@ -140,14 +143,14 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
           <div className="p-3 bg-muted/50 rounded border">
             <p className="font-medium text-tunisia-blue mb-1">PayPal Instructions:</p>
             <p className="text-muted-foreground">
-              Please paste your booking reference <strong>{displayReference}</strong> in the note field during payment.
+              Please paste your booking reference in the note field during payment.
             </p>
           </div>
           
           <div className="p-3 bg-muted/50 rounded border">
             <p className="font-medium text-tunisia-blue mb-1">Revolut Instructions:</p>
             <p className="text-muted-foreground">
-              Please paste your booking reference <strong>{displayReference}</strong> in the message field during payment.
+              Please paste your booking reference in the message field during payment.
             </p>
           </div>
         </div>
@@ -157,12 +160,13 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <svg width="32" height="20" viewBox="0 0 32 20" className="border rounded">
               <rect width="32" height="20" fill="#1a1f71"/>
-              <text x="16" y="13" textAnchor="middle" fill="white" fontSize="8" fontFamily="Arial">VISA</text>
+              <text x="16" y="13" textAnchor="middle" fill="white" fontSize="8" fontFamily="Arial, sans-serif">VISA</text>
             </svg>
             <svg width="32" height="20" viewBox="0 0 32 20" className="border rounded">
-              <rect width="32" height="20" fill="#eb001b"/>
-              <circle cx="12" cy="10" r="6" fill="#ff5f00"/>
+              <rect width="32" height="20" fill="white"/>
+              <circle cx="12" cy="10" r="6" fill="#eb001b"/>
               <circle cx="20" cy="10" r="6" fill="#f79e1b"/>
+              <circle cx="16" cy="10" r="6" fill="#ff5f00"/>
             </svg>
           </div>
         </div>
