@@ -47,40 +47,11 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
     }
   };
 
-  const handlePayPalPayment = () => {
-    const paypalUrl = `https://www.paypal.me/seifkhila1/${paymentAmount}${paymentCurrency}`;
-    window.open(paypalUrl, '_blank', 'noopener,noreferrer');
-    toast.success(`Payment initiated via PayPal for ${paymentAmount} ${paymentCurrency}`);
-  };
-
-  const handleRevolutPayment = () => {
-    const revolutUrl = `https://revolut.me/seifededju/${paymentAmount}${paymentCurrency.toLowerCase()}`;
-    window.open(revolutUrl, '_blank', 'noopener,noreferrer');
-    toast.success(`Payment initiated via Revolut for ${paymentAmount} ${paymentCurrency}`);
-  };
-
-  const handleWhatsAppBooking = () => {
-    const message = encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`);
-    const link = `https://wa.me/447956643662?text=${message}`;
-    
-    // Create a temporary link element to handle the navigation properly
-    const tempLink = document.createElement('a');
-    tempLink.href = link;
-    tempLink.target = '_blank';
-    tempLink.rel = 'noopener noreferrer';
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
-  };
-
-  const handleEmailBooking = () => {
-    const subject = "New Booking Enquiry – Get Tunisia Transfer";
-    const body = `Hi Get Tunisia Transfer\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`;
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    const link = `mailto:khilas592@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-    window.open(link, '_self');
-  };
+  // Payment and contact URLs
+  const paypalUrl = `https://www.paypal.me/seifkhila1/${paymentAmount}${paymentCurrency}`;
+  const revolutUrl = `https://revolut.me/seifededju/${paymentAmount}${paymentCurrency.toLowerCase()}`;
+  const whatsappUrl = `https://wa.me/447956643662?text=${encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`;
+  const emailUrl = `mailto:khilas592@gmail.com?subject=${encodeURIComponent("New Booking Enquiry – Get Tunisia Transfer")}&body=${encodeURIComponent(`Hi Get Tunisia Transfer\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -169,29 +140,41 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
 
           {/* Payment Buttons */}
           <div className="space-y-3">
-            <Button
-              onClick={handlePayPalPayment}
-              className="w-full h-14 bg-[#0070ba] hover:bg-[#005a9c] text-white font-semibold text-base flex items-center justify-center gap-3"
-              aria-label={`Pay deposit with PayPal – 25% of fare (${paymentAmount} ${paymentCurrency})`}
+            <a
+              href={paypalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
-                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.928C5.026 2.407 5.474 2 5.998 2h7.46c2.57 0 4.578.543 5.69 1.531 1.05.93 1.51 2.188 1.51 3.501 0 1.998-.797 3.592-2.314 4.632-.454.312-.956.55-1.483.709-.263.08-.53.148-.797.201-.05.01-.101.02-.152.029L15.814 13l-2.076-.001c-1.622 0-2.688.35-3.24 1.078-.264.348-.404.74-.404 1.143 0 .804.294 1.482.876 2.024.579.54 1.365.812 2.344.812 1.197 0 2.168-.272 2.883-.81.296-.223.537-.495.719-.81l.017-.032c.132-.256.2-.537.2-.837 0-.622-.186-1.117-.557-1.48-.372-.366-.867-.548-1.486-.548-.273 0-.525.04-.756.119-.232.079-.438.195-.616.347l-.015.013c-.177.152-.266.337-.266.553 0 .216.089.401.266.553.177.152.383.268.615.347.231.079.483.119.756.119.619 0 1.114.182 1.486.548.371.363.557.858.557 1.48 0 .3-.068.581-.2.837l-.017.032c-.182.315-.423.587-.719.81-.715.538-1.686.81-2.883.81-.979 0-1.765-.272-2.344-.812-.582-.542-.876-1.22-.876-2.024 0-.403.14-.795.404-1.143.552-.728 1.618-1.078 3.24-1.078L15.814 13l.1-.001z"/>
-              </svg>
-              Pay Deposit via PayPal
-              <ExternalLink className="w-4 h-4" />
-            </Button>
+              <Button
+                className="w-full h-14 bg-[#0070ba] hover:bg-[#005a9c] text-white font-semibold text-base flex items-center justify-center gap-3"
+                aria-label={`Pay deposit with PayPal – 25% of fare (${paymentAmount} ${paymentCurrency})`}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
+                  <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.928C5.026 2.407 5.474 2 5.998 2h7.46c2.57 0 4.578.543 5.69 1.531 1.05.93 1.51 2.188 1.51 3.501 0 1.998-.797 3.592-2.314 4.632-.454.312-.956.55-1.483.709-.263.08-.53.148-.797.201-.05.01-.101.02-.152.029L15.814 13l-2.076-.001c-1.622 0-2.688.35-3.24 1.078-.264.348-.404.74-.404 1.143 0 .804.294 1.482.876 2.024.579.54 1.365.812 2.344.812 1.197 0 2.168-.272 2.883-.81.296-.223.537-.495.719-.81l.017-.032c.132-.256.2-.537.2-.837 0-.622-.186-1.117-.557-1.48-.372-.366-.867-.548-1.486-.548-.273 0-.525.04-.756.119-.232.079-.438.195-.616.347l-.015.013c-.177.152-.266.337-.266.553 0 .216.089.401.266.553.177.152.383.268.615.347.231.079.483.119.756.119.619 0 1.114.182 1.486.548.371.363.557.858.557 1.48 0 .3-.068.581-.2.837l-.017.032c-.182.315-.423.587-.719.81-.715.538-1.686.81-2.883.81-.979 0-1.765-.272-2.344-.812-.582-.542-.876-1.22-.876-2.024 0-.403.14-.795.404-1.143.552-.728 1.618-1.078 3.24-1.078L15.814 13l.1-.001z"/>
+                </svg>
+                Pay Deposit via PayPal
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </a>
 
-            <Button
-              onClick={handleRevolutPayment}
-              className="w-full h-14 bg-[#0075eb] hover:bg-[#0066d1] text-white font-semibold text-base flex items-center justify-center gap-3"
-              aria-label={`Pay deposit with Revolut – 25% of fare (${paymentAmount} ${paymentCurrency})`}
+            <a
+              href={revolutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 13.5h-9v-3h9v3zm0-4.5h-9V8h9v3z"/>
-              </svg>
-              Pay Deposit via Revolut
-              <ExternalLink className="w-4 w-4" />
-            </Button>
+              <Button
+                className="w-full h-14 bg-[#0075eb] hover:bg-[#0066d1] text-white font-semibold text-base flex items-center justify-center gap-3"
+                aria-label={`Pay deposit with Revolut – 25% of fare (${paymentAmount} ${paymentCurrency})`}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
+                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 13.5h-9v-3h9v3zm0-4.5h-9V8h9v3z"/>
+                </svg>
+                Pay Deposit via Revolut
+                <ExternalLink className="w-4 w-4" />
+              </Button>
+            </a>
           </div>
 
           {/* Contact Options */}
@@ -201,33 +184,33 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
             </p>
             
             <div className="grid grid-cols-2 gap-3">
-          <a 
-            href={`https://wa.me/447956643662?text=${encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full"
-          >
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
-            >
-              <MessageCircle className="h-4 w-4" />
-              WhatsApp
-            </Button>
-          </a>
-          
-          <a
-            href={`mailto:khilas592@gmail.com?subject=${encodeURIComponent("New Booking Enquiry – Get Tunisia Transfer")}&body=${encodeURIComponent(`Hi Get Tunisia Transfer\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`}
-            className="block w-full"
-          >
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
-            >
-              <Mail className="h-4 w-4" />
-              Email
-            </Button>
-          </a>
+              <a 
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full"
+              >
+                <Button
+                  variant="outline"
+                  className="w-full flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </Button>
+              </a>
+              
+              <a
+                href={emailUrl}
+                className="block w-full"
+              >
+                <Button
+                  variant="outline"
+                  className="w-full flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+                >
+                  <Mail className="h-4 w-4" />
+                  Email
+                </Button>
+              </a>
             </div>
           </div>
 
