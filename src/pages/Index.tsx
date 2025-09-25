@@ -1,24 +1,28 @@
+import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Clock, CheckCircle, Shield, Users, Star, MapPin, Calendar, CreditCard, Phone, Mail, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
-import BookingForm from "@/components/BookingForm";
-import DriverForm from "@/components/DriverForm";
+import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
-import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
+import BookingForm from "@/components/BookingForm";
+import PricingTable from "@/components/PricingTable";
 import FAQ from "@/components/FAQ";
 import TestimonialSection from "@/components/TestimonialSection";
-import PricingTable from "@/components/PricingTable";
-import Footer from "@/components/Footer";
-import CurrencySelector from "@/components/CurrencySelector";
+import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
+import DriverForm from "@/components/DriverForm";
+import ToolsPanel from "@/components/ToolsPanel";
+import FooterDecorative from "@/components/FooterDecorative";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import { Phone, Mail, MessageCircle, MapPin, Users, Shield, Clock } from "lucide-react";
+import { Helmet } from 'react-helmet';
 import tunisiaHero from "@/assets/tunisia-hero-new.jpg";
-import { Helmet } from "react-helmet";
+import beachBackground from "@/assets/beach-background.webp";
+import saharaBackground from "@/assets/sahara-background.webp";
 
 const Index = () => {
   const { t, language } = useLanguage();
-  const { formatPrice, convertFromEUR } = useCurrency();
+  const { formatPrice } = useCurrency();
 
   // SEO Meta Tags based on language
   const getMetaTags = () => {
@@ -55,29 +59,23 @@ const Index = () => {
   };
 
   const topRoutes = [
-    { from: 'Enfidha', to: 'Hammamet', basePrice: 35, baseCurrency: 'EUR' as const, route: 'Enfidha → Hammamet' },
-    { from: 'Tunis', to: 'Hammamet', basePrice: 45, baseCurrency: 'EUR' as const, route: 'Tunis → Hammamet' },
-    { from: 'Monastir', to: 'Sousse', basePrice: 40, baseCurrency: 'EUR' as const, route: 'Monastir → Sousse' },
-    { from: 'Djerba', to: 'Midoun', basePrice: 42, baseCurrency: 'EUR' as const, route: 'Djerba → Midoun' }
+    { from: 'Enfidha', to: 'Hammamet', price: 35, duration: '45 min' },
+    { from: 'Tunis', to: 'Hammamet', price: 45, duration: '60 min' },
+    { from: 'Monastir', to: 'Sousse', price: 40, duration: '30 min' },
+    { from: 'Djerba', to: 'Midoun', price: 42, duration: '20 min' }
   ];
 
   const excursions = [
-    { name: 'Hammamet → Sidi Bou Said', duration: 'half-day', price: '200 TND' },
-    { name: 'Hammamet/Yasmine → Tunis Carthage + Medina', duration: 'full-day', price: '220 TND' },
-    { name: 'Yasmine Hammamet → El Jem Amphitheatre', duration: 'full-day', price: '500 TND' },
-    { name: 'Sousse → Kairouan Historical Tour', duration: '', price: '350 TND' },
-    { name: 'Monastir → Sousse + Monastir City Tour', duration: '', price: '140 TND' },
-    { name: 'El Jem → City & Amphitheatre Tour', duration: 'half-day', price: '100 TND' }
+    { name: 'Hammamet → Sidi Bou Said', description: 'Beautiful coastal village', price: 200 },
+    { name: 'Hammamet/Yasmine → Tunis Carthage + Medina', description: 'Historical tour', price: 220 },
+    { name: 'Yasmine Hammamet → El Jem Amphitheatre', description: 'Ancient Roman ruins', price: 500 },
+    { name: 'Sousse → Kairouan Historical Tour', description: 'Islamic heritage', price: 350 },
+    { name: 'Monastir → Sousse + Monastir City Tour', description: 'Twin cities exploration', price: 140 },
+    { name: 'El Jem → City & Amphitheatre Tour', description: 'Local culture experience', price: 100 }
   ];
 
   return (
-    <div 
-      className={`min-h-screen ${language === 'ar' ? 'font-arabic' : ''} ${language === 'ar' ? 'dir-rtl' : 'dir-ltr'}`}
-      style={{
-        backgroundImage: `linear-gradient(135deg, rgba(42, 130, 180, 0.1) 0%, rgba(226, 204, 164, 0.15) 50%, rgba(255, 187, 120, 0.1) 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.03'%3E%3Cpolygon fill='%23E2CCA4' points='50 0 60 40 100 50 60 60 50 100 40 60 0 50 40 40'/%3E%3C/g%3E%3C/svg%3E")`,
-        backgroundColor: 'hsl(var(--background))'
-      }}
-    >
+    <div className={`min-h-screen ${language === 'ar' ? 'font-arabic' : ''} ${language === 'ar' ? 'dir-rtl' : 'dir-ltr'}`}>
       <Helmet>
         <title>{metaTags.title}</title>
         <meta name="description" content={metaTags.description} />
@@ -91,27 +89,23 @@ const Index = () => {
       {/* Skip to content link */}
       <a 
         href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-tunisia-coral text-white px-4 py-2 rounded-lg z-50 focus:outline-none focus:ring-2 focus:ring-tunisia-coral"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-tunisia-coral text-white px-4 py-2 rounded-lg z-50 focus-visible:ring-2 focus-visible:ring-tunisia-coral focus-visible:ring-offset-2"
       >
         Skip to main content
       </a>
       
       <Header />
       
-      {/* Hero Section */}
+      {/* Hero Section with Beach Background */}
       <section 
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+        className="relative min-h-screen flex items-center justify-center text-white overflow-hidden"
         style={{
-          backgroundImage: `url(${tunisiaHero})`,
+          backgroundImage: `linear-gradient(135deg, rgba(11, 79, 108, 0.4) 0%, rgba(242, 100, 48, 0.2) 100%), url(${beachBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
         }}
-        role="banner"
-        aria-label="Hero section with booking information"
       >
-        {/* Gradient Overlay - Tunisia's teal/blue coastal colors */}
-        <div className="absolute inset-0 bg-gradient-to-br from-tunisia-blue/70 via-tunisia-turquoise/60 to-tunisia-coral/50" />
-        
         {/* Animated Background Elements */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-tunisia-gold/20 rounded-full animate-float" />
         <div className="absolute top-40 right-20 w-16 h-16 bg-tunisia-coral/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
@@ -130,143 +124,113 @@ const Index = () => {
           <div className={`flex flex-col md:flex-row gap-6 mb-8 justify-center items-center ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
             <Button 
               onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-              variant="cta"
-              className="min-w-[200px] min-h-[56px] text-lg"
-              aria-label="Get the best quote for your transfer"
+              size="lg"
+              className="min-w-[200px] h-14 text-lg bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-glow"
             >
-              {t('hero.get_quote')}
+              {t('cta.get_quote')}
             </Button>
             
             <Button 
-              onClick={() => document.getElementById('driver')?.scrollIntoView({ behavior: 'smooth' })}
-              variant="alt"
-              className="min-w-[200px] min-h-[56px] text-lg"
-              aria-label="Apply to become a driver"
+              onClick={() => document.getElementById('driver-form')?.scrollIntoView({ behavior: 'smooth' })}
+              size="lg"
+              variant="outline"
+              className="min-w-[200px] h-14 text-lg border-white text-white hover:bg-white hover:text-tunisia-blue"
             >
-              {t('hero.become_driver')}
-            </Button>
-          </div>
-          
-          {/* Secondary Buttons */}
-          <div className={`flex flex-col md:flex-row gap-4 mb-12 justify-center items-center ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
-            <Button 
-              onClick={() => window.open(generateWhatsAppLink('Hi I want to book a Tunisia airport transfer from [Airport] to [Destination] on [Date] for [Passengers]'))}
-              variant="cta"
-              className="min-w-[180px] min-h-[48px] bg-white/10 backdrop-blur-sm border-white/20"
-              aria-label="Book via WhatsApp"
-            >
-              <MessageCircle className={`${language === 'ar' ? 'ml-2' : 'mr-2'} h-5 w-5`} />
-              {t('hero.book_whatsapp')}
-            </Button>
-            
-            <Button 
-              onClick={() => window.open(generateEmailLink('Tunisia Airport Transfer Booking', 'Hello, I\'d like to book a transfer from [Airport] to [Destination] on [Date] for [Passengers].'))}
-              variant="cta"
-              className="min-w-[180px] min-h-[48px] bg-white/10 backdrop-blur-sm border-white/20"
-              aria-label="Book via Email"
-            >
-              <Mail className={`${language === 'ar' ? 'ml-2' : 'mr-2'} h-5 w-5`} />
-              {t('hero.book_email')}
+              {t('driver_recruitment.cta')}
             </Button>
           </div>
           
           {/* Trust Badges */}
-          <p className="text-lg text-white/90 mb-8">{t('hero.trust_badges')}</p>
+          <p className="text-lg text-white/90">{t('hero.trust_badges')}</p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-16 space-y-20">
-        {/* Booking Section */}
-        <section className="space-y-8">
+      {/* Main Content - Pricing Section with Sahara Background */}
+      <main 
+        className="container mx-auto px-4 py-16 space-y-16 relative"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(11, 79, 108, 0.4) 0%, rgba(242, 100, 48, 0.2) 100%), url(${saharaBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
+        }}
+      >
+        {/* Tools Panel */}
+        <ToolsPanel />
+
+        {/* Booking Form */}
+        <section id="booking" className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
           <BookingForm />
         </section>
 
         {/* How It Works Section */}
-        <section className="text-center space-y-12">
+        <section className="space-y-8">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-tunisia-blue mb-4">
               {t('how_it_works.title')}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {t('how_it_works.step1')}
-            </p>
           </div>
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 ${language === 'ar' ? 'md:grid-flow-col-reverse' : ''}`}>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="text-4xl mb-4">📱</div>
-                <h3 className="text-xl font-semibold text-tunisia-blue mb-2">
-                  Book Online
-                </h3>
-                <p className="text-muted-foreground">Contact us via WhatsApp or email</p>
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${language === 'ar' ? 'md:grid-flow-col-reverse' : ''}`}>
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="bg-tunisia-coral text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+                <h3 className="font-semibold text-tunisia-blue mb-2">{t('how_it_works.step1')}</h3>
+                <p className="text-sm text-gray-600">{t('how_it_works.step1_desc')}</p>
               </CardContent>
             </Card>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="text-4xl mb-4">💳</div>
-                <h3 className="text-xl font-semibold text-tunisia-blue mb-2">
-                  Pay 25% Deposit
-                </h3>
-                <p className="text-muted-foreground">Secure payment via PayPal or Revolut</p>
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="bg-tunisia-coral text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+                <h3 className="font-semibold text-tunisia-blue mb-2">{t('how_it_works.step2')}</h3>
+                <p className="text-sm text-gray-600">{t('how_it_works.step2_desc')}</p>
               </CardContent>
             </Card>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="text-4xl mb-4">🚗</div>
-                <h3 className="text-xl font-semibold text-tunisia-blue mb-2">
-                  Meet Driver
-                </h3>
-                <p className="text-muted-foreground">At airport arrival hall</p>
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="bg-tunisia-coral text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+                <h3 className="font-semibold text-tunisia-blue mb-2">{t('how_it_works.step3')}</h3>
+                <p className="text-sm text-gray-600">{t('how_it_works.step3_desc')}</p>
               </CardContent>
             </Card>
           </div>
         </section>
 
-        {/* Best Price Guarantee Section */}
-        <section className="text-center space-y-8">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-tunisia-blue mb-4">
-              {t('guarantee.title')}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              {t('guarantee.content')}
-            </p>
-          </div>
+        {/* Best Price Guarantee */}
+        <section className="text-center bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+          <CheckCircle className="h-16 w-16 text-tunisia-coral mx-auto mb-4" />
+          <h2 className="text-3xl font-bold text-tunisia-blue mb-4">{t('guarantee.title')}</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            {t('guarantee.description')}
+          </p>
         </section>
 
         {/* Top Routes Section */}
         <section className="space-y-8">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-tunisia-blue mb-4">
-              Top Routes
+              {t('routes.title')}
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {topRoutes.map((route, index) => {
-              const convertedPrice = convertFromEUR(route.basePrice, 'EUR'); // Already in EUR, no conversion needed
-              return (
-                <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
-                  <CardContent className="p-6 text-center">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <MapPin className="h-4 w-4 text-tunisia-coral" />
-                      <span className="font-semibold">{route.route}</span>
-                    </div>
-                    <div className="text-2xl font-bold text-tunisia-blue mb-3">
-                      {formatPrice(route.basePrice)}
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-3">{t('routes.guarantee')}</p>
-                    <Button
-                      onClick={() => window.open(generateWhatsAppLink(`Hi, I want to book ${route.route} transfer`))}
-                      variant="default"
-                      className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
-                    >
-                      Book Now
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${language === 'ar' ? 'md:grid-flow-col-reverse' : ''}`}>
+            {topRoutes.map((route, index) => (
+              <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-tunisia-blue">{route.from} → {route.to}</h3>
+                    <span className="text-2xl font-bold text-tunisia-coral">{formatPrice(route.price)}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">{route.duration}</p>
+                  <Button 
+                    onClick={() => {
+                      window.open(generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`), '_blank');
+                    }}
+                    className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                  >
+                    {t('cta.book_now')}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </section>
 
@@ -281,28 +245,28 @@ const Index = () => {
             </h2>
           </div>
           <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${language === 'ar' ? 'md:grid-flow-col-reverse' : ''}`}>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <Clock className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
                 <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.ontime')}</h3>
               </CardContent>
             </Card>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <Shield className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
-                <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.vetted')}</h3>
+                <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.safe')}</h3>
               </CardContent>
             </Card>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <Users className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
-                <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.family')}</h3>
+                <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.professional')}</h3>
               </CardContent>
             </Card>
-            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+            <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
-                <MessageCircle className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
-                <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.support')}</h3>
+                <Star className="h-12 w-12 text-tunisia-coral mx-auto mb-4" />
+                <h3 className="font-semibold text-tunisia-blue mb-2">{t('why_choose.rated')}</h3>
               </CardContent>
             </Card>
           </div>
@@ -314,35 +278,26 @@ const Index = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-tunisia-blue mb-4">
               {t('excursions.title')}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-4xl mx-auto mb-8">
-              {t('excursions.subtitle')}
-            </p>
-            <Button
-              onClick={() => window.open('https://wa.me/447956643662?text=Hi%20I%20want%20to%20plan%20a%20tour%20in%20Tunisia')}
-              variant="cta"
-              className="min-h-[48px] mb-12"
-            >
-              {t('excursions.plan_button')}
-            </Button>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${language === 'ar' ? 'md:grid-flow-col-reverse' : ''}`}>
             {excursions.map((excursion, index) => (
-              <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300">
+              <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
                 <CardContent className="p-6">
+                  <MapPin className="h-8 w-8 text-tunisia-coral mb-3" />
                   <h3 className="font-semibold text-tunisia-blue mb-2">{excursion.name}</h3>
-                  {excursion.duration && (
-                    <p className="text-sm text-muted-foreground mb-2">({excursion.duration})</p>
-                  )}
-                  <div className="text-xl font-bold text-tunisia-coral mb-3">{excursion.price}</div>
-                  <p className="text-xs text-muted-foreground mb-4">{t('excursions.custom_note')}</p>
-                  <Button
-                    onClick={() => window.open(generateWhatsAppLink(`Hi, I want to book ${excursion.name} excursion`))}
-                    variant="cta"
-                    className="w-full min-h-[42px]"
-                  >
-                    Book Tour
-                  </Button>
+                  <p className="text-sm text-gray-600 mb-3">{excursion.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-tunisia-coral">{formatPrice(excursion.price)}</span>
+                    <Button 
+                      size="sm" 
+                      onClick={() => {
+                        window.open(generateWhatsAppLink(`Book ${excursion.name} excursion`), '_blank');
+                      }}
+                      className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                    >
+                      {t('cta.book')}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -363,48 +318,50 @@ const Index = () => {
         </section>
 
         {/* Driver Recruitment CTA */}
-        <section className="text-center space-y-8">
+        <section className="text-center space-y-8 bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
           <Card className="bg-gradient-hero text-white border-0">
             <CardContent className="p-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 {t('driver_recruitment.headline')}
               </h2>
-              <p className="text-xl mb-6 text-white/90">
-                {t('driver_recruitment.subline')}
+              <p className="text-xl mb-8 text-white/90">
+                {t('driver_recruitment.description')}
               </p>
-              <Button
-                onClick={() => document.getElementById('driver')?.scrollIntoView({ behavior: 'smooth' })}
-                variant="default"
-                className="bg-white text-tunisia-blue hover:bg-white/90 min-h-[48px] px-8"
+              <Button 
+                size="lg" 
+                variant="secondary"
+                onClick={() => document.getElementById('driver-form')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-white text-tunisia-blue hover:bg-gray-100 font-semibold px-8 py-3"
               >
-                Apply Now
+                {t('driver_recruitment.cta')}
               </Button>
             </CardContent>
           </Card>
         </section>
 
-        {/* Driver Section */}
-        <section className="space-y-8">
+        {/* Driver Application Form */}
+        <section id="driver-form" className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
           <DriverForm />
         </section>
       </main>
 
-      {/* Floating WhatsApp Button */}
-      <FloatingWhatsApp />
-
+      {/* Footer Decorative Element */}
+      <FooterDecorative />
+      
       {/* Footer */}
       <Footer />
-      
-      {/* Sticky Quick Contact Button for Mobile */}
-      <div className="fixed bottom-6 right-6 z-40 md:hidden">
-        <Button
-          onClick={() => window.open('https://wa.me/447956643662')}
-          variant="cta"
-          className="rounded-full p-4 shadow-glow animate-pulse"
-          aria-label="Quick WhatsApp contact"
+
+      {/* Floating Elements */}
+      <FloatingWhatsApp />
+
+      {/* Mobile Contact Button - Sticky */}
+      <div className="fixed bottom-20 right-4 z-40 md:hidden">
+        <Button 
+          onClick={() => window.open(generateWhatsAppLink('Hi I need help with booking'))}
+          size="lg"
+          className="rounded-full h-14 w-14 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
         >
-          <MessageCircle className="h-6 w-6" />
-          <span className="sr-only">Quick Contact</span>
+          <Phone className="h-6 w-6" />
         </Button>
       </div>
     </div>

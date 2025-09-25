@@ -73,7 +73,7 @@ const Footer = () => {
         {/* Secure Payments Section */}
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-tunisia-gold mb-6">Secure Payments</h3>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
             {/* PayPal */}
             <a
               href="https://www.paypal.me/seifkhila1"
@@ -98,6 +98,13 @@ const Footer = () => {
               <span>Revolut</span>
             </a>
           </div>
+
+          {/* Service Benefits Tagline */}
+          <div className="text-center py-3 border-t border-tunisia-gold/30">
+            <p className="text-sm text-tunisia-gold">
+              ✈️ Safe transfers • 🚖 Fixed prices • 🤝 Local trusted drivers
+            </p>
+          </div>
         </div>
 
         {/* Service Info */}
@@ -116,7 +123,7 @@ const Footer = () => {
             {t('privacy.note')}
           </p>
           <p className="text-sm text-white/60">
-            © 2024 Get Tunisia Transfer. All rights reserved.
+            © 2025 Get Tunisia Transfer. All rights reserved.
           </p>
         </div>
       </div>
