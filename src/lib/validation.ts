@@ -93,7 +93,7 @@ export const validateBookingMessage = (message: string) => {
     return {
       isValid: false,
       sanitizedMessage: '',
-      error: error instanceof z.ZodError ? error.issues[0]?.message : 'Invalid message'
+      error: error instanceof z.ZodError ? error.issues[0].message : 'Invalid message'
     };
   }
 };
