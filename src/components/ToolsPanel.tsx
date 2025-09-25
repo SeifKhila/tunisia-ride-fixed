@@ -60,7 +60,7 @@ const ToolsPanel = () => {
                   className={`${isMobile ? 'min-w-fit px-4' : 'w-full justify-start'} h-12 text-sm font-medium transition-all duration-300 rounded-xl focus-visible:ring-2 focus-visible:ring-tunisia-blue focus-visible:ring-offset-2 ${
                     language === lang.code 
                       ? 'bg-gradient-to-r from-tunisia-coral to-tunisia-blue text-white shadow-lg hover:opacity-90' 
-                      : 'text-tunisia-blue hover:bg-tunisia-blue/30 bg-white border-2 border-tunisia-blue/50 shadow-md hover:shadow-lg hover:border-tunisia-blue hover:bg-white/90'
+                      : 'text-tunisia-blue bg-white/95 border-2 border-tunisia-blue shadow-md hover:shadow-lg hover:bg-tunisia-blue hover:text-white hover:border-tunisia-blue'
                   } ${lang.code === 'ar' ? 'font-arabic' : ''}`}
                 >
                   <span className="mr-2 text-base">{lang.flag}</span>
@@ -86,7 +86,7 @@ const ToolsPanel = () => {
                   className={`${isMobile ? 'min-w-fit px-4' : 'w-full justify-start'} h-12 text-sm font-medium transition-all duration-300 rounded-xl focus-visible:ring-2 focus-visible:ring-tunisia-blue focus-visible:ring-offset-2 ${
                     currency === curr.code 
                       ? 'bg-gradient-to-r from-tunisia-coral to-tunisia-blue text-white shadow-lg hover:opacity-90' 
-                      : 'text-tunisia-blue hover:bg-tunisia-blue/30 bg-white border-2 border-tunisia-blue/50 shadow-md hover:shadow-lg hover:border-tunisia-blue hover:bg-white/90'
+                      : 'text-tunisia-blue bg-white/95 border-2 border-tunisia-blue shadow-md hover:shadow-lg hover:bg-tunisia-blue hover:text-white hover:border-tunisia-blue'
                   }`}
                 >
                   <span className="mr-2 text-base">{curr.symbol}</span>
