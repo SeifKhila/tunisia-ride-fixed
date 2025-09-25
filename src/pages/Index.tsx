@@ -91,7 +91,6 @@ const Index = () => {
       </a>
       
       <Header />
-      <CurrencySelector />
       
       {/* Hero Section */}
       <section 
@@ -348,7 +347,7 @@ const Index = () => {
         <TestimonialSection />
 
         {/* Live Currency Exchange */}
-        <section className="space-y-8">
+        <section>
           <InteractiveCurrencyConverter />
         </section>
 

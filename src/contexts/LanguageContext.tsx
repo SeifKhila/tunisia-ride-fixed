@@ -134,9 +134,10 @@ const translations = {
     
     // Testimonials
     'testimonials.title': 'What Our Customers Say',
-    'testimonials.1': '"Great service, on time, very professional!" – Sarah, UK',
-    'testimonials.2': '"Reliable transfers, friendly drivers!" – John, Canada', 
-    'testimonials.3': '"Best airport service in Tunisia!" – Lisa, Germany',
+    'testimonials.1': '"Great service, clean cars and on time – made my trip stress-free!"',
+    'testimonials.2': '"Best airport transfer in Tunisia, highly recommended."',
+    'testimonials.3': '"Service fiable et chauffeurs très gentils !"',
+    'testimonials.4': '"سائقون محترفون وخدمة ممتازة!"',
     
     // Excursions
     'excursions.title': 'Special Requests & Excursions',
@@ -277,9 +278,10 @@ const translations = {
     
     // Testimonials
     'testimonials.title': 'Ce que disent nos clients',
-    'testimonials.1': '"Service excellent, chauffeur ponctuel et sérieux !" – Julien, France',
-    'testimonials.2': '"Transferts fiables, chauffeurs sympathiques !" – Marie, Belgique',
-    'testimonials.3': '"Meilleur service d\'aéroport en Tunisie !" – Pierre, Suisse',
+    'testimonials.1': '"Great service, clean cars and on time – made my trip stress-free!"',
+    'testimonials.2': '"Best airport transfer in Tunisia, highly recommended."',
+    'testimonials.3': '"Service fiable et chauffeurs très gentils !"',
+    'testimonials.4': '"سائقون محترفون وخدمة ممتازة!"',
     
     // Excursions
     'excursions.title': 'Demandes spéciales & Excursions',
@@ -422,9 +424,10 @@ const translations = {
     
     // Testimonials
     'testimonials.title': 'ماذا يقول عملاؤنا',
-    'testimonials.1': '"خدمة رائعة، في الموعد ومحترفة جدًا!" – أحمد، تونس',
-    'testimonials.2': '"نقل موثوق، سائقون ودودون!" – فاطمة، الجزائر',
-    'testimonials.3': '"أفضل خدمة مطار في تونس!" – محمد، المغرب',
+    'testimonials.1': '"Great service, clean cars and on time – made my trip stress-free!"',
+    'testimonials.2': '"Best airport transfer in Tunisia, highly recommended."',
+    'testimonials.3': '"Service fiable et chauffeurs très gentils !"',
+    'testimonials.4': '"سائقون محترفون وخدمة ممتازة!"',
     
     // Excursions
     'excursions.title': 'الطلبات الخاصة والجولات السياحية',

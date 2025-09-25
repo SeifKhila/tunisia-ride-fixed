@@ -27,7 +27,7 @@ const FALLBACK_RATES = {
 };
 
 export default function InteractiveCurrencyConverter() {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const [amount, setAmount] = useState<number>(100);
   const [fromCurrency, setFromCurrency] = useState<string>('TND');
   const [rates, setRates] = useState<ExchangeRates>({});
@@ -162,90 +162,84 @@ export default function InteractiveCurrencyConverter() {
   const otherCurrencies = CURRENCIES.filter(curr => curr !== fromCurrency);
 
   return (
-    <section className="py-16 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-foreground">Convert TND ↔ GBP/EUR/USD</h2>
-          <p className="text-xl text-muted-foreground">
-            Live currency converter for your transfer budget
-          </p>
-        </div>
-
-        <div className="max-w-md mx-auto">
-          <Card className="bg-card/50 backdrop-blur-sm border-2 border-tunisia-gold/20 shadow-card">
-            <CardHeader>
-              <CardTitle className="text-center text-tunisia-blue">
-                Currency Converter
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="amount">Amount</Label>
-                  <Input
-                    id="amount"
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(Number(e.target.value) || 0)}
-                    className="text-lg font-medium"
-                    min="0"
-                    step="0.01"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="from-currency">From</Label>
-                  <Select value={fromCurrency} onValueChange={setFromCurrency}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CURRENCIES.map((currency) => (
-                        <SelectItem key={currency} value={currency}>
-                          {currency}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {loading ? (
-                <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-tunisia-blue mx-auto"></div>
-                  <p className="text-sm text-muted-foreground mt-2">Loading exchange rates...</p>
-                </div>
-              ) : (
-                <div className="space-y-3 pt-4 border-t border-border">
-                  <h4 className="font-medium text-sm text-muted-foreground">Converted amounts:</h4>
-                  {otherCurrencies.map((currency) => (
-                    <div key={currency} className="flex justify-between items-center p-3 bg-gradient-sand rounded-lg">
-                      <span className="font-medium text-tunisia-blue">{currency}:</span>
-                      <span className="text-lg font-bold text-tunisia-coral">
-                        {formatCurrency(convertCurrency(fromCurrency, currency, amount), currency)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Exchange Rate Timestamp */}
-              <div className="text-center">
-                {lastUpdated && (
-                  <p className="text-xs text-muted-foreground">
-                    Exchange rates updated: {formatTimestamp(lastUpdated)}
-                    {isUsingFallback && (
-                      <span className="inline-flex items-center gap-1 ml-2 text-amber-600">
-                        <AlertTriangle className="h-3 w-3" />
-                        (fallback rates)
-                      </span>
-                    )}
-                  </p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+    <div className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-tunisia-blue to-tunisia-orange bg-clip-text text-transparent mb-4">
+          💱 Live Currency Converter – updated daily
+        </h2>
       </div>
-    </section>
+      <Card className={`w-full border-tunisia-blue/20 ${language === 'ar' ? 'font-arabic text-right' : ''}`}>
+        <CardHeader>
+          <CardTitle className="text-tunisia-blue text-center">
+            Currency Exchange
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="amount">Amount</Label>
+              <Input
+                id="amount"
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(Number(e.target.value) || 0)}
+                className="text-lg font-medium"
+                min="0"
+                step="0.01"
+              />
+            </div>
+            <div>
+              <Label htmlFor="from-currency">From</Label>
+              <Select value={fromCurrency} onValueChange={setFromCurrency}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {CURRENCIES.map((currency) => (
+                    <SelectItem key={currency} value={currency}>
+                      {currency}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-tunisia-blue mx-auto"></div>
+              <p className="text-sm text-muted-foreground mt-2">Loading exchange rates...</p>
+            </div>
+          ) : (
+            <div className="space-y-3 pt-4 border-t border-border">
+              <h4 className="font-medium text-sm text-muted-foreground">Converted amounts:</h4>
+              {otherCurrencies.map((currency) => (
+                <div key={currency} className="flex justify-between items-center p-3 bg-gradient-sand rounded-lg">
+                  <span className="font-medium text-tunisia-blue">{currency}:</span>
+                  <span className="text-lg font-bold text-tunisia-coral">
+                    {formatCurrency(convertCurrency(fromCurrency, currency, amount), currency)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <div className="mt-6 text-center">
+            <p className="text-xs text-muted-foreground">
+              Rates are approximate and auto-updated.
+              {lastUpdated && ` Last updated: ${formatTimestamp(lastUpdated)}`}
+            </p>
+          </div>
+          
+          {isUsingFallback && (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+              <p className="text-sm text-yellow-800">
+                Using fallback rates - live rates temporarily unavailable
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
