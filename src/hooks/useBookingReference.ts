@@ -4,27 +4,20 @@ export const useBookingReference = () => {
   const [bookingReference, setBookingReference] = useState('');
 
   useEffect(() => {
-    // Check if we already have a booking reference in session storage
-    const existingRef = sessionStorage.getItem('bookingReference');
+    // Always generate a new unique booking reference
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    const dateStr = `${year}${month}${day}`;
     
-    if (existingRef) {
-      setBookingReference(existingRef);
-    } else {
-      // Generate a new unique booking reference
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = (today.getMonth() + 1).toString().padStart(2, '0');
-      const day = today.getDate().toString().padStart(2, '0');
-      const dateStr = `${year}${month}${day}`;
-      
-      // Generate a random number between 01-99
-      const randomNum = Math.floor(Math.random() * 99) + 1;
-      const paddedNum = randomNum.toString().padStart(2, '0');
-      
-      const newRef = `GT-${dateStr}-${paddedNum}`;
-      setBookingReference(newRef);
-      sessionStorage.setItem('bookingReference', newRef);
-    }
+    // Generate a random number between 01-99 with timestamp for uniqueness
+    const randomNum = Math.floor(Math.random() * 99) + 1;
+    const timestamp = Date.now().toString().slice(-2);
+    const paddedNum = (randomNum + parseInt(timestamp)).toString().padStart(2, '0').slice(-2);
+    
+    const newRef = `GT-${dateStr}-${paddedNum}`;
+    setBookingReference(newRef);
   }, []);
 
   const copyToClipboard = async () => {

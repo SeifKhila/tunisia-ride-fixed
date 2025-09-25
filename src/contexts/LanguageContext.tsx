@@ -109,9 +109,12 @@ const translations = {
     'routes.title': 'Top Routes',
     'why_choose.title': 'Why Choose Us',
     'why_choose.ontime': 'On-time pickup',
-    'why_choose.vetted': 'Vetted drivers',
+    'why_choose.vetted': 'Vetted drivers',  
     'why_choose.family': 'Family-friendly',
     'why_choose.support': 'WhatsApp support',
+    'why_choose.safe': 'Safe & insured',
+    'why_choose.professional': 'Professional drivers',
+    'why_choose.rated': 'Top-rated service',
 
     // FAQs
     'faq.title': 'Frequently Asked Questions',
@@ -254,8 +257,11 @@ const translations = {
     'why_choose.title': 'Pourquoi nous choisir',
     'why_choose.ontime': 'Prise en charge ponctuelle',
     'why_choose.vetted': 'Chauffeurs vérifiés',
-    'why_choose.family': 'Familles bienvenues',
+    'why_choose.family': 'Familles bienvenues', 
     'why_choose.support': 'Support WhatsApp',
+    'why_choose.safe': 'Sécurisé & assuré',
+    'why_choose.professional': 'Chauffeurs professionnels',
+    'why_choose.rated': 'Service très bien noté',
 
     // FAQs
     'faq.title': 'Questions fréquemment posées',
@@ -402,6 +408,9 @@ const translations = {
     'why_choose.vetted': 'سائقون معتمدون',
     'why_choose.family': 'مناسب للعائلات',
     'why_choose.support': 'دعم عبر واتساب',
+    'why_choose.safe': 'آمن ومؤمَّن',
+    'why_choose.professional': 'سائقون محترفون',
+    'why_choose.rated': 'خدمة بتقييمات عالية',
 
     // FAQs
     'faq.title': 'الأسئلة المتكررة',

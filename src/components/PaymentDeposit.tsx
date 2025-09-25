@@ -44,13 +44,13 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
 
   const handlePayPalPayment = () => {
     const paypalUrl = `https://www.paypal.me/seifkhila1/${paymentAmount}${paymentCurrency}`;
-    window.open(paypalUrl, '_blank');
+    window.open(paypalUrl, '_blank', 'noopener,noreferrer');
     onPaymentInitiated?.('paypal', paymentAmount, paymentCurrency);
   };
 
   const handleRevolutPayment = () => {
     const revolutUrl = `https://revolut.me/seifededju/${paymentAmount}${paymentCurrency.toLowerCase()}`;
-    window.open(revolutUrl, '_blank');
+    window.open(revolutUrl, '_blank', 'noopener,noreferrer');
     onPaymentInitiated?.('revolut', paymentAmount, paymentCurrency);
   };
 

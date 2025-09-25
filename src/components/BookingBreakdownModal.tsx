@@ -49,13 +49,13 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
 
   const handlePayPalPayment = () => {
     const paypalUrl = `https://www.paypal.me/seifkhila1/${paymentAmount}${paymentCurrency}`;
-    window.open(paypalUrl, '_blank');
+    window.open(paypalUrl, '_blank', 'noopener,noreferrer');
     toast.success(`Payment initiated via PayPal for ${paymentAmount} ${paymentCurrency}`);
   };
 
   const handleRevolutPayment = () => {
     const revolutUrl = `https://revolut.me/seifededju/${paymentAmount}${paymentCurrency.toLowerCase()}`;
-    window.open(revolutUrl, '_blank');
+    window.open(revolutUrl, '_blank', 'noopener,noreferrer');
     toast.success(`Payment initiated via Revolut for ${paymentAmount} ${paymentCurrency}`);
   };
 
@@ -65,7 +65,7 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
     const link = isMobile 
       ? `https://wa.me/447956643662?text=${message}`
       : `https://web.whatsapp.com/send?phone=447956643662&text=${message}`;
-    window.open(link, '_blank');
+    window.open(link, '_blank', 'noopener,noreferrer');
   };
 
   const handleEmailBooking = () => {
