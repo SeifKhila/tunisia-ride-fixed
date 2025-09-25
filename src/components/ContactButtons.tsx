@@ -6,17 +6,14 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { validateBookingMessage } from "@/lib/validation";
 
 interface ContactButtonsProps {
-  type: 'booking' | 'driver';
+  // Component is now booking-only
 }
 
-const ContactButtons: React.FC<ContactButtonsProps> = ({ type }) => {
+const ContactButtons: React.FC<ContactButtonsProps> = () => {
   const { t, language } = useLanguage();
 
-  const getValidatedMessage = (type: 'booking' | 'driver') => {
-    let message: string;
-    
-    if (type === 'booking') {
-      message = `Hi Get Tunisia Transfer 👋
+  const getValidatedMessage = () => {
+    const message = `Hi Get Tunisia Transfer 👋
 I'd like to book a transfer:
 • Name:
 • Pickup:
@@ -25,32 +22,20 @@ I'd like to book a transfer:
 • Pax/Bags:
 • Flight No:
 • Notes:`;
-    } else {
-      message = `Hi Get Tunisia Transfer 👋
-I'd like to apply as a driver:
-• Name:
-• City/Zone(s):
-• Vehicle type:
-• Years experience:
-• Languages:
-• WhatsApp number:
-• Docs ready (ID/License): Yes/No`;
-    }
     
     // Validate and sanitize the message
     const validation = validateBookingMessage(message);
     if (!validation.isValid) {
       console.error('Invalid contact message:', validation.error);
-      return `Hi Get Tunisia Transfer - I would like to ${type === 'booking' ? 'book a transfer' : 'apply as a driver'}. Please contact me.`;
+      return 'Hi Get Tunisia Transfer - I would like to book a transfer. Please contact me.';
     }
     
     return message;
   };
 
   const emailData = {
-    booking: {
-      subject: "New Booking Enquiry – Get Tunisia Transfer",
-      body: `Hello, I'd like to book a transfer.
+    subject: "New Booking Enquiry – Get Tunisia Transfer",
+    body: `Hello, I'd like to book a transfer.
 
 Name:
 Pickup:
@@ -59,49 +44,28 @@ Date/Time:
 Pax/Bags:
 Flight No:
 Notes:`
-    },
-    driver: {
-      subject: "Driver Application – Get Tunisia Transfer", 
-      body: `Hello, I'd like to apply as a driver.
-
-Name:
-City/Zone(s):
-Vehicle:
-Years experience:
-Languages:
-WhatsApp:
-
-Other details:`
-    }
   };
 
-  const titles = {
-    booking: t('booking.title') || 'Book Your Transfer',
-    driver: t('driver.title') || 'Join Our Driver Network'
-  };
-
-  const descriptions = {
-    booking: 'Get an instant quote and book your transfer directly via WhatsApp or email.',
-    driver: 'Apply to become a professional driver with Get Tunisia Transfer.'
-  };
+  const title = t('booking.title') || 'Book Your Transfer';
+  const description = 'Get an instant quote and book your transfer directly via WhatsApp or email.';
 
   return (
-    <Card className={`w-full max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id={type}>
+    <Card className={`w-full max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic text-right' : ''}`} id="booking">
       <CardHeader>
-        <CardTitle className="text-2xl text-tunisia-blue">{titles[type]}</CardTitle>
-        <CardDescription>{descriptions[type]}</CardDescription>
+        <CardTitle className="text-2xl text-tunisia-blue">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* WhatsApp Button (Primary) */}
         <a 
-          href={`https://wa.me/447956643662?text=${encodeURIComponent(getValidatedMessage(type))}`}
+          href={`https://wa.me/447956643662?text=${encodeURIComponent(getValidatedMessage())}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full"
         >
           <Button 
             className="w-full min-h-[60px] bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold text-lg flex items-center justify-center gap-3"
-            aria-label={`Contact via WhatsApp for ${type}`}
+            aria-label="Contact via WhatsApp for booking"
           >
             <MessageCircle className="h-6 w-6" />
             💬 WhatsApp us
@@ -110,13 +74,13 @@ Other details:`
 
         {/* Email Button (Secondary) */}
         <a
-          href={`mailto:khilas592@gmail.com?subject=${encodeURIComponent(emailData[type].subject)}&body=${encodeURIComponent(emailData[type].body)}`}
+          href={`mailto:khilas592@gmail.com?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`}
           className="block w-full"
         >
           <Button 
             variant="outline"
             className="w-full min-h-[56px] font-semibold text-lg flex items-center justify-center gap-3 border-2"
-            aria-label={`Contact via email for ${type}`}
+            aria-label="Contact via email for booking"
           >
             <Mail className="h-5 w-5" />
             📧 Email us

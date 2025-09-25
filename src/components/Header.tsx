@@ -28,13 +28,6 @@ const Header = () => {
             >
               {t('nav.book_now')}
             </Button>
-            <Button
-              variant="ghost"
-              onClick={() => scrollToSection('drivers')}
-              className="text-tunisia-blue hover:bg-tunisia-blue/10"
-            >
-              {t('nav.drivers')}
-            </Button>
           </nav>
 
           {/* Language Selector */}

@@ -107,8 +107,6 @@ const AdminStats = () => {
     { key: 'Email Book', label: 'Email Bookings' },
     { key: 'PayPal Pay', label: 'PayPal Payments' },
     { key: 'Revolut Pay', label: 'Revolut Payments' },
-    { key: 'WhatsApp Driver', label: 'WhatsApp Driver Applications' },
-    { key: 'Email Driver', label: 'Email Driver Applications' },
   ];
 
   const totalClicks = Object.values(stats).reduce((sum: number, count: number) => sum + count, 0);

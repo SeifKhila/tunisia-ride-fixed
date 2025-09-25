@@ -41,13 +41,11 @@ const translations = {
     // Navigation
     'nav.logo': 'Get Tunisia Transfer',
     'nav.book_now': 'Book Now',
-    'nav.drivers': 'Drivers',
     
     // Hero Section
     'hero.title': 'Fixed-Price Airport Transfers in Tunisia',
     'hero.subtitle': 'Reliable rides from Tunis, Enfidha, Monastir & Djerba airports.',
     'hero.get_quote': 'Get the Best Quote',
-    'hero.become_driver': 'Become a Driver',
     'hero.book_whatsapp': 'Book via WhatsApp',
     'hero.book_email': 'Book via Email',
     'hero.trust_badges': '🧾 Best Price Guarantee • 🚖 Trusted Local Taxis • 📲 24/7 WhatsApp Support',
@@ -73,29 +71,11 @@ const translations = {
     'booking.submit': 'Get the Best Quote',
     'booking.success': 'Thanks for booking with Get Tunisia Transfer! Ref GT-{{ID}}. We\'ll confirm your price and deposit link shortly. Cancellation: Free ≥24h = full refund; <24h = deposit non-refundable; no-show = deposit forfeited.',
 
-    // Driver Form
-    'driver.title': 'Become a Driver',
-    'driver.name': 'Name',
-    'driver.email': 'Email',
-    'driver.phone': 'Phone/WhatsApp',
-    'driver.service_zones': 'Service Zones',
-    'driver.vehicle_details': 'Vehicle Details',
-    'driver.vehicle_photos': 'Vehicle Photos',
-    'driver.documents': 'ID / License / Insurance',
-    'driver.availability': 'Availability Notes',
-    'driver.consent': 'I accept the terms and conditions',
-    'driver.submit': 'Apply Now',
-    'driver.success': 'Thanks! We\'ll verify within 24–48 hours.',
-
     // Sections
     'how_it_works.title': 'How It Works',
     'how_it_works.step1': '1. Book online. 2. Pay 25% deposit. 3. Meet driver at airport.',
     'how_it_works.step2': 'Pay 25% deposit',
     'how_it_works.step3': 'Meet your driver',
-    
-    // Driver Recruitment
-    'driver_recruitment.headline': 'Drivers Wanted – Earn with Your Car.',
-    'driver_recruitment.subline': 'Flexible hours, earn per ride. Apply in 2 minutes.',
     
     // Privacy
     'privacy.note': 'By contacting us you consent to us replying via WhatsApp or email.',
@@ -176,20 +156,17 @@ const translations = {
     'footer.service_desc': 'Professional airport transfer services across Tunisia',
     'footer.pricing_note': 'All prices include taxes and tolls. No hidden fees.',
     'footer.copyright': '© 2024 Get Transfer Tunisia. All rights reserved.',
-    'driver_recruitment.title': 'Drivers: Get more airport jobs. Apply now.',
   },
 
   fr: {
     // Navigation
     'nav.logo': 'Get Transfer Tunisia',
     'nav.book_now': 'Réserver',
-    'nav.drivers': 'Chauffeurs',
     
     // Hero Section
     'hero.title': 'Transferts aéroport à prix fixe en Tunisie',
     'hero.subtitle': 'Trajets fiables depuis les aéroports de Tunis, Enfidha, Monastir & Djerba.',
     'hero.get_quote': 'Obtenez le meilleur tarif',
-    'hero.become_driver': 'Devenez chauffeur',
     'hero.book_whatsapp': 'Réserver via WhatsApp',
     'hero.book_email': 'Réserver par email',
     'hero.trust_badges': '🧾 Garantie du meilleur prix • 🚖 Taxis locaux de confiance • 📲 Assistance 24/7',
@@ -215,29 +192,11 @@ const translations = {
     'booking.submit': 'Obtenez le meilleur tarif',
     'booking.success': 'Merci d\'avoir réservé avec Get Tunisia Transfer ! Réf GT-{{ID}}. Nous confirmerons votre tarif et le lien de paiement bientôt. Annulation : gratuite ≥24h remboursement complet ; <24h acompte non remboursable ; absence = acompte perdu.',
 
-    // Driver Form
-    'driver.title': 'Devenez chauffeur',
-    'driver.name': 'Nom',
-    'driver.email': 'Email',
-    'driver.phone': 'Téléphone/WhatsApp',
-    'driver.service_zones': 'Zones de service',
-    'driver.vehicle_details': 'Détails du véhicule',
-    'driver.vehicle_photos': 'Photos du véhicule',
-    'driver.documents': 'ID / Permis / Assurance',
-    'driver.availability': 'Notes de disponibilité',
-    'driver.consent': 'J\'accepte les termes et conditions',
-    'driver.submit': 'Postuler maintenant',
-    'driver.success': 'Merci ! Nous vérifierons sous 24–48h.',
-
     // Sections
     'how_it_works.title': 'Comment ça marche',
     'how_it_works.step1': '1. Réservez en ligne. 2. Payez un acompte de 25 %. 3. Retrouvez votre chauffeur à l\'aéroport.',
     'how_it_works.step2': 'Payez 25 % d\'acompte',
     'how_it_works.step3': 'Retrouvez votre chauffeur',
-    
-    // Driver Recruitment
-    'driver_recruitment.headline': 'Conducteurs recherchés – Gagnez avec votre voiture.',
-    'driver_recruitment.subline': 'Horaires flexibles, gagnez par trajet. Postulez en 2 minutes.',
     
     // Privacy
     'privacy.note': 'En nous contactant, vous acceptez de recevoir une réponse par WhatsApp ou email.',
@@ -323,22 +282,17 @@ const translations = {
     'footer.service_desc': 'Services de transfert aéroport professionnels à travers la Tunisie',
     'footer.pricing_note': 'Tous les prix incluent les taxes et péages. Pas de frais cachés.',
     'footer.copyright': '© 2024 Get Transfer Tunisia. Tous droits réservés.',
-
-    // Driver Recruitment
-    'driver_recruitment.title': 'Chauffeurs : obtenez plus de courses d\'aéroport. Postulez maintenant.',
   },
 
   ar: {
     // Navigation
     'nav.logo': 'Get Transfer Tunisia',
     'nav.book_now': 'احجز الآن',
-    'nav.drivers': 'السائقون',
     
     // Hero Section
     'hero.title': 'خدمات نقل من المطار بأسعار ثابتة في تونس',
     'hero.subtitle': 'رحلات موثوقة من مطارات تونس، النفيضة، المنستير و جربة.',
     'hero.get_quote': 'احصل على أفضل سعر',
-    'hero.become_driver': 'انضم كسائق',
     'hero.book_whatsapp': 'احجز عبر واتساب',
     'hero.book_email': 'احجز عبر البريد الإلكتروني',
     'hero.trust_badges': '🧾 ضمان أفضل الأسعار • 🚖 سيارات أجرة محلية موثوقة • 📲 دعم 24/7',
@@ -364,29 +318,11 @@ const translations = {
     'booking.submit': 'احصل على أفضل سعر',
     'booking.success': 'شكرًا لحجزك مع Get Tunisia Transfer! رقم الحجز GT-{{ID}}. سنؤكد السعر ورابط الدفع قريبًا. الإلغاء: مجاني قبل 24 ساعة مع استرداد كامل؛ أقل من 24 ساعة المقدم غير قابل للاسترداد؛ عدم الحضور = مصادرة المقدم.',
 
-    // Driver Form
-    'driver.title': 'انضم كسائق',
-    'driver.name': 'الاسم',
-    'driver.email': 'البريد الإلكتروني',
-    'driver.phone': 'الهاتف/واتساب',
-    'driver.service_zones': 'مناطق الخدمة',
-    'driver.vehicle_details': 'تفاصيل المركبة',
-    'driver.vehicle_photos': 'صور المركبة',
-    'driver.documents': 'الهوية / رخصة القيادة / التأمين',
-    'driver.availability': 'ملاحظات التوفر',
-    'driver.consent': 'أوافق على الشروط والأحكام',
-    'driver.submit': 'قدّم الآن',
-    'driver.success': 'شكرًا! سنقوم بالمراجعة خلال 24–48 ساعة.',
-
     // Sections
     'how_it_works.title': 'كيف يعمل',
     'how_it_works.step1': '١. احجز عبر الإنترنت. ٢. ادفع ٢٥٪ مقدماً. ٣. قابل السائق في المطار.',
     'how_it_works.step2': 'ادفع 25٪ مقدمًا',
     'how_it_works.step3': 'قابل سائقك',
-    
-    // Driver Recruitment
-    'driver_recruitment.headline': 'مطلوب سائقون – اربح بسيارتك.',
-    'driver_recruitment.subline': 'ساعات عمل مرنة، اربح لكل رحلة. قدّم طلبك في دقيقتين.',
     
     // Privacy
     'privacy.note': 'بالتواصل معنا، فإنك توافق على أن نرد عليك عبر واتساب أو البريد الإلكتروني.',
@@ -472,8 +408,5 @@ const translations = {
     'footer.service_desc': 'خدمات نقل المطار المهنية في جميع أنحاء تونس',
     'footer.pricing_note': 'جميع الأسعار تشمل الضرائب والرسوم. لا توجد رسوم خفية.',
     'footer.copyright': '© 2024 Get Transfer Tunisia. جميع الحقوق محفوظة.',
-
-    // Driver Recruitment
-    'driver_recruitment.title': 'السائقون: احصلوا على المزيد من وظائف المطار. قدموا الآن.',
   }
 };
