@@ -30,38 +30,44 @@ const CurrencySelector = () => {
   };
 
   return (
-    <div className="fixed top-4 left-4 z-50 bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
-      <div className="flex items-center gap-2 mb-2">
-        <DollarSign className="text-white" size={18} />
-        {currencies.map((curr) => (
-          <Button
-            key={curr.code}
-            variant={currency === curr.code ? "default" : "ghost"}
-            size="sm"
-            onClick={() => setCurrency(curr.code)}
-            className={`text-sm font-medium transition-all duration-300 ${
-              currency === curr.code 
-                ? 'bg-tunisia-coral text-white shadow-glow' 
-                : 'text-white hover:bg-white/20'
-            }`}
-          >
-            <span className="mr-1">{curr.symbol}</span>
-            {curr.label}
-          </Button>
-        ))}
-      </div>
-      
-      {ratesLastUpdated && (
-        <div className="flex items-center gap-1 text-xs text-white/70">
-          {isUsingFallbackRates && (
-            <AlertTriangle className="h-3 w-3 text-yellow-400" />
-          )}
-          <span>
-            Rates updated: {formatTimestamp(ratesLastUpdated)}
-            {isUsingFallbackRates ? ' (using fallback rates)' : ''}
-          </span>
+    <div className="fixed top-4 left-4 z-50">
+      <div className="bg-gradient-card backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-card">
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <DollarSign className="text-tunisia-blue" size={20} />
+          <span className="font-medium text-tunisia-blue text-sm">Currency</span>
         </div>
-      )}
+        
+        <div className="flex flex-col gap-2">
+          {currencies.map((curr) => (
+            <Button
+              key={curr.code}
+              variant={currency === curr.code ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setCurrency(curr.code)}
+              className={`w-full justify-start text-sm font-medium transition-all duration-300 rounded-xl ${
+                currency === curr.code 
+                  ? 'bg-tunisia-coral text-white shadow-glow hover:bg-tunisia-coral/90' 
+                  : 'text-tunisia-blue hover:bg-tunisia-blue/10 border border-tunisia-blue/20'
+              }`}
+            >
+              <span className="mr-2 text-base">{curr.symbol}</span>
+              {curr.label}
+            </Button>
+          ))}
+        </div>
+        
+        {ratesLastUpdated && (
+          <div className="flex items-center gap-1 text-xs text-tunisia-blue/70 mt-3 pt-3 border-t border-tunisia-blue/10">
+            {isUsingFallbackRates && (
+              <AlertTriangle className="h-3 w-3 text-yellow-500" />
+            )}
+            <span className="text-center w-full leading-tight">
+              Updated: {formatTimestamp(ratesLastUpdated)}
+              {isUsingFallbackRates ? ' (fallback)' : ''}
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
