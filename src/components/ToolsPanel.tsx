@@ -60,7 +60,7 @@ const ToolsPanel = () => {
                   className={`${isMobile ? 'min-w-fit px-4' : 'w-full justify-start'} h-12 text-sm font-medium transition-all duration-300 rounded-xl focus-visible:ring-2 focus-visible:ring-tunisia-blue focus-visible:ring-offset-2 ${
                     language === lang.code 
                       ? 'bg-gradient-to-r from-tunisia-coral to-tunisia-blue text-white shadow-glow hover:opacity-90' 
-                      : 'text-tunisia-blue hover:bg-tunisia-blue/10 border border-tunisia-blue/20'
+                      : 'text-tunisia-blue hover:bg-tunisia-blue/20 bg-white/80 border-2 border-tunisia-blue/30 shadow-md hover:shadow-lg hover:border-tunisia-blue/50'
                   } ${lang.code === 'ar' ? 'font-arabic' : ''}`}
                 >
                   <span className="mr-2 text-base">{lang.flag}</span>
@@ -86,7 +86,7 @@ const ToolsPanel = () => {
                   className={`${isMobile ? 'min-w-fit px-4' : 'w-full justify-start'} h-12 text-sm font-medium transition-all duration-300 rounded-xl focus-visible:ring-2 focus-visible:ring-tunisia-blue focus-visible:ring-offset-2 ${
                     currency === curr.code 
                       ? 'bg-gradient-to-r from-tunisia-coral to-tunisia-blue text-white shadow-glow hover:opacity-90' 
-                      : 'text-tunisia-blue hover:bg-tunisia-blue/10 border border-tunisia-blue/20'
+                      : 'text-tunisia-blue hover:bg-tunisia-blue/20 bg-white/80 border-2 border-tunisia-blue/30 shadow-md hover:shadow-lg hover:border-tunisia-blue/50'
                   }`}
                 >
                   <span className="mr-2 text-base">{curr.symbol}</span>

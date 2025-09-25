@@ -12,11 +12,12 @@ import TestimonialSection from "@/components/TestimonialSection";
 import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
 import DriverForm from "@/components/DriverForm";
 import ToolsPanel from "@/components/ToolsPanel";
+import { useIsMobile } from "@/hooks/use-mobile";
 import FooterDecorative from "@/components/FooterDecorative";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Helmet } from 'react-helmet';
-import tunisiaHero from "@/assets/tunisia-hero-new.jpg";
+import footerBackground from "@/assets/footer-background.webp";
 import beachBackground from "@/assets/beach-background.webp";
 import saharaBackground from "@/assets/sahara-background.webp";
 
@@ -127,7 +128,7 @@ const Index = () => {
               size="lg"
               className="min-w-[200px] h-14 text-lg bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-glow"
             >
-              {t('cta.get_quote')}
+              {t('hero.get_quote')}
             </Button>
             
             <Button 
@@ -136,7 +137,7 @@ const Index = () => {
               variant="outline"
               className="min-w-[200px] h-14 text-lg border-white text-white hover:bg-white hover:text-tunisia-blue"
             >
-              {t('driver_recruitment.cta')}
+              {t('hero.become_driver')}
             </Button>
           </div>
           
@@ -226,7 +227,7 @@ const Index = () => {
                     }}
                     className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                   >
-                    {t('cta.book_now')}
+                    {t('booking.submit')}
                   </Button>
                 </CardContent>
               </Card>
@@ -295,7 +296,7 @@ const Index = () => {
                       }}
                       className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                     >
-                      {t('cta.book')}
+                      {t('booking.submit')}
                     </Button>
                   </div>
                 </CardContent>
@@ -325,7 +326,7 @@ const Index = () => {
                 {t('driver_recruitment.headline')}
               </h2>
               <p className="text-xl mb-8 text-white/90">
-                {t('driver_recruitment.description')}
+                {t('driver_recruitment.subline')}
               </p>
               <Button 
                 size="lg" 
@@ -333,7 +334,7 @@ const Index = () => {
                 onClick={() => document.getElementById('driver-form')?.scrollIntoView({ behavior: 'smooth' })}
                 className="bg-white text-tunisia-blue hover:bg-gray-100 font-semibold px-8 py-3"
               >
-                {t('driver_recruitment.cta')}
+                {t('hero.become_driver')}
               </Button>
             </CardContent>
           </Card>
@@ -346,8 +347,9 @@ const Index = () => {
       </main>
 
       {/* Footer Decorative Element */}
+      {/* Footer Decorative Separator */}
       <FooterDecorative />
-      
+
       {/* Footer */}
       <Footer />
 

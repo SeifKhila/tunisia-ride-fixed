@@ -1,13 +1,22 @@
 import React from 'react';
 import { Instagram, Mail, Phone } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import footerBackground from "@/assets/footer-background.webp";
 
 const Footer = () => {
   const { t, language } = useLanguage();
 
   return (
-    <footer className={`bg-tunisia-blue text-white py-12 ${language === 'ar' ? 'font-arabic' : ''}`}>
-      <div className="container mx-auto px-4">
+    <footer className={`relative bg-tunisia-blue text-white py-12 ${language === 'ar' ? 'font-arabic' : ''}`} style={{
+      backgroundImage: `url(${footerBackground})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
+    }}>
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-tunisia-blue/90 to-tunisia-coral/60"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Connect with Us Section */}
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-tunisia-gold mb-6">Connect with Us</h3>
