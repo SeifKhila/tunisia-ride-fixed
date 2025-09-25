@@ -378,6 +378,30 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       public_driver_listings: {
@@ -452,8 +476,16 @@ export type Database = {
           updated_at: string
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "driver" | "customer"
       bid_status: "pending" | "accepted" | "rejected" | "withdrawn"
       driver_status: "pending" | "approved" | "suspended" | "rejected"
       request_status:
@@ -596,6 +628,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "driver", "customer"],
       bid_status: ["pending", "accepted", "rejected", "withdrawn"],
       driver_status: ["pending", "approved", "suspended", "rejected"],
       request_status: [

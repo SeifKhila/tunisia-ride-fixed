@@ -1,30 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Helmet } from 'react-helmet';
-
-// PIN for admin access - change this to your preferred PIN
-const ADMIN_PIN = "2468";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const AdminStats = () => {
-  const [pin, setPin] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [pinError, setPinError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
-  const checkPin = () => {
-    if (pin === ADMIN_PIN) {
-      setIsAuthenticated(true);
-      setPinError("");
-    } else {
-      setPinError("Incorrect PIN");
-      setPin("");
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          setIsLoading(false);
+          return;
+        }
+
+        setUser(session.user);
+
+        // Check if user has admin role
+        const { data: roles, error } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .eq('role', 'admin')
+          .single();
+
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error checking admin role:', error);
+          toast.error('Error checking permissions');
+          setIsLoading(false);
+          return;
+        }
+
+        setIsAuthenticated(!!roles);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error in admin check:', error);
+        setIsLoading(false);
+      }
+    };
+
+    checkAdminAccess();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_OUT') {
+          setIsAuthenticated(false);
+          setUser(null);
+        } else if (event === 'SIGNED_IN' && session) {
+          checkAdminAccess();
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignIn = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/admin-stats`
+        }
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error signing in:', error);
+      toast.error('Error signing in');
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      checkPin();
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast.success('Signed out successfully');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      toast.error('Error signing out');
     }
   };
 
@@ -60,8 +118,26 @@ const AdminStats = () => {
     window.location.reload();
   };
 
-  // Show PIN prompt if not authenticated
-  if (!isAuthenticated) {
+  if (isLoading) {
+    return (
+      <>
+        <Helmet>
+          <meta name="robots" content="noindex,nofollow" />
+          <title>Admin Access - Get Transfer Tunisia</title>
+        </Helmet>
+        <div className="min-h-screen bg-background flex items-center justify-center p-8">
+          <Card className="w-full max-w-md">
+            <CardContent className="flex justify-center items-center h-32">
+              <div className="text-tunisia-blue">Loading...</div>
+            </CardContent>
+          </Card>
+        </div>
+      </>
+    );
+  }
+
+  // Show sign-in prompt if not authenticated or not admin
+  if (!user || !isAuthenticated) {
     return (
       <>
         <Helmet>
@@ -71,33 +147,35 @@ const AdminStats = () => {
         <div className="min-h-screen bg-background flex items-center justify-center p-8">
           <Card className="w-full max-w-md">
             <CardHeader>
-              <CardTitle className="text-center text-tunisia-blue">Admin Access</CardTitle>
+              <CardTitle className="text-center text-tunisia-blue">Admin Access Required</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="pin" className="text-sm font-medium">
-                  Enter PIN:
-                </label>
-                <Input
-                  id="pin"
-                  type="password"
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Enter 4-digit PIN"
-                  maxLength={4}
-                  className="text-center"
-                />
-                {pinError && (
-                  <p className="text-sm text-red-600 text-center">{pinError}</p>
-                )}
-              </div>
-              <Button 
-                onClick={checkPin} 
-                className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90"
-              >
-                Access Admin Panel
-              </Button>
+              {!user ? (
+                <>
+                  <p className="text-center text-muted-foreground">
+                    Please sign in to access the admin panel
+                  </p>
+                  <Button 
+                    onClick={handleSignIn} 
+                    className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90"
+                  >
+                    Sign In with Google
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <p className="text-center text-muted-foreground">
+                    You don't have admin permissions. Contact a system administrator.
+                  </p>
+                  <Button 
+                    onClick={handleSignOut} 
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Sign Out
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -113,9 +191,18 @@ const AdminStats = () => {
       </Helmet>
       <div className="min-h-screen bg-background p-8">
         <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-tunisia-blue mb-2">Admin Statistics</h1>
-          <p className="text-muted-foreground">Lightweight click tracking (localStorage only)</p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-tunisia-blue mb-2">Admin Statistics</h1>
+            <p className="text-muted-foreground">Lightweight click tracking (localStorage only)</p>
+          </div>
+          <Button 
+            onClick={handleSignOut} 
+            variant="outline"
+            className="text-tunisia-blue border-tunisia-blue hover:bg-tunisia-blue/10"
+          >
+            Sign Out
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

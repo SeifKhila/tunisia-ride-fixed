@@ -1,7 +1,7 @@
 project_id = "ueyvmsxksueuxppuksrg"
 
 [functions.submit-booking]
-verify_jwt = false
+verify_jwt = true
 
 [functions.submit-driver-application]
-verify_jwt = false
+verify_jwt = true
