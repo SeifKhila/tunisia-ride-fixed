@@ -5,6 +5,7 @@ import { MessageCircle, Mail, Copy } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import PaymentDeposit from "@/components/PaymentDeposit";
+import { validateBookingMessage, bookingReferenceSchema } from "@/lib/validation";
 
 const BookingForm = () => {
   const { t, language } = useLanguage();
@@ -39,9 +40,14 @@ const BookingForm = () => {
   };
 
   const getBookingMessage = () => {
+    // Validate booking reference first
+    const referenceValidation = bookingReferenceSchema.safeParse(bookingReference);
+    const safeReference = referenceValidation.success ? bookingReference : 'PENDING';
+    
+    let message: string;
     switch(language) {
       case 'fr':
-        return `Bonjour Get Tunisia Transfer 👋
+        message = `Bonjour Get Tunisia Transfer 👋
 Je souhaite réserver un transfert :
 • Nom :
 • Lieu de prise en charge :
@@ -50,9 +56,10 @@ Je souhaite réserver un transfert :
 • Passagers/Bagages :
 • Numéro de vol :
 • Remarques :
-Réf réservation : ${bookingReference}`;
+Réf réservation : ${safeReference}`;
+        break;
       case 'ar':
-        return `مرحباً Get Tunisia Transfer 👋
+        message = `مرحباً Get Tunisia Transfer 👋
 أرغب في حجز نقل:
 • الاسم:
 • موقع الانطلاق:
@@ -61,9 +68,10 @@ Réf réservation : ${bookingReference}`;
 • عدد الركاب/الأمتعة:
 • رقم الرحلة:
 • ملاحظات:
-رقم الحجز: ${bookingReference}`;
+رقم الحجز: ${safeReference}`;
+        break;
       default:
-        return `Hi Get Tunisia Transfer 👋
+        message = `Hi Get Tunisia Transfer 👋
 I'd like to book a transfer:
 • Name:
 • Pickup:
@@ -72,8 +80,17 @@ I'd like to book a transfer:
 • Pax/Bags:
 • Flight No:
 • Notes:
-Booking Ref: ${bookingReference}`;
+Booking Ref: ${safeReference}`;
     }
+    
+    // Validate and sanitize the message
+    const validation = validateBookingMessage(message);
+    if (!validation.isValid) {
+      console.error('Invalid booking message:', validation.error);
+      return 'Hi Get Tunisia Transfer - I would like to book a transfer. Please contact me.';
+    }
+    
+    return message;
   };
 
   const handleWhatsAppClick = () => {

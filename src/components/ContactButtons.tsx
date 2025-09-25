@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageCircle, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { validateBookingMessage } from "@/lib/validation";
 
 interface ContactButtonsProps {
   type: 'booking' | 'driver';
@@ -11,8 +12,11 @@ interface ContactButtonsProps {
 const ContactButtons: React.FC<ContactButtonsProps> = ({ type }) => {
   const { t, language } = useLanguage();
 
-  const whatsappMessages = {
-    booking: `Hi Get Tunisia Transfer 👋
+  const getValidatedMessage = (type: 'booking' | 'driver') => {
+    let message: string;
+    
+    if (type === 'booking') {
+      message = `Hi Get Tunisia Transfer 👋
 I'd like to book a transfer:
 • Name:
 • Pickup:
@@ -20,8 +24,9 @@ I'd like to book a transfer:
 • Date/Time:
 • Pax/Bags:
 • Flight No:
-• Notes:`,
-    driver: `Hi Get Tunisia Transfer 👋
+• Notes:`;
+    } else {
+      message = `Hi Get Tunisia Transfer 👋
 I'd like to apply as a driver:
 • Name:
 • City/Zone(s):
@@ -29,7 +34,17 @@ I'd like to apply as a driver:
 • Years experience:
 • Languages:
 • WhatsApp number:
-• Docs ready (ID/License): Yes/No`
+• Docs ready (ID/License): Yes/No`;
+    }
+    
+    // Validate and sanitize the message
+    const validation = validateBookingMessage(message);
+    if (!validation.isValid) {
+      console.error('Invalid contact message:', validation.error);
+      return `Hi Get Tunisia Transfer - I would like to ${type === 'booking' ? 'book a transfer' : 'apply as a driver'}. Please contact me.`;
+    }
+    
+    return message;
   };
 
   const emailData = {
@@ -79,7 +94,7 @@ Other details:`
       <CardContent className="space-y-6">
         {/* WhatsApp Button (Primary) */}
         <a 
-          href={`https://wa.me/447956643662?text=${encodeURIComponent(whatsappMessages[type])}`}
+          href={`https://wa.me/447956643662?text=${encodeURIComponent(getValidatedMessage(type))}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full"

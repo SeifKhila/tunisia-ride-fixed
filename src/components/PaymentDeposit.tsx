@@ -8,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useBookingReference } from "@/hooks/useBookingReference";
 import { toast } from "sonner";
+import { paymentAmountSchema, bookingReferenceSchema } from "@/lib/validation";
 
 interface PaymentDepositProps {
   totalFareEUR: number;
@@ -43,12 +44,40 @@ const PaymentDeposit: React.FC<PaymentDepositProps> = ({
   };
 
   const handlePayPalPayment = () => {
+    // Validate payment amount and booking reference
+    const amountValidation = paymentAmountSchema.safeParse(paymentAmount);
+    const referenceValidation = bookingReferenceSchema.safeParse(bookingReference);
+    
+    if (!amountValidation.success) {
+      toast.error('Invalid payment amount');
+      return;
+    }
+    
+    if (!referenceValidation.success) {
+      toast.error('Invalid booking reference');
+      return;
+    }
+    
     const paypalUrl = `https://www.paypal.me/seifkhila1/${paymentAmount}${paymentCurrency}`;
     window.open(paypalUrl, '_blank', 'noopener,noreferrer');
     onPaymentInitiated?.('paypal', paymentAmount, paymentCurrency);
   };
 
   const handleRevolutPayment = () => {
+    // Validate payment amount and booking reference
+    const amountValidation = paymentAmountSchema.safeParse(paymentAmount);
+    const referenceValidation = bookingReferenceSchema.safeParse(bookingReference);
+    
+    if (!amountValidation.success) {
+      toast.error('Invalid payment amount');
+      return;
+    }
+    
+    if (!referenceValidation.success) {
+      toast.error('Invalid booking reference');
+      return;
+    }
+    
     const revolutUrl = `https://revolut.me/seifededju/${paymentAmount}${paymentCurrency.toLowerCase()}`;
     window.open(revolutUrl, '_blank', 'noopener,noreferrer');
     onPaymentInitiated?.('revolut', paymentAmount, paymentCurrency);
