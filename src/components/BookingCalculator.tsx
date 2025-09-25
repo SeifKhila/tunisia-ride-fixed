@@ -333,7 +333,7 @@ export default function BookingCalculator() {
                       <div className="flex flex-col gap-2">
                         <Button
                           onClick={() => {
-                            window.open(`https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`, '_blank');
+                            window.location.href = `https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`;
                             setShowContactOptions(false);
                           }}
                           className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
@@ -344,7 +344,7 @@ export default function BookingCalculator() {
                         
                         <Button
                           onClick={() => {
-                            window.open(`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`, '_blank');
+                            window.location.href = `https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`;
                             setShowContactOptions(false);
                           }}
                           variant="outline"

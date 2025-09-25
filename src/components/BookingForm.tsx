@@ -88,7 +88,7 @@ Booking Ref: ${bookingReference}`;
       ? `https://wa.me/447956643662?text=${encodedMessage}`
       : `https://web.whatsapp.com/send?phone=447956643662&text=${encodedMessage}`;
     
-    window.open(link, '_blank', 'noopener,noreferrer');
+    window.location.href = link;
   };
 
   const handleEmailClick = () => {

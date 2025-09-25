@@ -65,7 +65,7 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
     const link = isMobile 
       ? `https://wa.me/447956643662?text=${message}`
       : `https://web.whatsapp.com/send?phone=447956643662&text=${message}`;
-    window.open(link, '_blank', 'noopener,noreferrer');
+    window.location.href = link;
   };
 
   const handleEmailBooking = () => {

@@ -91,7 +91,7 @@ Other details:`
   const handleWhatsAppClick = () => {
     trackClick(`WhatsApp ${type === 'booking' ? 'Book' : 'Driver'}`);
     const link = generateWhatsAppLink(whatsappMessages[type]);
-    window.open(link, '_blank');
+    window.location.href = link;
   };
 
   const handleEmailClick = () => {

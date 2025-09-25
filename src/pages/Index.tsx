@@ -223,7 +223,7 @@ const Index = () => {
                   <p className="text-sm text-gray-600 mb-4">{route.duration}</p>
                   <Button 
                     onClick={() => {
-                      window.open(generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`), '_blank', 'noopener,noreferrer');
+                      window.location.href = generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`);
                     }}
                     className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                   >
@@ -292,7 +292,7 @@ const Index = () => {
                     <Button 
                       size="sm" 
                       onClick={() => {
-                        window.open(generateWhatsAppLink(`Book ${excursion.name} excursion`), '_blank', 'noopener,noreferrer');
+                        window.location.href = generateWhatsAppLink(`Book ${excursion.name} excursion`);
                       }}
                       className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                     >
@@ -361,7 +361,7 @@ const Index = () => {
       {/* Mobile Contact Button - Sticky */}
       <div className="fixed bottom-20 right-4 z-40 md:hidden">
         <Button 
-          onClick={() => window.open(generateWhatsAppLink('Hi I need help with booking'), '_blank', 'noopener,noreferrer')}
+          onClick={() => window.location.href = generateWhatsAppLink('Hi I need help with booking')}
           size="lg"
           className="rounded-full h-14 w-14 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
         >
