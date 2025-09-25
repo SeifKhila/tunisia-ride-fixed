@@ -223,7 +223,14 @@ const Index = () => {
                   <p className="text-sm text-gray-600 mb-4">{route.duration}</p>
                   <Button 
                     onClick={() => {
-                      window.location.href = generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`);
+                      const link = generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`);
+                      const tempLink = document.createElement('a');
+                      tempLink.href = link;
+                      tempLink.target = '_blank';
+                      tempLink.rel = 'noopener noreferrer';
+                      document.body.appendChild(tempLink);
+                      tempLink.click();
+                      document.body.removeChild(tempLink);
                     }}
                     className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                   >
@@ -292,7 +299,14 @@ const Index = () => {
                     <Button 
                       size="sm" 
                       onClick={() => {
-                        window.location.href = generateWhatsAppLink(`Book ${excursion.name} excursion`);
+                        const link = generateWhatsAppLink(`Book ${excursion.name} excursion`);
+                        const tempLink = document.createElement('a');
+                        tempLink.href = link;
+                        tempLink.target = '_blank';
+                        tempLink.rel = 'noopener noreferrer';
+                        document.body.appendChild(tempLink);
+                        tempLink.click();
+                        document.body.removeChild(tempLink);
                       }}
                       className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
                     >
@@ -361,7 +375,16 @@ const Index = () => {
       {/* Mobile Contact Button - Sticky */}
       <div className="fixed bottom-20 right-4 z-40 md:hidden">
         <Button 
-          onClick={() => window.location.href = generateWhatsAppLink('Hi I need help with booking')}
+          onClick={() => {
+            const link = generateWhatsAppLink('Hi I need help with booking');
+            const tempLink = document.createElement('a');
+            tempLink.href = link;
+            tempLink.target = '_blank';
+            tempLink.rel = 'noopener noreferrer';
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+          }}
           size="lg"
           className="rounded-full h-14 w-14 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
         >

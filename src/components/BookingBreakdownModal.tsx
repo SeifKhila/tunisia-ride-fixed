@@ -61,11 +61,16 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
 
   const handleWhatsAppBooking = () => {
     const message = encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`);
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const link = isMobile 
-      ? `https://wa.me/447956643662?text=${message}`
-      : `https://web.whatsapp.com/send?phone=447956643662&text=${message}`;
-    window.location.href = link;
+    const link = `https://wa.me/447956643662?text=${message}`;
+    
+    // Create a temporary link element to handle the navigation properly
+    const tempLink = document.createElement('a');
+    tempLink.href = link;
+    tempLink.target = '_blank';
+    tempLink.rel = 'noopener noreferrer';
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
   };
 
   const handleEmailBooking = () => {

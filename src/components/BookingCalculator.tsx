@@ -333,7 +333,14 @@ export default function BookingCalculator() {
                       <div className="flex flex-col gap-2">
                         <Button
                           onClick={() => {
-                            window.location.href = `https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`;
+                            const link = `https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`;
+                            const tempLink = document.createElement('a');
+                            tempLink.href = link;
+                            tempLink.target = '_blank';
+                            tempLink.rel = 'noopener noreferrer';
+                            document.body.appendChild(tempLink);
+                            tempLink.click();
+                            document.body.removeChild(tempLink);
                             setShowContactOptions(false);
                           }}
                           className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
@@ -344,7 +351,14 @@ export default function BookingCalculator() {
                         
                         <Button
                           onClick={() => {
-                            window.location.href = `https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`;
+                            const link = `https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`;
+                            const tempLink = document.createElement('a');
+                            tempLink.href = link;
+                            tempLink.target = '_blank';
+                            tempLink.rel = 'noopener noreferrer';
+                            document.body.appendChild(tempLink);
+                            tempLink.click();
+                            document.body.removeChild(tempLink);
                             setShowContactOptions(false);
                           }}
                           variant="outline"

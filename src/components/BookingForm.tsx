@@ -82,13 +82,16 @@ Booking Ref: ${bookingReference}`;
     const message = getBookingMessage();
     
     const encodedMessage = encodeURIComponent(message);
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const link = `https://wa.me/447956643662?text=${encodedMessage}`;
     
-    const link = isMobile 
-      ? `https://wa.me/447956643662?text=${encodedMessage}`
-      : `https://web.whatsapp.com/send?phone=447956643662&text=${encodedMessage}`;
-    
-    window.location.href = link;
+    // Create a temporary link element to handle the navigation properly
+    const tempLink = document.createElement('a');
+    tempLink.href = link;
+    tempLink.target = '_blank';
+    tempLink.rel = 'noopener noreferrer';
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
   };
 
   const handleEmailClick = () => {

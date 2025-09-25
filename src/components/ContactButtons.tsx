@@ -73,13 +73,7 @@ Other details:`
 
   const generateWhatsAppLink = (message: string) => {
     const encodedMessage = encodeURIComponent(message);
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-      return `https://wa.me/447956643662?text=${encodedMessage}`;
-    } else {
-      return `https://web.whatsapp.com/send?phone=447956643662&text=${encodedMessage}`;
-    }
+    return `https://wa.me/447956643662?text=${encodedMessage}`;
   };
 
   const generateEmailLink = (subject: string, body: string) => {
@@ -89,9 +83,16 @@ Other details:`
   };
 
   const handleWhatsAppClick = () => {
-    trackClick(`WhatsApp ${type === 'booking' ? 'Book' : 'Driver'}`);
     const link = generateWhatsAppLink(whatsappMessages[type]);
-    window.location.href = link;
+    // Create a temporary link element to handle the navigation properly
+    const tempLink = document.createElement('a');
+    tempLink.href = link;
+    tempLink.target = '_blank';
+    tempLink.rel = 'noopener noreferrer';
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
+    trackClick(`WhatsApp ${type === 'booking' ? 'Book' : 'Driver'}`);
   };
 
   const handleEmailClick = () => {
