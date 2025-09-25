@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import BookingBreakdownModal from "@/components/BookingBreakdownModal";
 
 const PricingTable = () => {
   const { t, language } = useLanguage();
   const { formatPrice } = useCurrency();
+  const [selectedRoute, setSelectedRoute] = useState<{from: string; to: string; basePriceEUR: number} | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // All base prices are in EUR
   const routes = [
@@ -16,9 +19,9 @@ const PricingTable = () => {
     { from: 'Tunis', to: 'Hammamet', basePriceEUR: 45 }
   ];
 
-  const generateWhatsAppLink = (route: string) => {
-    const message = encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route} transfer`);
-    return `https://wa.me/447956643662?text=${message}`;
+  const handleBookNow = (route: {from: string; to: string; basePriceEUR: number}) => {
+    setSelectedRoute(route);
+    setIsModalOpen(true);
   };
 
   return (
@@ -43,7 +46,7 @@ const PricingTable = () => {
                 {formatPrice(route.basePriceEUR)}
               </div>
               <Button
-                onClick={() => window.open(generateWhatsAppLink(`${route.from} ⇄ ${route.to}`))}
+                onClick={() => handleBookNow(route)}
                 variant="default"
                 className="w-full min-h-[48px] bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
               >
@@ -53,6 +56,15 @@ const PricingTable = () => {
           </Card>
         ))}
       </div>
+
+      {/* Booking Breakdown Modal */}
+      {selectedRoute && (
+        <BookingBreakdownModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          route={selectedRoute}
+        />
+      )}
     </section>
   );
 };

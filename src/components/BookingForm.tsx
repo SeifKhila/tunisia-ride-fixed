@@ -168,7 +168,7 @@ Booking Ref: ${bookingReference}`;
 
       {/* Payment Deposit Section - Always visible */}
       <PaymentDeposit 
-        defaultAmount={25}
+        totalFareEUR={35}
         onPaymentInitiated={(method, amount, currency) => {
           trackClick(`${method} Pay`);
           toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);

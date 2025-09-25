@@ -311,7 +311,7 @@ export default function BookingCalculator() {
                   {/* Payment Deposit Section */}
                   <div className="mt-6">
                     <PaymentDeposit 
-                      defaultAmount={Math.round((dropoff === 'custom' ? 50 : pricing.oneWay) * 0.25)}
+                      totalFareEUR={dropoff === 'custom' ? 50 : pricing.oneWay}
                       onPaymentInitiated={(method, amount, currency) => {
                         toast.success(`Payment initiated via ${method} for ${amount} ${currency}`);
                       }}
