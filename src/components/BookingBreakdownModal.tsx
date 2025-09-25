@@ -201,29 +201,33 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
             </p>
             
             <div className="grid grid-cols-2 gap-3">
-              <a 
-                href={`https://wa.me/447956643662?text=${encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full"
-              >
-                <Button
-                  variant="outline"
-                  className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  WhatsApp
-                </Button>
-              </a>
-              
-              <Button
-                onClick={handleEmailBooking}
-                variant="outline"
-                className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
-              >
-                <Mail className="h-4 w-4" />
-                Email
-              </Button>
+          <a 
+            href={`https://wa.me/447956643662?text=${encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full"
+          >
+            <Button
+              variant="outline"
+              className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+            >
+              <MessageCircle className="h-4 w-4" />
+              WhatsApp
+            </Button>
+          </a>
+          
+          <a
+            href={`mailto:khilas592@gmail.com?subject=${encodeURIComponent("New Booking Enquiry – Get Tunisia Transfer")}&body=${encodeURIComponent(`Hi Get Tunisia Transfer\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`}
+            className="block w-full"
+          >
+            <Button
+              variant="outline"
+              className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+            >
+              <Mail className="h-4 w-4" />
+              Email
+            </Button>
+          </a>
             </div>
           </div>
 

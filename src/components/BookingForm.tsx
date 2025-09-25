@@ -77,34 +77,11 @@ Booking Ref: ${bookingReference}`;
   };
 
   const handleWhatsAppClick = () => {
-    trackClick('WhatsApp Book');
     setShowPayment(true);
-    const message = getBookingMessage();
-    
-    const encodedMessage = encodeURIComponent(message);
-    const link = `https://wa.me/447956643662?text=${encodedMessage}`;
-    
-    // Create a temporary link element to handle the navigation properly
-    const tempLink = document.createElement('a');
-    tempLink.href = link;
-    tempLink.target = '_blank';
-    tempLink.rel = 'noopener noreferrer';
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
   };
 
   const handleEmailClick = () => {
-    trackClick('Email Book');
     setShowPayment(true);
-    const subject = "New Booking Enquiry – Get Tunisia Transfer";
-    const body = getBookingMessage();
-    
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    const link = `mailto:khilas592@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-    
-    window.open(link, '_self');
   };
 
   return (
@@ -142,31 +119,37 @@ Booking Ref: ${bookingReference}`;
             </p>
           </div>
 
-          {/* Contact Buttons */}
-          <div className="grid grid-cols-1 gap-4">
-            <a 
-              href={`https://wa.me/447956643662?text=${encodeURIComponent(getBookingMessage())}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full"
-            >
-              <Button
-                className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
-              >
-                <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
-                Book via WhatsApp (Primary)
-              </Button>
-            </a>
-            
+        {/* Contact Buttons */}
+        <div className="grid grid-cols-1 gap-4">
+          <a 
+            href={`https://wa.me/447956643662?text=${encodeURIComponent(getBookingMessage())}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full"
+            onClick={handleWhatsAppClick}
+          >
             <Button
-              onClick={handleEmailClick}
+              className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
+            >
+              <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
+              Book via WhatsApp (Primary)
+            </Button>
+          </a>
+          
+          <a
+            href={`mailto:khilas592@gmail.com?subject=${encodeURIComponent("New Booking Enquiry – Get Tunisia Transfer")}&body=${encodeURIComponent(getBookingMessage())}`}
+            className="block w-full"
+            onClick={handleEmailClick}
+          >
+            <Button
               variant="outline"
               className="w-full min-h-[56px] text-lg border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
             >
               <Mail className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
               Book via Email (Secondary)
             </Button>
-          </div>
+          </a>
+        </div>
 
           {/* Privacy Notice */}
           <div className="text-xs text-muted-foreground text-center p-3 bg-muted/50 rounded">

@@ -10,7 +10,6 @@ import PricingTable from "@/components/PricingTable";
 import FAQ from "@/components/FAQ";
 import TestimonialSection from "@/components/TestimonialSection";
 import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
-import DriverForm from "@/components/DriverForm";
 import ToolsPanel from "@/components/ToolsPanel";
 import { useIsMobile } from "@/hooks/use-mobile";
 import FooterDecorative from "@/components/FooterDecorative";
@@ -129,15 +128,6 @@ const Index = () => {
               className="min-w-[200px] h-14 text-lg bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-glow"
             >
               {t('hero.get_quote')}
-            </Button>
-            
-            <Button 
-              onClick={() => document.getElementById('driver-form')?.scrollIntoView({ behavior: 'smooth' })}
-              size="lg"
-              variant="outline"
-              className="min-w-[200px] h-14 text-lg border-white text-white hover:bg-white hover:text-tunisia-blue"
-            >
-              {t('hero.become_driver')}
             </Button>
           </div>
           
@@ -324,34 +314,6 @@ const Index = () => {
           <FAQ />
         </section>
 
-        {/* Driver Recruitment CTA */}
-        <section className="text-center space-y-8 bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
-          <Card className="bg-gradient-hero text-white border-0">
-            <CardContent className="p-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {t('driver_recruitment.headline')}
-              </h2>
-              <p className="text-xl mb-8 text-white/90">
-                {t('driver_recruitment.subline')}
-              </p>
-              <Button 
-                size="lg" 
-                variant="secondary"
-                onClick={() => document.getElementById('driver-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-white text-tunisia-blue hover:bg-gray-100 font-semibold px-8 py-3"
-                role="button"
-                aria-label="Scroll to driver registration form"
-              >
-                {t('hero.become_driver')}
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Driver Application Form */}
-        <section id="driver-form" className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
-          <DriverForm />
-        </section>
       </main>
 
       {/* Footer Decorative Element */}

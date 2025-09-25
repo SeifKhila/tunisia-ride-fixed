@@ -331,46 +331,48 @@ export default function BookingCalculator() {
                       </p>
                       
                       <div className="flex flex-col gap-2">
-                        <a 
-                          href={`https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block w-full"
-                          onClick={() => setShowContactOptions(false)}
-                        >
-                          <Button className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white">
-                            <MessageCircle className="mr-2 h-4 w-4" />
-                            WhatsApp Tunisia (+216 28 602 147)
-                          </Button>
-                        </a>
-                        
-                        <a 
-                          href={`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block w-full"
-                          onClick={() => setShowContactOptions(false)}
-                        >
-                          <Button
-                            variant="outline"
-                            className="w-full border-tunisia-coral text-tunisia-coral hover:bg-tunisia-coral/10"
-                          >
-                            <MessageCircle className="mr-2 h-4 w-4" />
-                            WhatsApp UK (+44 7956 643662)
-                          </Button>
-                        </a>
-                        
-                        <Button
-                          onClick={() => {
-                            window.open(generateEmailLink(selectedTripType), '_blank');
-                            setShowContactOptions(false);
-                          }}
-                          variant="outline"
-                          className="border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue/10"
-                        >
-                          <Mail className="mr-2 h-4 w-4" />
-                          Email Quote
-                        </Button>
+        <a 
+          href={`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full"
+          onClick={() => setShowContactOptions(false)}
+        >
+          <Button className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white">
+            <MessageCircle className="mr-2 h-4 w-4" />
+            WhatsApp Tunisia (+216 28 602 147)
+          </Button>
+        </a>
+        
+        <a 
+          href={`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full"
+          onClick={() => setShowContactOptions(false)}
+        >
+          <Button
+            variant="outline"
+            className="w-full border-tunisia-coral text-tunisia-coral hover:bg-tunisia-coral/10"
+          >
+            <MessageCircle className="mr-2 h-4 w-4" />
+            WhatsApp UK (+44 7956 643662)
+          </Button>
+        </a>
+        
+        <a
+          href={`mailto:info@get-tunisia-transfer.com?subject=${encodeURIComponent(`Tunisia Transfer Booking - ${selectedTripType === 'oneway' ? 'One Way' : 'Return'}`)}&body=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
+          className="block w-full"
+          onClick={() => setShowContactOptions(false)}
+        >
+          <Button
+            variant="outline"
+            className="border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue/10"
+          >
+            <Mail className="mr-2 h-4 w-4" />
+            Email Quote
+          </Button>
+        </a>
                         
                         <Button
                           onClick={() => setShowContactOptions(false)}
