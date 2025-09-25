@@ -176,21 +176,21 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="bg-tunisia-coral text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
                 <h3 className="font-semibold text-tunisia-blue mb-2">{t('how_it_works.step1')}</h3>
-                <p className="text-sm text-gray-600">{t('how_it_works.step1_desc')}</p>
+                <p className="text-sm text-gray-600">Complete your booking with our secure online form. Choose your pickup location, destination, and travel date.</p>
               </CardContent>
             </Card>
             <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="bg-tunisia-coral text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
                 <h3 className="font-semibold text-tunisia-blue mb-2">{t('how_it_works.step2')}</h3>
-                <p className="text-sm text-gray-600">{t('how_it_works.step2_desc')}</p>
+                <p className="text-sm text-gray-600">Secure your transfer with just a 25% deposit. Pay the remaining balance to your driver upon arrival.</p>
               </CardContent>
             </Card>
             <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="bg-tunisia-coral text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
                 <h3 className="font-semibold text-tunisia-blue mb-2">{t('how_it_works.step3')}</h3>
-                <p className="text-sm text-gray-600">{t('how_it_works.step3_desc')}</p>
+                <p className="text-sm text-gray-600">Your professional driver will be waiting for you at the agreed location with a personalized sign.</p>
               </CardContent>
             </Card>
           </div>
