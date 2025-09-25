@@ -201,14 +201,20 @@ const BookingBreakdownModal: React.FC<BookingBreakdownModalProps> = ({
             </p>
             
             <div className="grid grid-cols-2 gap-3">
-              <Button
-                onClick={handleWhatsAppBooking}
-                variant="outline"
-                className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+              <a 
+                href={`https://wa.me/447956643662?text=${encodeURIComponent(`Hi Get Tunisia Transfer 👋\nI'd like to book ${route.from} ⇄ ${route.to} transfer\nBooking Ref: ${bookingReference}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full"
               >
-                <MessageCircle className="h-4 w-4" />
-                WhatsApp
-              </Button>
+                <Button
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </Button>
+              </a>
               
               <Button
                 onClick={handleEmailBooking}

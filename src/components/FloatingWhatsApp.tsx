@@ -14,16 +14,15 @@ const FloatingWhatsApp = () => {
     }
   };
 
-  const handleClick = () => {
-    trackClick();
-    const today = new Date();
-    const date = today.getFullYear().toString() + 
-                (today.getMonth() + 1).toString().padStart(2, '0') + 
-                today.getDate().toString().padStart(2, '0');
-    const random = Math.floor(Math.random() * 99) + 1;
-    const bookingRef = `GT-${date}-${random.toString().padStart(2, '0')}`;
-    
-    const message = `Hi Get Tunisia Transfer 👋
+  // Create message with booking reference
+  const today = new Date();
+  const date = today.getFullYear().toString() + 
+              (today.getMonth() + 1).toString().padStart(2, '0') + 
+              today.getDate().toString().padStart(2, '0');
+  const random = Math.floor(Math.random() * 99) + 1;
+  const bookingRef = `GT-${date}-${random.toString().padStart(2, '0')}`;
+  
+  const message = `Hi Get Tunisia Transfer 👋
 I'd like to book a transfer:
 • Name:
 • Pickup:
@@ -33,28 +32,22 @@ I'd like to book a transfer:
 • Flight No:
 • Notes:
 Booking Ref: ${bookingRef}`;
-    
-    const encodedMessage = encodeURIComponent(message);
-    const link = `https://wa.me/447956643662?text=${encodedMessage}`;
-    
-    // Create a temporary link element to handle the navigation properly
-    const tempLink = document.createElement('a');
-    tempLink.href = link;
-    tempLink.target = '_blank';
-    tempLink.rel = 'noopener noreferrer';
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
-  };
 
   return (
-    <Button
-      onClick={handleClick}
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BA5A] text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-bounce md:hidden"
-      aria-label="Quick WhatsApp contact"
+    <a 
+      href={`https://wa.me/447956643662?text=${encodeURIComponent(message)}`}
+      target="_blank"
+      rel="noopener noreferrer" 
+      className="fixed bottom-6 right-6 z-50 md:hidden"
+      onClick={trackClick}
     >
-      <MessageCircle className="h-6 w-6" />
-    </Button>
+      <Button
+        className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BA5A] text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-bounce"
+        aria-label="Quick WhatsApp contact"
+      >
+        <MessageCircle className="h-6 w-6" />
+      </Button>
+    </a>
   );
 };
 

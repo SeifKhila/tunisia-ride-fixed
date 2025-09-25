@@ -221,21 +221,16 @@ const Index = () => {
                     <span className="text-2xl font-bold text-tunisia-coral">{formatPrice(route.price)}</span>
                   </div>
                   <p className="text-sm text-gray-600 mb-4">{route.duration}</p>
-                  <Button 
-                    onClick={() => {
-                      const link = generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`);
-                      const tempLink = document.createElement('a');
-                      tempLink.href = link;
-                      tempLink.target = '_blank';
-                      tempLink.rel = 'noopener noreferrer';
-                      document.body.appendChild(tempLink);
-                      tempLink.click();
-                      document.body.removeChild(tempLink);
-                    }}
-                    className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                  <a 
+                    href={generateWhatsAppLink(`Book transfer from ${route.from} to ${route.to}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full"
                   >
-                    {t('booking.submit')}
-                  </Button>
+                    <Button className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white">
+                      {t('booking.submit')}
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             ))}
@@ -296,22 +291,19 @@ const Index = () => {
                   <p className="text-sm text-gray-600 mb-3">{excursion.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-tunisia-coral">د.ت {excursion.price}</span>
-                    <Button 
-                      size="sm" 
-                      onClick={() => {
-                        const link = generateWhatsAppLink(`Book ${excursion.name} excursion`);
-                        const tempLink = document.createElement('a');
-                        tempLink.href = link;
-                        tempLink.target = '_blank';
-                        tempLink.rel = 'noopener noreferrer';
-                        document.body.appendChild(tempLink);
-                        tempLink.click();
-                        document.body.removeChild(tempLink);
-                      }}
-                      className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                    <a 
+                      href={generateWhatsAppLink(`Book ${excursion.name} excursion`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
                     >
-                      {t('booking.submit')}
-                    </Button>
+                      <Button 
+                        size="sm" 
+                        className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white"
+                      >
+                        {t('booking.submit')}
+                      </Button>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
@@ -374,22 +366,19 @@ const Index = () => {
 
       {/* Mobile Contact Button - Sticky */}
       <div className="fixed bottom-20 right-4 z-40 md:hidden">
-        <Button 
-          onClick={() => {
-            const link = generateWhatsAppLink('Hi I need help with booking');
-            const tempLink = document.createElement('a');
-            tempLink.href = link;
-            tempLink.target = '_blank';
-            tempLink.rel = 'noopener noreferrer';
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            document.body.removeChild(tempLink);
-          }}
-          size="lg"
-          className="rounded-full h-14 w-14 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
-        >
-          <Phone className="h-6 w-6" />
-        </Button>
+          <a 
+            href={generateWhatsAppLink('Hi I need help with booking')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <Button 
+              size="lg"
+              className="rounded-full h-14 w-14 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white shadow-lg"
+            >
+              <Phone className="h-6 w-6" />
+            </Button>
+          </a>
       </div>
     </div>
   );

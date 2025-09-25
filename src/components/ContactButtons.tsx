@@ -120,14 +120,20 @@ Other details:`
       </CardHeader>
       <CardContent className="space-y-6">
         {/* WhatsApp Button (Primary) */}
-        <Button 
-          onClick={handleWhatsAppClick}
-          className="w-full min-h-[60px] bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold text-lg flex items-center justify-center gap-3"
-          aria-label={`Contact via WhatsApp for ${type}`}
+        <a 
+          href={generateWhatsAppLink(whatsappMessages[type])}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full"
         >
-          <MessageCircle className="h-6 w-6" />
-          💬 WhatsApp us
-        </Button>
+          <Button 
+            className="w-full min-h-[60px] bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold text-lg flex items-center justify-center gap-3"
+            aria-label={`Contact via WhatsApp for ${type}`}
+          >
+            <MessageCircle className="h-6 w-6" />
+            💬 WhatsApp us
+          </Button>
+        </a>
 
         {/* Email Button (Secondary) */}
         <Button 

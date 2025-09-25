@@ -132,13 +132,19 @@ Application Ref: ${bookingReference}`;
 
         {/* Contact Buttons */}
         <div className="grid grid-cols-1 gap-4">
-          <Button
-            onClick={handleWhatsAppClick}
+        <a 
+          href={`https://wa.me/447956643662?text=${encodeURIComponent(getDriverMessage())}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full"
+        >
+          <Button 
             className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
           >
             <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
             Apply via WhatsApp (Primary)
           </Button>
+        </a>
           
           <Button
             onClick={handleEmailClick}

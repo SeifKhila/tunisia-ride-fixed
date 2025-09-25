@@ -144,13 +144,19 @@ Booking Ref: ${bookingReference}`;
 
           {/* Contact Buttons */}
           <div className="grid grid-cols-1 gap-4">
-            <Button
-              onClick={handleWhatsAppClick}
-              className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
+            <a 
+              href={`https://wa.me/447956643662?text=${encodeURIComponent(getBookingMessage())}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full"
             >
-              <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
-              Book via WhatsApp (Primary)
-            </Button>
+              <Button
+                className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
+              >
+                <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
+                Book via WhatsApp (Primary)
+              </Button>
+            </a>
             
             <Button
               onClick={handleEmailClick}
