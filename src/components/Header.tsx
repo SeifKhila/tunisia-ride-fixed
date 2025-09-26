@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageSelector from "./LanguageSelector";
+import TopControls from "./TopControls";
 
 const Header = () => {
   const { t, language } = useLanguage();
@@ -19,16 +19,19 @@ const Header = () => {
             {t('nav.logo')}
           </div>
 
-          {/* Navigation */}
-          <nav className={`hidden md:flex items-center gap-6 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-            <Button
-              variant="ghost"
-              onClick={() => scrollToSection('booking')}
-              className="text-white hover:bg-white/20"
-            >
-              {t('nav.book_now')}
-            </Button>
-          </nav>
+          {/* Navigation and Controls */}
+          <div className={`flex items-center gap-4 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+            <nav className={`hidden md:flex items-center gap-6 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+              <Button
+                variant="ghost"
+                onClick={() => scrollToSection('booking')}
+                className="text-white hover:bg-white/20"
+              >
+                {t('nav.book_now')}
+              </Button>
+            </nav>
+            <TopControls />
+          </div>
         </div>
       </div>
     </header>
