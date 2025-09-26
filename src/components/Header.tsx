@@ -11,11 +11,11 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-tunisia-blue/20 shadow-sm ${language === 'ar' ? 'font-arabic' : ''}`}>
+    <header className={`fixed top-0 w-full z-50 bg-gradient-to-r from-tunisia-blue to-tunisia-coral backdrop-blur-md border-b border-tunisia-blue/20 shadow-lg ${language === 'ar' ? 'font-arabic' : ''}`}>
       <div className="container mx-auto px-4 py-4">
         <div className={`flex items-center justify-between ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
-          <div className="font-bold text-xl text-tunisia-blue">
+          <div className="font-bold text-xl text-white">
             {t('nav.logo')}
           </div>
 
@@ -24,7 +24,7 @@ const Header = () => {
             <Button
               variant="ghost"
               onClick={() => scrollToSection('booking')}
-              className="text-tunisia-blue hover:bg-tunisia-blue/10"
+              className="text-white hover:bg-white/20"
             >
               {t('nav.book_now')}
             </Button>

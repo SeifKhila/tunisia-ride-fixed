@@ -21,7 +21,7 @@ const TopControls = () => {
   ];
 
   return (
-    <div className="fixed top-4 left-4 z-50 flex flex-col gap-3">
+    <div className="fixed top-20 left-4 z-40 flex flex-col gap-3">
       {/* Language Selector */}
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-2 border border-white/20">
         <div className="flex items-center gap-1 mb-2">

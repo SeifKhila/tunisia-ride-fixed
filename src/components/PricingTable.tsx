@@ -58,10 +58,18 @@ const PricingTable = () => {
       </div>
       
       {/* Vehicle Information */}
-      <div className="text-center mt-6">
-        <p className="text-sm text-muted-foreground bg-tunisia-blue/5 border border-tunisia-blue/20 rounded-lg p-3 max-w-md mx-auto">
-          💼 Prices are for a 4-seater car and can carry up to 4 medium cases.
-        </p>
+      <div className="text-center mt-6 space-y-4">
+        <div className="bg-tunisia-blue/5 border border-tunisia-blue/20 rounded-lg p-4 max-w-lg mx-auto">
+          <p className="text-sm text-muted-foreground font-semibold mb-2">
+            ℹ️ All prices are for a 4-seater car and include up to 4 medium size cases.
+          </p>
+        </div>
+        
+        <div className="bg-tunisia-coral/5 border border-tunisia-coral/20 rounded-lg p-4 max-w-lg mx-auto">
+          <p className="text-sm text-tunisia-blue font-medium">
+            If your route or ride is not listed, get in touch and we promise you the best quotes 😉
+          </p>
+        </div>
       </div>
 
       {/* Booking Breakdown Modal */}
