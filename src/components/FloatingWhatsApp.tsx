@@ -18,7 +18,7 @@ I'd like to book a transfer:
       href={`https://wa.me/447956643662?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer" 
-      className="fixed bottom-6 right-6 z-50 md:hidden"
+      className="fixed bottom-6 right-6 z-50"
     >
       <Button
         className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BA5A] text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-bounce"
