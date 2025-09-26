@@ -33,18 +33,6 @@ const Footer = () => {
               <span>Instagram</span>
             </a>
 
-            {/* TikTok */}
-            <a
-              href="https://www.tiktok.com/@gettunisiatransfer"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow us on TikTok"
-              className="flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
-            >
-              <div className="h-5 w-5 text-center font-bold text-teal-400">T</div>
-              <span>TikTok</span>
-            </a>
-
             {/* Facebook */}
             <a
               href="https://www.facebook.com/share/14N6VDgPBgp/"

@@ -98,6 +98,7 @@ const translations = {
 
     // FAQs
     'faq.title': 'Frequently Asked Questions',
+    'faq.description': 'Here are answers to the most common questions about our transfer service.',
     'faq.q1': 'How do I pay?',
     'faq.a1': '25% online deposit, 75% cash at pickup',
     'faq.q2': 'What if my flight is late?',
@@ -224,6 +225,7 @@ const translations = {
 
     // FAQs
     'faq.title': 'Questions fréquemment posées',
+    'faq.description': 'Voici les réponses aux questions les plus courantes sur notre service de transfert.',
     'faq.q1': 'Comment puis-je payer ?',
     'faq.a1': '25 % en ligne, solde en espèces',
     'faq.q2': 'Et si mon vol est en retard ?',
@@ -350,6 +352,7 @@ const translations = {
 
     // FAQs
     'faq.title': 'الأسئلة المتكررة',
+    'faq.description': 'إليك إجابات على الأسئلة الأكثر شيوعاً حول خدمة النقل لدينا.',
     'faq.q1': 'كيف أدفع؟',
     'faq.a1': '25٪ عبر الإنترنت، والباقي نقدًا عند الوصول',
     'faq.q2': 'ماذا لو تأخرت رحلتي؟',

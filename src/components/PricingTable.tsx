@@ -56,6 +56,13 @@ const PricingTable = () => {
           </Card>
         ))}
       </div>
+      
+      {/* Vehicle Information */}
+      <div className="text-center mt-6">
+        <p className="text-sm text-muted-foreground bg-tunisia-blue/5 border border-tunisia-blue/20 rounded-lg p-3 max-w-md mx-auto">
+          💼 Prices are for a 4-seater car and can carry up to 4 medium cases.
+        </p>
+      </div>
 
       {/* Booking Breakdown Modal */}
       {selectedRoute && (

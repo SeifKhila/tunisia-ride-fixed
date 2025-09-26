@@ -149,7 +149,7 @@ Booking Ref: ${safeReference}`;
               className="w-full min-h-[56px] bg-[#25D366] hover:bg-[#20BA5A] text-white text-lg"
             >
               <MessageCircle className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
-              Book via WhatsApp (Primary)
+              Book via WhatsApp
             </Button>
           </a>
           
@@ -163,7 +163,7 @@ Booking Ref: ${safeReference}`;
               className="w-full min-h-[56px] text-lg border-tunisia-blue text-tunisia-blue hover:bg-tunisia-blue hover:text-white"
             >
               <Mail className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-6 w-6`} />
-              Book via Email (Secondary)
+              Book via Email
             </Button>
           </a>
         </div>

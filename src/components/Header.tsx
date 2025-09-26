@@ -29,9 +29,6 @@ const Header = () => {
               {t('nav.book_now')}
             </Button>
           </nav>
-
-          {/* Language Selector */}
-          <LanguageSelector />
         </div>
       </div>
     </header>
