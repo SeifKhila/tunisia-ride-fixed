@@ -17,7 +17,6 @@ import FAQ from "@/components/FAQ";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MeetOurDrivers from "@/components/MeetOurDrivers";
 import OurCars from "@/components/OurCars";
-import VehicleCategories from "@/components/VehicleCategories";
 import CustomerReviews from "@/components/CustomerReviews";
 import ReturnTripDiscount from "@/components/ReturnTripDiscount";
 import EnhancedTrustBadges from "@/components/EnhancedTrustBadges";
@@ -326,9 +325,6 @@ const Index = () => {
 
         {/* Our Cars Gallery */}
         <OurCars />
-
-        {/* Vehicle Categories */}
-        <VehicleCategories />
 
         {/* Customer Reviews */}
         <CustomerReviews />
