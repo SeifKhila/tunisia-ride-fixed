@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type Language = 'en' | 'fr' | 'ar';
+export type Language = 'en' | 'fr' | 'ar' | 'de';
 
 interface LanguageContextType {
   language: Language;

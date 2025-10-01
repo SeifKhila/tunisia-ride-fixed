@@ -8,7 +8,7 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FooterDecorative from "@/components/FooterDecorative";
-import BookingForm from "@/components/BookingForm";
+import ComprehensiveBookingForm from "@/components/ComprehensiveBookingForm";
 import PricingTable from "@/components/PricingTable";
 import TrustBadge from "@/components/TrustBadge";
 import PopularExcursions from "@/components/PopularExcursions";
@@ -16,6 +16,13 @@ import TopControls from "@/components/TopControls";
 import InteractiveCurrencyConverter from "@/components/InteractiveCurrencyConverter";
 import FAQ from "@/components/FAQ";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import MeetOurDrivers from "@/components/MeetOurDrivers";
+import OurCars from "@/components/OurCars";
+import VehicleCategories from "@/components/VehicleCategories";
+import CustomerReviews from "@/components/CustomerReviews";
+import ReturnTripDiscount from "@/components/ReturnTripDiscount";
+import EnhancedTrustBadges from "@/components/EnhancedTrustBadges";
+import InstantPriceCalculator from "@/components/InstantPriceCalculator";
 import { Phone, Shield, Clock, Users, CreditCard, Car, Plane, MapPin, CheckCircle, Star, MessageCircle, Mail } from "lucide-react";
 import heroImage from "@/assets/sidi-bou-said-hero.jpg";
 
@@ -160,12 +167,15 @@ const Index = () => {
       }}>
         <div className="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
         
-        {/* Booking Form - Immediate Priority */}
+        {/* Comprehensive Booking Form - Immediate Priority */}
         <section className="relative py-8 md:py-12" id="booking">
           <div className="container mx-auto px-4">
-            <BookingForm />
+            <ComprehensiveBookingForm />
           </div>
         </section>
+
+        {/* Instant Price Calculator */}
+        <InstantPriceCalculator />
 
         {/* How It Works */}
         <section className="relative py-12 md:py-16">
@@ -313,12 +323,30 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Return Trip Discount */}
+        <ReturnTripDiscount />
+
+        {/* Meet Our Drivers */}
+        <MeetOurDrivers />
+
+        {/* Our Cars Gallery */}
+        <OurCars />
+
+        {/* Vehicle Categories */}
+        <VehicleCategories />
+
         {/* Pricing Table */}
         <section className="relative py-12 md:py-16">
           <div className="container mx-auto px-4">
             <PricingTable />
           </div>
         </section>
+
+        {/* Customer Reviews */}
+        <CustomerReviews />
+
+        {/* Enhanced Trust Badges */}
+        <EnhancedTrustBadges />
 
         {/* Why Choose Us */}
         <section className="relative py-12 md:py-16">
