@@ -9,7 +9,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FooterDecorative from "@/components/FooterDecorative";
 import ComprehensiveBookingForm from "@/components/ComprehensiveBookingForm";
-import PricingTable from "@/components/PricingTable";
 import TrustBadge from "@/components/TrustBadge";
 import PopularExcursions from "@/components/PopularExcursions";
 import TopControls from "@/components/TopControls";
@@ -330,13 +329,6 @@ const Index = () => {
 
         {/* Vehicle Categories */}
         <VehicleCategories />
-
-        {/* Pricing Table */}
-        <section className="relative py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <PricingTable />
-          </div>
-        </section>
 
         {/* Customer Reviews */}
         <CustomerReviews />
