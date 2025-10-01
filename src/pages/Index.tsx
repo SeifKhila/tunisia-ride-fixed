@@ -113,10 +113,6 @@ const Index = () => {
 
         <div className="container mx-auto px-4 text-center text-white relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-6 animate-fade-in">
-              <TrustBadge />
-            </div>
-            
             <h1 className={`text-3xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in ${language === 'ar' ? 'font-arabic' : ''}`}>
               {t('hero.title')}
             </h1>
