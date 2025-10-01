@@ -27,12 +27,6 @@ const cars = [
     capacity: "4-7 passengers",
     image: carMinivanWhite,
     description: "Spacious van for families and groups"
-  },
-  {
-    type: "Standard Sedan",
-    capacity: "1-3 passengers",
-    image: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&q=80&w=800",
-    description: "Comfortable sedan for small groups"
   }
 ];
 
