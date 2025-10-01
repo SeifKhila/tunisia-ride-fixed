@@ -63,13 +63,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "bids_driver_id_fkey"
-            columns: ["driver_id"]
-            isOneToOne: false
-            referencedRelation: "public_driver_listings"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "bids_request_id_fkey"
             columns: ["request_id"]
             isOneToOne: false
@@ -191,13 +184,6 @@ export type Database = {
             columns: ["driver_id"]
             isOneToOne: false
             referencedRelation: "drivers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "bookings_driver_id_fkey"
-            columns: ["driver_id"]
-            isOneToOne: false
-            referencedRelation: "public_driver_listings"
             referencedColumns: ["id"]
           },
           {
@@ -533,48 +519,7 @@ export type Database = {
       }
     }
     Views: {
-      public_driver_listings: {
-        Row: {
-          coverage_areas: string[] | null
-          created_at: string | null
-          id: string | null
-          is_online: boolean | null
-          rating: number | null
-          total_trips: number | null
-          vehicle_class: Database["public"]["Enums"]["vehicle_class"] | null
-          vehicle_color: string | null
-          vehicle_make: string | null
-          vehicle_model: string | null
-          vehicle_year: number | null
-        }
-        Insert: {
-          coverage_areas?: string[] | null
-          created_at?: string | null
-          id?: string | null
-          is_online?: boolean | null
-          rating?: number | null
-          total_trips?: number | null
-          vehicle_class?: Database["public"]["Enums"]["vehicle_class"] | null
-          vehicle_color?: string | null
-          vehicle_make?: string | null
-          vehicle_model?: string | null
-          vehicle_year?: number | null
-        }
-        Update: {
-          coverage_areas?: string[] | null
-          created_at?: string | null
-          id?: string | null
-          is_online?: boolean | null
-          rating?: number | null
-          total_trips?: number | null
-          vehicle_class?: Database["public"]["Enums"]["vehicle_class"] | null
-          vehicle_color?: string | null
-          vehicle_make?: string | null
-          vehicle_model?: string | null
-          vehicle_year?: number | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       approve_driver: {
