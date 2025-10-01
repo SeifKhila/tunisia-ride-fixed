@@ -9,6 +9,7 @@ const CurrencySelector = () => {
   const currencies: { code: Currency; label: string; symbol: string }[] = [
     { code: 'EUR', label: 'EUR', symbol: '€' },
     { code: 'GBP', label: 'GBP', symbol: '£' },
+    { code: 'USD', label: 'USD', symbol: '$' },
     { code: 'TND', label: 'TND', symbol: 'د.ت' }
   ];
 

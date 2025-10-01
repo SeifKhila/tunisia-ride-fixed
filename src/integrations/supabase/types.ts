@@ -80,49 +80,100 @@ export type Database = {
       }
       bookings: {
         Row: {
+          balance_due: number | null
           bid_id: string | null
+          booking_reference: string | null
           commission_rate: number | null
+          confirmation_email_sent: boolean | null
+          confirmation_whatsapp_sent: boolean | null
           created_at: string
           currency: string
           customer_id: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          deposit_amount: number | null
+          deposit_paid: boolean | null
           driver_earnings: number | null
           driver_id: string | null
+          dropoff_location: string | null
+          flight_number: string | null
           id: string
+          luggage: number | null
+          passengers: number | null
+          payment_method: string | null
           payment_status: string | null
+          paypal_order_id: string | null
+          pickup_datetime: string | null
+          pickup_location: string | null
           platform_fee: number | null
           request_id: string | null
+          revolut_order_id: string | null
           stripe_session_id: string | null
           total_amount: number
           updated_at: string
         }
         Insert: {
+          balance_due?: number | null
           bid_id?: string | null
+          booking_reference?: string | null
           commission_rate?: number | null
+          confirmation_email_sent?: boolean | null
+          confirmation_whatsapp_sent?: boolean | null
           created_at?: string
           currency?: string
           customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          deposit_amount?: number | null
+          deposit_paid?: boolean | null
           driver_earnings?: number | null
           driver_id?: string | null
+          dropoff_location?: string | null
+          flight_number?: string | null
           id?: string
+          luggage?: number | null
+          passengers?: number | null
+          payment_method?: string | null
           payment_status?: string | null
+          paypal_order_id?: string | null
+          pickup_datetime?: string | null
+          pickup_location?: string | null
           platform_fee?: number | null
           request_id?: string | null
+          revolut_order_id?: string | null
           stripe_session_id?: string | null
           total_amount: number
           updated_at?: string
         }
         Update: {
+          balance_due?: number | null
           bid_id?: string | null
+          booking_reference?: string | null
           commission_rate?: number | null
+          confirmation_email_sent?: boolean | null
+          confirmation_whatsapp_sent?: boolean | null
           created_at?: string
           currency?: string
           customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          deposit_amount?: number | null
+          deposit_paid?: boolean | null
           driver_earnings?: number | null
           driver_id?: string | null
+          dropoff_location?: string | null
+          flight_number?: string | null
           id?: string
+          luggage?: number | null
+          passengers?: number | null
+          payment_method?: string | null
           payment_status?: string | null
+          paypal_order_id?: string | null
+          pickup_datetime?: string | null
+          pickup_location?: string | null
           platform_fee?: number | null
           request_id?: string | null
+          revolut_order_id?: string | null
           stripe_session_id?: string | null
           total_amount?: number
           updated_at?: string
@@ -292,6 +343,48 @@ export type Database = {
           sms_notifications?: boolean | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      pricing_settings: {
+        Row: {
+          created_at: string
+          enable_live_fx: boolean
+          eur_rounding_decimals: number
+          flat_eur_uplift: number
+          fx_cache_hours: number
+          gbp_rounding_decimals: number
+          id: string
+          tnd_rounding_to_nearest: number
+          updated_at: string
+          updated_by: string | null
+          usd_rounding_decimals: number
+        }
+        Insert: {
+          created_at?: string
+          enable_live_fx?: boolean
+          eur_rounding_decimals?: number
+          flat_eur_uplift?: number
+          fx_cache_hours?: number
+          gbp_rounding_decimals?: number
+          id?: string
+          tnd_rounding_to_nearest?: number
+          updated_at?: string
+          updated_by?: string | null
+          usd_rounding_decimals?: number
+        }
+        Update: {
+          created_at?: string
+          enable_live_fx?: boolean
+          eur_rounding_decimals?: number
+          flat_eur_uplift?: number
+          fx_cache_hours?: number
+          gbp_rounding_decimals?: number
+          id?: string
+          tnd_rounding_to_nearest?: number
+          updated_at?: string
+          updated_by?: string | null
+          usd_rounding_decimals?: number
         }
         Relationships: []
       }
@@ -487,6 +580,10 @@ export type Database = {
       approve_driver: {
         Args: { driver_id: string }
         Returns: undefined
+      }
+      generate_booking_reference: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       get_driver_visible_requests: {
         Args: Record<PropertyKey, never>

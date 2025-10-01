@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-export type Currency = 'EUR' | 'GBP' | 'TND';
+export type Currency = 'EUR' | 'GBP' | 'TND' | 'USD';
 
 interface ExchangeRateData {
   rates: Record<string, number>;
@@ -12,21 +12,28 @@ interface CurrencyContextType {
   setCurrency: (currency: Currency) => void;
   formatPrice: (eurAmount: number, targetCurrency?: Currency) => string;
   convertFromEUR: (eurAmount: number, targetCurrency: Currency) => number;
+  calculateDeposit: (totalEurAmount: number, targetCurrency?: Currency) => { deposit: number; balance: number; total: number };
   ratesLastUpdated: string | null;
   isUsingFallbackRates: boolean;
+  flatEurUplift: number;
 }
 
 // Manual fallback rates (editable)
 const manualRates = {
   GBP: 0.85,
-  TND: 3.40
+  TND: 3.40,
+  USD: 1.10
 };
 
 const currencySymbols: Record<Currency, string> = {
   EUR: '€',
   GBP: '£',
-  TND: 'د.ت'
+  TND: 'د.ت',
+  USD: '$'
 };
+
+// Flat EUR uplift added to all ride prices
+const FLAT_EUR_UPLIFT = 5.00;
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
@@ -51,7 +58,8 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   
   const [exchangeRates, setExchangeRates] = useState<Record<string, number>>({
     GBP: manualRates.GBP,
-    TND: manualRates.TND
+    TND: manualRates.TND,
+    USD: manualRates.USD
   });
   
   const [ratesLastUpdated, setRatesLastUpdated] = useState<string | null>(null);
@@ -61,7 +69,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   const fetchExchangeRates = async () => {
     try {
       console.log('Fetching live exchange rates...');
-      const response = await fetch('https://api.exchangerate.host/latest?base=EUR&symbols=GBP,TND');
+      const response = await fetch('https://api.exchangerate.host/latest?base=EUR&symbols=GBP,TND,USD');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -75,7 +83,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
           fetchedAt: new Date().toISOString()
         };
         
-        // Cache in localStorage
+        // Cache in localStorage (6 hour cache)
         localStorage.setItem('exchangeRateData', JSON.stringify(rateData));
         
         setExchangeRates(data.rates);
@@ -88,7 +96,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       }
     } catch (error) {
       console.error('Failed to fetch exchange rates, using fallback:', error);
-      setExchangeRates({ GBP: manualRates.GBP, TND: manualRates.TND });
+      setExchangeRates({ GBP: manualRates.GBP, TND: manualRates.TND, USD: manualRates.USD });
       setIsUsingFallbackRates(true);
       setRatesLastUpdated(new Date().toISOString());
     }
@@ -102,9 +110,9 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
         if (cached) {
           const rateData: ExchangeRateData = JSON.parse(cached);
           const cacheAge = Date.now() - new Date(rateData.fetchedAt).getTime();
-          const twentyFourHours = 24 * 60 * 60 * 1000;
+          const sixHours = 6 * 60 * 60 * 1000; // 6-hour cache as per requirements
           
-          if (cacheAge < twentyFourHours) {
+          if (cacheAge < sixHours) {
             // Use cached rates
             setExchangeRates(rateData.rates);
             setRatesLastUpdated(rateData.fetchedAt);
@@ -130,15 +138,28 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   }, [currency]);
 
   const convertFromEUR = (eurAmount: number, targetCurrency: Currency): number => {
-    if (targetCurrency === 'EUR') return Math.round(eurAmount);
+    // Add flat €5 uplift to base EUR amount
+    const eurWithUplift = eurAmount + FLAT_EUR_UPLIFT;
+    
+    if (targetCurrency === 'EUR') {
+      return Number(eurWithUplift.toFixed(2)); // 2 decimal places for EUR
+    }
     
     const rate = exchangeRates[targetCurrency];
     if (!rate || isNaN(rate)) {
       console.warn(`No rate available for ${targetCurrency}, showing EUR value`);
-      return Math.round(eurAmount);
+      return Number(eurWithUplift.toFixed(2));
     }
     
-    return Math.round(eurAmount * rate);
+    const converted = eurWithUplift * rate;
+    
+    // Apply rounding rules per currency
+    if (targetCurrency === 'TND') {
+      return Math.round(converted); // Round to nearest 1 TND
+    }
+    
+    // GBP, USD: 2 decimal places
+    return Number(converted.toFixed(2));
   };
 
   const formatPrice = (eurAmount: number, targetCurrency?: Currency): string => {
@@ -148,13 +169,26 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     
     // Handle NaN or negative values
     if (isNaN(convertedAmount) || convertedAmount < 0) {
-      return `€${Math.round(eurAmount)}`;
+      const withUplift = eurAmount + FLAT_EUR_UPLIFT;
+      return `€${withUplift.toFixed(2)}`;
     }
     
+    // TND format (no decimals)
     if (curr === 'TND') {
       return `${symbol} ${convertedAmount}`;
     }
-    return `${symbol}${convertedAmount}`;
+    
+    // EUR, GBP, USD (2 decimals)
+    return `${symbol}${convertedAmount.toFixed(2)}`;
+  };
+
+  const calculateDeposit = (totalEurAmount: number, targetCurrency?: Currency) => {
+    const curr = targetCurrency || currency;
+    const total = convertFromEUR(totalEurAmount, curr);
+    const deposit = Number((total * 0.25).toFixed(curr === 'TND' ? 0 : 2)); // 25% deposit
+    const balance = Number((total - deposit).toFixed(curr === 'TND' ? 0 : 2));
+    
+    return { deposit, balance, total };
   };
 
   return (
@@ -163,8 +197,10 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       setCurrency, 
       formatPrice, 
       convertFromEUR,
+      calculateDeposit,
       ratesLastUpdated,
-      isUsingFallbackRates
+      isUsingFallbackRates,
+      flatEurUplift: FLAT_EUR_UPLIFT
     }}>
       {children}
     </CurrencyContext.Provider>

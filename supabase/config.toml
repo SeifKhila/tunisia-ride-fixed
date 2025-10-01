@@ -5,3 +5,18 @@ verify_jwt = true
 
 [functions.submit-driver-application]
 verify_jwt = true
+
+[functions.create-paypal-order]
+verify_jwt = false
+
+[functions.create-revolut-order]
+verify_jwt = false
+
+[functions.send-booking-email]
+verify_jwt = false
+
+[functions.send-whatsapp-notification]
+verify_jwt = false
+
+[functions.complete-booking]
+verify_jwt = false
