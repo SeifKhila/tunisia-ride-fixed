@@ -69,7 +69,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   const fetchExchangeRates = async () => {
     try {
       console.log('Fetching live exchange rates...');
-      const response = await fetch('https://api.exchangerate.host/latest?base=EUR&symbols=GBP,TND,USD');
+      const response = await fetch('https://api.frankfurter.app/latest?from=EUR&to=GBP,TND,USD');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -77,7 +77,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       
       const data = await response.json();
       
-      if (data.success && data.rates) {
+      if (data.rates) {
         const rateData: ExchangeRateData = {
           rates: data.rates,
           fetchedAt: new Date().toISOString()
