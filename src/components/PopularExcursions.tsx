@@ -36,10 +36,19 @@ const PopularExcursions = () => {
               {/* Excursions List - Left Side */}
               <div className="space-y-3">
                 {excursions.map((excursion, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-tunisia-blue/5 hover:bg-tunisia-blue/10 transition-colors">
-                    <MapPin className="w-5 h-5 text-tunisia-coral flex-shrink-0" />
-                    <span className="font-medium text-tunisia-blue">{excursion}</span>
-                  </div>
+                  <a 
+                    key={index}
+                    href={`https://wa.me/447956643662?text=${encodeURIComponent(`🗺️ EXCURSION INQUIRY\n\nExcursion: ${excursion}\n\n📋 Please provide:\n• Preferred date\n• Number of people\n• Pickup location\n• Special interests or requests`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between gap-3 p-3 rounded-lg bg-tunisia-blue/5 hover:bg-tunisia-blue/10 transition-colors group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <MapPin className="w-5 h-5 text-tunisia-coral flex-shrink-0" />
+                      <span className="font-medium text-tunisia-blue">{excursion}</span>
+                    </div>
+                    <MessageCircle className="w-4 h-4 text-tunisia-coral opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
                 ))}
               </div>
 

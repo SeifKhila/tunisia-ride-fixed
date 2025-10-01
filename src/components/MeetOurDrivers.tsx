@@ -1,4 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MessageCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import driverSeif from "@/assets/driver-seif.jpg";
 import driverBoulbaba from "@/assets/driver-boulbaba.jpg";
@@ -41,9 +43,22 @@ export default function MeetOurDrivers() {
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                   />
                 </div>
-                <div className="p-4 text-center bg-gradient-to-r from-tunisia-blue to-tunisia-coral">
-                  <h3 className="text-xl font-bold text-white">{driver.name}</h3>
-                  <p className="text-sm text-white/90">Professional Driver</p>
+                <div className="p-4 bg-gradient-to-r from-tunisia-blue to-tunisia-coral">
+                  <div className="text-center mb-3">
+                    <h3 className="text-xl font-bold text-white">{driver.name}</h3>
+                    <p className="text-sm text-white/90">Professional Driver</p>
+                  </div>
+                  <a 
+                    href={`https://wa.me/447956643662?text=${encodeURIComponent(`👨‍✈️ DRIVER REQUEST\n\nPreferred Driver: ${driver.name}\n\n📋 Please provide:\n• Pickup location\n• Destination\n• Date & time\n• Number of passengers`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full"
+                  >
+                    <Button className="w-full bg-white text-tunisia-blue hover:bg-white/90 text-sm">
+                      <MessageCircle className="mr-2 h-4 w-4" />
+                      Request {driver.name}
+                    </Button>
+                  </a>
                 </div>
               </CardContent>
             </Card>

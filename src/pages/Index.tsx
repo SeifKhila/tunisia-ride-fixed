@@ -300,7 +300,7 @@ const Index = () => {
                       </span>
                     </div>
                     <a 
-                      href={generateWhatsAppLink(`I'd like to book a transfer from ${route.from} to ${route.to}`)}
+                      href={generateWhatsAppLink(`🚗 BOOKING REQUEST\n\nRoute: ${route.from} → ${route.to}\nPrice: ${formatCurrency(route.price)}\nDuration: ${route.duration}\n\n📋 Please provide:\n• Pickup date & time\n• Number of passengers\n• Luggage quantity\n• Flight number (if applicable)\n• Special requests`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block w-full"

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Car, Users, Luggage, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Car, Users, Luggage, Star, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
@@ -59,7 +60,7 @@ export default function VehicleCategories() {
                       {category.luggage}
                     </Badge>
                   </div>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mb-6">
                     {category.features.map((feature, index) => (
                       <li key={index} className="flex items-center text-sm text-muted-foreground">
                         <div className="w-1.5 h-1.5 rounded-full bg-tunisia-coral mr-2" />
@@ -67,6 +68,17 @@ export default function VehicleCategories() {
                       </li>
                     ))}
                   </ul>
+                  <a 
+                    href={`https://wa.me/447956643662?text=${encodeURIComponent(`🚗 VEHICLE BOOKING\n\nCategory: ${category.name}\nPrice from: ${formatPrice(category.priceFrom)}\nCapacity: ${category.passengers} passengers\nLuggage: ${category.luggage} bags\n\n📋 Please provide:\n• Pickup location\n• Destination\n• Date & time\n• Number of passengers\n• Special requests`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full"
+                  >
+                    <Button className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90">
+                      <MessageCircle className="mr-2 h-4 w-4" />
+                      Book This Vehicle
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             );

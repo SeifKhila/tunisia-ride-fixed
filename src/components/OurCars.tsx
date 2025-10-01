@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { ChevronLeft, ChevronRight, Users } from "lucide-react";
+import { ChevronLeft, ChevronRight, Users, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import carSuvBlack from "@/assets/car-suv-black.jpg";
@@ -124,6 +124,20 @@ export default function OurCars() {
                   onClick={() => setCurrentIndex(index)}
                 />
               ))}
+            </div>
+
+            <div className="mt-6 text-center">
+              <a 
+                href={`https://wa.me/447956643662?text=${encodeURIComponent(`🚗 CAR BOOKING REQUEST\n\nVehicle: ${cars[currentIndex].type}\nCapacity: ${cars[currentIndex].capacity}\nDescription: ${cars[currentIndex].description}\n\n📋 Please provide:\n• Pickup location\n• Destination\n• Date & time\n• Number of passengers & luggage\n• Special requests`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <Button size="lg" className="bg-tunisia-coral hover:bg-tunisia-coral/90 text-white px-8">
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Book This Car
+                </Button>
+              </a>
             </div>
           </div>
         </div>
