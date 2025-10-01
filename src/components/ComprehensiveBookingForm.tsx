@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,12 +11,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CalendarIcon, Clock, MessageCircle, Mail, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { CalendarIcon, Clock, MessageCircle, Mail, Loader2, Calculator } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { getAllLocations } from "@/data/locations";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const bookingSchema = z.object({
   pickup: z.string().min(2, "Pickup location is required"),
@@ -48,8 +50,56 @@ const bookingSchema = z.object({
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
 
+// Route prices for common destinations (in EUR base)
+const routePrices: Record<string, number> = {
+  'enfidha-hammamet': 35,
+  'enfidha-yasmine': 30,
+  'enfidha-sousse': 35,
+  'enfidha-monastir': 40,
+  'tunis-hammamet': 45,
+  'tunis-yasmine': 50,
+  'tunis-sousse': 50,
+  'tunis-monastir': 60,
+  'monastir-sousse': 40,
+  'monastir-hammamet': 55,
+  'monastir-yasmine': 50,
+  'djerba-midoun': 42,
+};
+
+// Helper to normalize location names for price lookup
+const normalizeLocation = (location: string): string => {
+  return location.toLowerCase()
+    .replace(/airport|aéroport/gi, '')
+    .replace(/\s+/g, '')
+    .replace(/-/g, '')
+    .trim();
+};
+
+// Helper to find price between two locations
+const findRoutePrice = (from: string, to: string): number => {
+  const fromNorm = normalizeLocation(from);
+  const toNorm = normalizeLocation(to);
+  
+  // Try direct match
+  const directKey = `${fromNorm}-${toNorm}`;
+  if (routePrices[directKey]) return routePrices[directKey];
+  
+  // Try reverse
+  const reverseKey = `${toNorm}-${fromNorm}`;
+  if (routePrices[reverseKey]) return routePrices[reverseKey];
+  
+  // Check partial matches
+  for (const [key, price] of Object.entries(routePrices)) {
+    if (key.includes(fromNorm) && key.includes(toNorm)) return price;
+    if (key.includes(toNorm) && key.includes(fromNorm)) return price;
+  }
+  
+  return 0; // No price found - custom quote needed
+};
+
 export default function ComprehensiveBookingForm() {
   const { language } = useLanguage();
+  const { formatPrice } = useCurrency();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showReturnFields, setShowReturnFields] = useState(false);
@@ -57,6 +107,12 @@ export default function ComprehensiveBookingForm() {
   const [dropoffSuggestions, setDropoffSuggestions] = useState<string[]>([]);
   const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
   const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false);
+  const [calculatedPrice, setCalculatedPrice] = useState<{
+    oneWay: number;
+    return: number;
+    savings: number;
+    hasPrice: boolean;
+  }>({ oneWay: 0, return: 0, savings: 0, hasPrice: false });
 
   const allLocations = getAllLocations();
 
@@ -90,31 +146,67 @@ export default function ComprehensiveBookingForm() {
     setShowDropoffSuggestions(suggestions.length > 0);
   };
 
+  // Calculate price whenever pickup, dropoff, or trip type changes
+  useEffect(() => {
+    const pickup = form.watch("pickup");
+    const dropoff = form.watch("dropoff");
+    const tripType = form.watch("tripType");
+    
+    if (pickup && dropoff) {
+      const basePrice = findRoutePrice(pickup, dropoff);
+      if (basePrice > 0) {
+        const oneWayPrice = basePrice;
+        const returnPrice = basePrice * 2;
+        const discountedReturn = returnPrice * 0.9; // 10% discount
+        const savings = returnPrice - discountedReturn;
+        
+        setCalculatedPrice({
+          oneWay: oneWayPrice,
+          return: discountedReturn,
+          savings: savings,
+          hasPrice: true
+        });
+      } else {
+        setCalculatedPrice({ oneWay: 0, return: 0, savings: 0, hasPrice: false });
+      }
+    } else {
+      setCalculatedPrice({ oneWay: 0, return: 0, savings: 0, hasPrice: false });
+    }
+  }, [form.watch("pickup"), form.watch("dropoff"), form.watch("tripType")]);
+
   const onSubmit = async (data: BookingFormValues) => {
     setIsSubmitting(true);
 
     try {
+      // Calculate final price
+      const isReturnTrip = data.tripType === 'return';
+      const finalPrice = isReturnTrip ? calculatedPrice.return : calculatedPrice.oneWay;
+      const priceText = calculatedPrice.hasPrice 
+        ? `\nEstimated Price: ${formatPrice(finalPrice)}${isReturnTrip ? ' (10% discount applied!)' : ''}`
+        : '\nPrice: Custom quote needed';
+      
       // Prepare booking message
       const message = `
-NEW BOOKING REQUEST
+🚗 NEW BOOKING REQUEST
 
-Pickup: ${data.pickup}
-Drop-off: ${data.dropoff}
-Date: ${format(data.pickupDate, "PPP")}
-Time: ${data.pickupTime}
-${data.flightNumber ? `Flight: ${data.flightNumber}` : ''}
+📍 Pickup: ${data.pickup}
+📍 Drop-off: ${data.dropoff}
+📅 Date: ${format(data.pickupDate, "PPP")}
+⏰ Time: ${data.pickupTime}
+${data.flightNumber ? `✈️ Flight: ${data.flightNumber}` : ''}
 
-Passengers: ${data.passengers}
-Luggage: ${data.luggage}
-${data.children ? `Child Seats: ${data.childSeats || 'Yes'}` : ''}
+👥 Passengers: ${data.passengers}
+🧳 Luggage: ${data.luggage}
+${data.children ? `👶 Child Seats: ${data.childSeats || 'Yes'}` : ''}
 
-Trip Type: ${data.tripType}
-${data.tripType === 'return' ? `Return: ${format(data.returnDate!, "PPP")} at ${data.returnTime}` : ''}
+🔄 Trip Type: ${data.tripType === 'return' ? 'Return Trip (10% OFF!)' : 'One-way'}
+${data.tripType === 'return' ? `📅 Return: ${format(data.returnDate!, "PPP")} at ${data.returnTime}` : ''}
+${priceText}
 
-Customer: ${data.customerName}
-Phone: ${data.customerPhone}
-Email: ${data.customerEmail}
-${data.notes ? `Notes: ${data.notes}` : ''}
+👤 Customer: ${data.customerName}
+📱 Phone: ${data.customerPhone}
+📧 Email: ${data.customerEmail}
+${data.notes ? `📝 Notes: ${data.notes}` : ''}
       `.trim();
 
       // Send WhatsApp notification
@@ -391,7 +483,10 @@ ${data.notes ? `Notes: ${data.notes}` : ''}
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="return" id="return" />
-                        <label htmlFor="return" className="cursor-pointer">Return (Save 10%!)</label>
+                        <label htmlFor="return" className="cursor-pointer flex items-center gap-2">
+                          Return
+                          <Badge className="bg-tunisia-coral text-white">Save 10%</Badge>
+                        </label>
                       </div>
                     </RadioGroup>
                   </FormControl>
@@ -399,6 +494,58 @@ ${data.notes ? `Notes: ${data.notes}` : ''}
                 </FormItem>
               )}
             />
+
+            {/* Price Display */}
+            {calculatedPrice.hasPrice && (
+              <Card className="bg-gradient-to-r from-tunisia-blue/10 to-tunisia-coral/10 border-tunisia-blue/20">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Calculator className="h-5 w-5 text-tunisia-blue" />
+                    <h3 className="font-bold text-tunisia-blue">Estimated Price</h3>
+                  </div>
+                  
+                  {form.watch("tripType") === "one-way" ? (
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-tunisia-blue">
+                        {formatPrice(calculatedPrice.oneWay)}
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-1">One-way transfer</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center pb-2 border-b border-tunisia-blue/20">
+                        <span className="text-muted-foreground">Regular return price:</span>
+                        <span className="line-through text-muted-foreground">
+                          {formatPrice(calculatedPrice.oneWay * 2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold">With 10% discount:</span>
+                          <Badge className="bg-tunisia-coral text-white">-{formatPrice(calculatedPrice.savings)}</Badge>
+                        </div>
+                        <span className="text-3xl font-bold text-tunisia-coral">
+                          {formatPrice(calculatedPrice.return)}
+                        </span>
+                      </div>
+                      <p className="text-xs text-center text-muted-foreground">
+                        You save {formatPrice(calculatedPrice.savings)} with return trip!
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+            
+            {!calculatedPrice.hasPrice && form.watch("pickup") && form.watch("dropoff") && (
+              <Card className="bg-muted/50 border-tunisia-blue/20">
+                <CardContent className="pt-6">
+                  <p className="text-center text-muted-foreground">
+                    📝 Custom quote needed for this route. We'll provide the best price via WhatsApp!
+                  </p>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Return Trip Fields */}
             {showReturnFields && (
