@@ -245,7 +245,7 @@ const Index = () => {
                 {t('guarantee.title')}
               </h2>
               <p className={`text-base md:text-lg mb-6 text-white/90 ${language === 'ar' ? 'font-arabic' : ''}`}>
-                {t('guarantee.description')}
+                {t('guarantee.content')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
