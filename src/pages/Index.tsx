@@ -22,7 +22,6 @@ import VehicleCategories from "@/components/VehicleCategories";
 import CustomerReviews from "@/components/CustomerReviews";
 import ReturnTripDiscount from "@/components/ReturnTripDiscount";
 import EnhancedTrustBadges from "@/components/EnhancedTrustBadges";
-import InstantPriceCalculator from "@/components/InstantPriceCalculator";
 import { Phone, Shield, Clock, Users, CreditCard, Car, Plane, MapPin, CheckCircle, Star, MessageCircle, Mail } from "lucide-react";
 import heroImage from "@/assets/sidi-bou-said-hero.jpg";
 
@@ -173,9 +172,6 @@ const Index = () => {
             <ComprehensiveBookingForm />
           </div>
         </section>
-
-        {/* Instant Price Calculator */}
-        <InstantPriceCalculator />
 
         {/* How It Works */}
         <section className="relative py-12 md:py-16">

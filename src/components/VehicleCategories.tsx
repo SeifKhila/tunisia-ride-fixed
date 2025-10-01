@@ -12,22 +12,6 @@ const categories = [
     luggage: "2-3",
     priceFrom: 35,
     features: ["Comfortable sedan", "Air conditioning", "Professional driver", "Fixed price"]
-  },
-  {
-    name: "Van",
-    icon: Users,
-    passengers: "4-7",
-    luggage: "5-7",
-    priceFrom: 55,
-    features: ["Spacious minivan", "Extra luggage space", "Family friendly", "Group transfers"]
-  },
-  {
-    name: "Luxury",
-    icon: Star,
-    passengers: "1-3",
-    luggage: "3-4",
-    priceFrom: 65,
-    features: ["Premium vehicles", "VIP service", "Leather seats", "Complimentary water"]
   }
 ];
 
@@ -47,7 +31,7 @@ export default function VehicleCategories() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="max-w-md mx-auto">
           {categories.map((category) => {
             const Icon = category.icon;
             return (

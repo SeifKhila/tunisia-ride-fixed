@@ -14,8 +14,6 @@ const PricingTable = () => {
 
   // All base prices are in EUR
   const routes = [
-    { from: 'Enfidha', to: 'Hammamet', basePriceEUR: 35 },
-    { from: 'Enfidha', to: 'Sousse', basePriceEUR: 40 },
     { from: 'Tunis', to: 'Hammamet', basePriceEUR: 45 }
   ];
 
