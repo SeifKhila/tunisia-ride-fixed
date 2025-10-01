@@ -5,31 +5,34 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import carSuvBlack from "@/assets/car-suv-black.jpg";
+import carSuvBlue from "@/assets/car-suv-blue.jpg";
+import carMinivanWhite from "@/assets/car-minivan-white.jpg";
 
 const cars = [
+  {
+    type: "Premium SUV",
+    capacity: "1-5 passengers",
+    image: carSuvBlack,
+    description: "Modern SUV with luxury features"
+  },
+  {
+    type: "Luxury SUV",
+    capacity: "1-5 passengers",
+    image: carSuvBlue,
+    description: "Premium SUV with extra luggage space"
+  },
+  {
+    type: "Family Minivan",
+    capacity: "4-7 passengers",
+    image: carMinivanWhite,
+    description: "Spacious van for families and groups"
+  },
   {
     type: "Standard Sedan",
     capacity: "1-3 passengers",
     image: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&q=80&w=800",
     description: "Comfortable sedan for small groups"
-  },
-  {
-    type: "Premium Sedan",
-    capacity: "1-3 passengers",
-    image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=800",
-    description: "Luxury sedan for premium comfort"
-  },
-  {
-    type: "Minivan",
-    capacity: "4-7 passengers",
-    image: "https://images.unsplash.com/photo-1527786356703-4b100091cd2c?auto=format&fit=crop&q=80&w=800",
-    description: "Spacious van for families and groups"
-  },
-  {
-    type: "Luxury SUV",
-    capacity: "1-5 passengers",
-    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=800",
-    description: "Premium SUV with extra luggage space"
   }
 ];
 
