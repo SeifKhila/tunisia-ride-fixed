@@ -119,6 +119,16 @@ export default function ComprehensiveBookingForm() {
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
+      pickup: "",
+      dropoff: "",
+      flightNumber: "",
+      passengers: "",
+      luggage: "",
+      childSeats: "",
+      customerName: "",
+      customerPhone: "",
+      customerEmail: "",
+      notes: "",
       tripType: "one-way",
       children: false,
       consent: false
@@ -271,7 +281,8 @@ ${data.notes ? `📝 Notes: ${data.notes}` : ''}
                           key={location}
                           type="button"
                           className="w-full px-4 py-2 text-left hover:bg-muted"
-                          onClick={() => {
+                          onMouseDown={(e) => {
+                            e.preventDefault();
                             form.setValue("pickup", location);
                             setShowPickupSuggestions(false);
                           }}
@@ -312,7 +323,8 @@ ${data.notes ? `📝 Notes: ${data.notes}` : ''}
                           key={location}
                           type="button"
                           className="w-full px-4 py-2 text-left hover:bg-muted"
-                          onClick={() => {
+                          onMouseDown={(e) => {
+                            e.preventDefault();
                             form.setValue("dropoff", location);
                             setShowDropoffSuggestions(false);
                           }}
