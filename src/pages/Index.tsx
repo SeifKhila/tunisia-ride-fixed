@@ -160,6 +160,64 @@ const Index = () => {
       }}>
         <div className="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
         
+        {/* Top Routes */}
+        <section className="relative py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-tunisia-blue mb-4 ${language === 'ar' ? 'font-arabic' : ''}`}>
+                {t('routes.title')}
+              </h2>
+              <p className={`text-muted-foreground max-w-2xl mx-auto text-sm md:text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
+                Popular transfer routes with fixed pricing
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+              {topRoutes.map((route, index) => (
+                <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 hover:scale-105 bg-white/95 backdrop-blur-sm">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 md:h-5 w-4 md:w-5 text-tunisia-coral" />
+                        <CardTitle className={`text-tunisia-blue text-base md:text-lg ${language === 'ar' ? 'font-arabic' : ''}`}>
+                          {route.from} → {route.to}
+                        </CardTitle>
+                      </div>
+                      <Badge variant="secondary" className="bg-tunisia-coral/10 text-tunisia-coral text-xs">
+                        {route.duration}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xl md:text-2xl font-bold text-tunisia-blue">
+                        {formatCurrency(route.price)}
+                      </span>
+                      <span className="text-xs md:text-sm text-muted-foreground">
+                        per vehicle
+                      </span>
+                    </div>
+                    <a 
+                      href={generateWhatsAppLink(`🚗 BOOKING REQUEST\n\nRoute: ${route.from} → ${route.to}\nPrice: ${formatCurrency(route.price)}\nDuration: ${route.duration}\n\n📋 Please provide:\n• Pickup date & time\n• Number of passengers\n• Luggage quantity\n• Flight number (if applicable)\n• Special requests`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full"
+                    >
+                      <Button className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90 text-sm md:text-base">
+                        <MessageCircle className="mr-2 h-4 w-4" />
+                        Book Now
+                      </Button>
+                    </a>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Meet Our Drivers */}
+        <MeetOurDrivers />
+
         {/* Comprehensive Booking Form - Immediate Priority */}
         <section className="relative py-8 md:py-12" id="booking">
           <div className="container mx-auto px-4">
@@ -258,66 +316,8 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Top Routes */}
-        <section className="relative py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-8 md:mb-12">
-              <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-tunisia-blue mb-4 ${language === 'ar' ? 'font-arabic' : ''}`}>
-                {t('routes.title')}
-              </h2>
-              <p className={`text-muted-foreground max-w-2xl mx-auto text-sm md:text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
-                Popular transfer routes with fixed pricing
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
-              {topRoutes.map((route, index) => (
-                <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 hover:scale-105 bg-white/95 backdrop-blur-sm">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 md:h-5 w-4 md:w-5 text-tunisia-coral" />
-                        <CardTitle className={`text-tunisia-blue text-base md:text-lg ${language === 'ar' ? 'font-arabic' : ''}`}>
-                          {route.from} → {route.to}
-                        </CardTitle>
-                      </div>
-                      <Badge variant="secondary" className="bg-tunisia-coral/10 text-tunisia-coral text-xs">
-                        {route.duration}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xl md:text-2xl font-bold text-tunisia-blue">
-                        {formatCurrency(route.price)}
-                      </span>
-                      <span className="text-xs md:text-sm text-muted-foreground">
-                        per vehicle
-                      </span>
-                    </div>
-                    <a 
-                      href={generateWhatsAppLink(`🚗 BOOKING REQUEST\n\nRoute: ${route.from} → ${route.to}\nPrice: ${formatCurrency(route.price)}\nDuration: ${route.duration}\n\n📋 Please provide:\n• Pickup date & time\n• Number of passengers\n• Luggage quantity\n• Flight number (if applicable)\n• Special requests`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full"
-                    >
-                      <Button className="w-full bg-tunisia-blue hover:bg-tunisia-blue/90 text-sm md:text-base">
-                        <MessageCircle className="mr-2 h-4 w-4" />
-                        Book Now
-                      </Button>
-                    </a>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Return Trip Discount */}
         <ReturnTripDiscount />
-
-        {/* Meet Our Drivers */}
-        <MeetOurDrivers />
 
         {/* Our Cars Gallery */}
         <OurCars />
