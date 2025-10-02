@@ -36,11 +36,11 @@ export default function MeetOurDrivers() {
               className="overflow-hidden border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 hover:scale-105 bg-white/95 backdrop-blur-sm"
             >
               <CardContent className="p-0">
-                <div className="aspect-square overflow-hidden">
+                <div className="aspect-[3/4] overflow-hidden">
                   <img
                     src={driver.image}
                     alt={`${driver.name} - Professional Tunisia Transfer Driver`}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-110"
                   />
                 </div>
                 <div className="p-4 bg-gradient-to-r from-tunisia-blue to-tunisia-coral">
