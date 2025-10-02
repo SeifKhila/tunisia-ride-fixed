@@ -18,22 +18,22 @@ export default function MeetOurDrivers() {
   const { language } = useLanguage();
 
   return (
-    <section className="relative py-16">
+    <section className="relative py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className={`text-4xl font-bold text-tunisia-blue mb-6 ${language === 'ar' ? 'font-arabic' : ''}`}>
+        <div className="text-center mb-6 md:mb-8">
+          <h2 className={`text-2xl md:text-3xl font-bold text-tunisia-blue mb-3 ${language === 'ar' ? 'font-arabic' : ''}`}>
             Meet Our Drivers
           </h2>
-          <p className={`text-lg text-muted-foreground max-w-3xl mx-auto ${language === 'ar' ? 'font-arabic' : ''}`}>
+          <p className={`text-sm md:text-base text-muted-foreground max-w-2xl mx-auto ${language === 'ar' ? 'font-arabic' : ''}`}>
             Our dedicated drivers will do their best to make sure your ride is safe, comfortable, and enjoyable.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
           {drivers.map((driver) => (
             <Card 
               key={driver.name} 
-              className="overflow-hidden border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 hover:scale-105 bg-white/95 backdrop-blur-sm"
+              className="overflow-hidden border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 hover:scale-105"
             >
               <CardContent className="p-0">
                 <div className="aspect-[3/4] overflow-hidden">
@@ -43,10 +43,10 @@ export default function MeetOurDrivers() {
                     className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-110"
                   />
                 </div>
-                <div className="p-4 bg-gradient-to-r from-tunisia-blue to-tunisia-coral">
-                  <div className="text-center mb-3">
-                    <h3 className="text-xl font-bold text-white">{driver.name}</h3>
-                    <p className="text-sm text-white/90">Professional Driver</p>
+                <div className="p-2 md:p-3 bg-gradient-to-r from-tunisia-blue to-tunisia-coral">
+                  <div className="text-center mb-2">
+                    <h3 className="text-sm md:text-base font-bold text-white">{driver.name}</h3>
+                    <p className="text-xs text-white/90">Professional Driver</p>
                   </div>
                   <a 
                     href={`https://wa.me/447956643662?text=${encodeURIComponent(`👨‍✈️ DRIVER REQUEST\n\nPreferred Driver: ${driver.name}\n\n📋 Please provide:\n• Pickup location\n• Destination\n• Date & time\n• Number of passengers`)}`}
@@ -54,8 +54,8 @@ export default function MeetOurDrivers() {
                     rel="noopener noreferrer"
                     className="block w-full"
                   >
-                    <Button className="w-full bg-white text-tunisia-blue hover:bg-white/90 text-sm">
-                      <MessageCircle className="mr-2 h-4 w-4" />
+                    <Button className="w-full bg-white text-tunisia-blue hover:bg-white/90 text-xs md:text-sm py-1 md:py-2 h-auto">
+                      <MessageCircle className="mr-1 h-3 w-3 md:h-4 md:w-4" />
                       Request {driver.name}
                     </Button>
                   </a>
