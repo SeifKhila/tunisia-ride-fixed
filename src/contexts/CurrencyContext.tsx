@@ -78,19 +78,25 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       const data = await response.json();
       
       if (data.rates) {
+        // Frankfurter API doesn't support TND, so merge with manual TND rate
+        const mergedRates = {
+          ...data.rates,
+          TND: data.rates.TND || manualRates.TND // Use manual TND if not provided by API
+        };
+        
         const rateData: ExchangeRateData = {
-          rates: data.rates,
+          rates: mergedRates,
           fetchedAt: new Date().toISOString()
         };
         
         // Cache in localStorage (6 hour cache)
         localStorage.setItem('exchangeRateData', JSON.stringify(rateData));
         
-        setExchangeRates(data.rates);
+        setExchangeRates(mergedRates);
         setRatesLastUpdated(rateData.fetchedAt);
         setIsUsingFallbackRates(false);
         
-        console.log('Exchange rates updated:', data.rates, 'at', rateData.fetchedAt);
+        console.log('Exchange rates updated:', mergedRates, 'at', rateData.fetchedAt);
       } else {
         throw new Error('Invalid response format');
       }
