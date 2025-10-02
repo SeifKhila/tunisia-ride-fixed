@@ -178,17 +178,12 @@ const Index = () => {
               {topRoutes.map((route, index) => (
                 <Card key={index} className="border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 hover:scale-105 bg-white/95 backdrop-blur-sm">
                   <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 md:h-5 w-4 md:w-5 text-tunisia-coral" />
-                        <CardTitle className={`text-tunisia-blue text-base md:text-lg ${language === 'ar' ? 'font-arabic' : ''}`}>
-                          {route.from} → {route.to}
-                        </CardTitle>
-                      </div>
-                      <Badge variant="secondary" className="bg-tunisia-coral/10 text-tunisia-coral text-xs">
-                        {route.duration}
-                      </Badge>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 md:h-5 w-4 md:w-5 text-tunisia-coral" />
+                    <CardTitle className={`text-tunisia-blue text-base md:text-lg ${language === 'ar' ? 'font-arabic' : ''}`}>
+                      {route.from} → {route.to}
+                    </CardTitle>
+                  </div>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between mb-4">
