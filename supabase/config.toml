@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.complete-booking]
 verify_jwt = false
+
+[functions.booking-to-whatsapp]
+verify_jwt = false

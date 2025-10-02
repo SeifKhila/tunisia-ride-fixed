@@ -106,6 +106,8 @@ export default function ComprehensiveBookingForm() {
   const [showReturnFields, setShowReturnFields] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [showFallback, setShowFallback] = useState(false);
+  const [fallbackMessage, setFallbackMessage] = useState("");
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState<string[]>([]);
   const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
@@ -186,8 +188,11 @@ export default function ComprehensiveBookingForm() {
   }, [form.watch("pickup"), form.watch("dropoff"), form.watch("tripType")]);
 
   const onSubmit = async (data: BookingFormValues) => {
+    if (isSubmitting) return; // Prevent double submission
+    
     setIsSubmitting(true);
     setSubmissionError(null);
+    setShowFallback(false);
 
     try {
       // Calculate final price
@@ -197,8 +202,8 @@ export default function ComprehensiveBookingForm() {
         ? `${formatPrice(finalPrice)}${isReturnTrip ? ' (10% discount applied!)' : ''}`
         : null;
       
-      // Prepare email data
-      const emailData = {
+      // Prepare booking data
+      const bookingData = {
         pickup: data.pickup,
         dropoff: data.dropoff,
         pickupDate: format(data.pickupDate, "PPP"),
@@ -218,12 +223,50 @@ export default function ComprehensiveBookingForm() {
         notes: data.notes || ''
       };
 
-      // Send booking emails
-      const { error } = await supabase.functions.invoke('send-booking-email', {
-        body: emailData
+      // Prepare fallback message
+      const fallbackMsg = `🚗 Booking Request — ${data.customerName}
+
+📍 Route: ${data.pickup} → ${data.dropoff}
+📅 Date: ${format(data.pickupDate, "PPP")}
+⏰ Time: ${data.pickupTime}
+${data.flightNumber ? `✈️ Flight: ${data.flightNumber}` : ''}
+
+👥 Passengers: ${data.passengers}
+🧳 Luggage: ${data.luggage}
+${data.children ? `👶 Child Seats: ${data.childSeats || 'Yes'}` : ''}
+
+🔄 Trip: ${data.tripType === 'return' ? 'Return (10% OFF)' : 'One-way'}
+${data.tripType === 'return' && data.returnDate ? `📅 Return: ${format(data.returnDate, "PPP")} at ${data.returnTime}` : ''}
+${estimatedPrice ? `💰 Price: ${estimatedPrice}` : '💰 Price: Custom quote'}
+
+📱 Phone: ${data.customerPhone}
+📧 Email: ${data.customerEmail}
+${data.notes ? `📝 Notes: ${data.notes}` : ''}`;
+
+      setFallbackMessage(fallbackMsg);
+
+      // Try WhatsApp API first
+      const { data: whatsappResult, error: whatsappError } = await supabase.functions.invoke('booking-to-whatsapp', {
+        body: bookingData
       });
 
-      if (error) throw error;
+      if (whatsappError || !whatsappResult?.ok) {
+        console.log('WhatsApp API failed or not configured, using fallback');
+        
+        // Open WhatsApp web with prefilled message
+        window.open(
+          `https://wa.me/447956643662?text=${encodeURIComponent(fallbackMsg)}`,
+          '_blank'
+        );
+        
+        // Show fallback UI with copyable text
+        setShowFallback(true);
+        
+        // Try sending email as secondary (don't block on failure)
+        supabase.functions.invoke('send-booking-email', { body: bookingData }).catch(err => {
+          console.log('Email fallback also failed:', err);
+        });
+      }
 
       // Show success panel
       setShowSuccess(true);
@@ -268,17 +311,42 @@ ${values.tripType === 'return' && values.returnDate ? `📅 Return: ${format(val
         <CardContent className="pt-8 pb-8 text-center space-y-6">
           <div className="space-y-4">
             <p className="text-xl font-semibold text-tunisia-blue">
-              Thanks! We've received your booking request.
+              Thanks! We&apos;ve sent your request.
             </p>
             <p className="text-muted-foreground">
-              A confirmation email has been sent to your inbox. We'll confirm your booking within 30 minutes.
+              We&apos;ll confirm your booking on WhatsApp and email within 30 minutes.
             </p>
           </div>
+          
+          {showFallback && fallbackMessage && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-left">
+              <p className="text-sm font-medium text-yellow-800 mb-2">
+                📋 Copy this message to send via WhatsApp:
+              </p>
+              <Textarea
+                value={fallbackMessage}
+                readOnly
+                className="font-mono text-xs h-48 resize-none"
+                onClick={(e) => e.currentTarget.select()}
+              />
+              <Button
+                size="sm"
+                variant="outline"
+                className="mt-2 w-full"
+                onClick={() => {
+                  navigator.clipboard.writeText(fallbackMessage);
+                  toast({ title: "Copied to clipboard!" });
+                }}
+              >
+                Copy to Clipboard
+              </Button>
+            </div>
+          )}
           
           <div className="bg-tunisia-sand/30 p-6 rounded-lg border border-tunisia-blue/20">
             <p className="font-medium mb-3">Need immediate assistance?</p>
             <a 
-              href={`https://wa.me/447956643662?text=${encodeURIComponent(getWhatsAppMessage())}`}
+              href={`https://wa.me/447956643662?text=${encodeURIComponent(fallbackMessage || getWhatsAppMessage())}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -287,7 +355,7 @@ ${values.tripType === 'return' && values.returnDate ? `📅 Return: ${format(val
                 className="bg-[#25D366] hover:bg-[#20BA5A] text-white gap-2"
               >
                 <MessageCircle className="h-5 w-5" />
-                Chat on WhatsApp
+                Chat on WhatsApp Now
               </Button>
             </a>
           </div>
@@ -296,6 +364,7 @@ ${values.tripType === 'return' && values.returnDate ? `📅 Return: ${format(val
             variant="outline" 
             onClick={() => {
               setShowSuccess(false);
+              setShowFallback(false);
               form.reset();
             }}
             className="mt-4"
