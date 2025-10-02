@@ -12,14 +12,16 @@ serve(async (req) => {
   }
 
   try {
-    const booking = await req.json();
+    const formData = await req.json();
     
-    console.log('Sending booking confirmation email to:', booking.customer_email);
+    console.log('Sending booking request emails');
 
     const apiKey = Deno.env.get('EMAIL_API_KEY');
     const emailFrom = Deno.env.get('EMAIL_FROM') || 'bookings@get-tunisia-transfer.com';
+    const adminEmail = 'khilas592@gmail.com';
     
-    const emailHtml = `
+    // Customer confirmation email
+    const customerEmailHtml = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -28,83 +30,55 @@ serve(async (req) => {
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
             .header { background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
-            .booking-ref { font-size: 24px; font-weight: bold; color: #2563eb; margin: 20px 0; }
             .details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
-            .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+            .detail-row { padding: 10px 0; border-bottom: 1px solid #eee; }
             .label { font-weight: bold; color: #666; }
-            .value { color: #333; }
-            .price-breakdown { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0; }
-            .total { font-size: 20px; font-weight: bold; color: #2563eb; }
             .footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1>🎉 Booking Confirmed!</h1>
+              <h1>🎉 Booking Request Received!</h1>
               <p>Thank you for choosing Get Tunisia Transfer</p>
             </div>
             <div class="content">
-              <div class="booking-ref">Booking Reference: ${booking.booking_reference}</div>
+              <p>Hi ${formData.customerName},</p>
+              <p>We've received your booking request and will confirm within 30 minutes.</p>
               
               <div class="details">
-                <h2>Trip Details</h2>
+                <h3>Your Request Details:</h3>
                 <div class="detail-row">
-                  <span class="label">From:</span>
-                  <span class="value">${booking.pickup_location}</span>
+                  <span class="label">📍 Pickup:</span> ${formData.pickup}
                 </div>
                 <div class="detail-row">
-                  <span class="label">To:</span>
-                  <span class="value">${booking.dropoff_location}</span>
+                  <span class="label">📍 Drop-off:</span> ${formData.dropoff}
                 </div>
                 <div class="detail-row">
-                  <span class="label">Date & Time:</span>
-                  <span class="value">${new Date(booking.pickup_datetime).toLocaleString()}</span>
-                </div>
-                ${booking.flight_number ? `
-                <div class="detail-row">
-                  <span class="label">Flight Number:</span>
-                  <span class="value">${booking.flight_number}</span>
-                </div>
-                ` : ''}
-                <div class="detail-row">
-                  <span class="label">Passengers:</span>
-                  <span class="value">${booking.passengers}</span>
+                  <span class="label">📅 Date:</span> ${formData.pickupDate}
                 </div>
                 <div class="detail-row">
-                  <span class="label">Luggage:</span>
-                  <span class="value">${booking.luggage} pieces</span>
+                  <span class="label">⏰ Time:</span> ${formData.pickupTime}
                 </div>
-              </div>
-
-              <div class="price-breakdown">
-                <h3>Payment Summary</h3>
+                ${formData.flightNumber ? `<div class="detail-row"><span class="label">✈️ Flight:</span> ${formData.flightNumber}</div>` : ''}
                 <div class="detail-row">
-                  <span class="label">Total Fare:</span>
-                  <span class="value">${booking.currency}${booking.total_amount.toFixed(2)}</span>
+                  <span class="label">👥 Passengers:</span> ${formData.passengers}
                 </div>
                 <div class="detail-row">
-                  <span class="label">Deposit Paid (25%):</span>
-                  <span class="value">${booking.currency}${booking.deposit_amount.toFixed(2)}</span>
+                  <span class="label">🧳 Luggage:</span> ${formData.luggage}
                 </div>
+                ${formData.children ? `<div class="detail-row"><span class="label">👶 Child Seats:</span> ${formData.childSeats || 'Yes'}</div>` : ''}
                 <div class="detail-row">
-                  <span class="label total">Balance Due on Pickup:</span>
-                  <span class="value total">${booking.currency}${booking.balance_due.toFixed(2)}</span>
+                  <span class="label">🔄 Trip Type:</span> ${formData.tripType === 'return' ? 'Return Trip (10% OFF!)' : 'One-way'}
                 </div>
-              </div>
-
-              <div class="details">
-                <h3>What's Next?</h3>
-                <p>✅ Your deposit has been received</p>
-                <p>🚗 Your driver will meet you with a name board</p>
-                <p>💰 Pay the remaining balance (${booking.currency}${booking.balance_due.toFixed(2)}) directly to your driver</p>
-                <p>📱 We'll send you driver details 24 hours before pickup</p>
+                ${formData.tripType === 'return' ? `<div class="detail-row"><span class="label">📅 Return:</span> ${formData.returnDate} at ${formData.returnTime}</div>` : ''}
+                ${formData.estimatedPrice ? `<div class="detail-row"><span class="label">💰 Estimated Price:</span> ${formData.estimatedPrice}</div>` : '<div class="detail-row"><span class="label">💰 Price:</span> Custom quote needed</div>'}
               </div>
 
               <div class="footer">
-                <p>Need help? Contact us:</p>
-                <p>📧 info@get-tunisia-transfer.com</p>
+                <p>Need immediate assistance? Contact us:</p>
                 <p>📱 WhatsApp: +44 7956 643662</p>
+                <p>📧 info@get-tunisia-transfer.com</p>
                 <p><small>Get Tunisia Transfer - Your trusted transfer partner in Tunisia</small></p>
               </div>
             </div>
@@ -113,8 +87,61 @@ serve(async (req) => {
       </html>
     `;
 
-    // Send via SendGrid
-    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+    // Admin notification email
+    const adminEmailHtml = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: #dc2626; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .content { background: #f8f9fa; padding: 20px; border-radius: 0 0 8px 8px; }
+            .details { background: white; padding: 15px; border-radius: 8px; margin: 15px 0; }
+            .detail-row { padding: 8px 0; border-bottom: 1px solid #eee; }
+            .urgent { background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin: 15px 0; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>🚨 NEW BOOKING REQUEST</h1>
+            </div>
+            <div class="content">
+              <div class="urgent">
+                <strong>⏰ Action Required:</strong> Respond within 30 minutes
+              </div>
+              
+              <div class="details">
+                <h3>Trip Details:</h3>
+                <div class="detail-row">📍 Pickup: ${formData.pickup}</div>
+                <div class="detail-row">📍 Drop-off: ${formData.dropoff}</div>
+                <div class="detail-row">📅 Date: ${formData.pickupDate}</div>
+                <div class="detail-row">⏰ Time: ${formData.pickupTime}</div>
+                ${formData.flightNumber ? `<div class="detail-row">✈️ Flight: ${formData.flightNumber}</div>` : ''}
+                <div class="detail-row">👥 Passengers: ${formData.passengers}</div>
+                <div class="detail-row">🧳 Luggage: ${formData.luggage}</div>
+                ${formData.children ? `<div class="detail-row">👶 Child Seats: ${formData.childSeats || 'Yes'}</div>` : ''}
+                <div class="detail-row">🔄 Trip: ${formData.tripType === 'return' ? 'Return (10% OFF)' : 'One-way'}</div>
+                ${formData.tripType === 'return' ? `<div class="detail-row">📅 Return: ${formData.returnDate} at ${formData.returnTime}</div>` : ''}
+                ${formData.estimatedPrice ? `<div class="detail-row">💰 Est. Price: ${formData.estimatedPrice}</div>` : '<div class="detail-row">💰 Price: Custom quote</div>'}
+              </div>
+
+              <div class="details">
+                <h3>Customer Details:</h3>
+                <div class="detail-row">👤 Name: ${formData.customerName}</div>
+                <div class="detail-row">📱 Phone: ${formData.customerPhone}</div>
+                <div class="detail-row">📧 Email: ${formData.customerEmail}</div>
+                ${formData.notes ? `<div class="detail-row">📝 Notes: ${formData.notes}</div>` : ''}
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    // Send customer confirmation email
+    const customerResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -122,8 +149,8 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         personalizations: [{
-          to: [{ email: booking.customer_email, name: booking.customer_name }],
-          subject: `Booking Confirmed - ${booking.booking_reference}`,
+          to: [{ email: formData.customerEmail, name: formData.customerName }],
+          subject: 'Booking Request Received - Get Tunisia Transfer',
         }],
         from: { 
           email: emailFrom.match(/<(.+)>/)?.[1] || emailFrom,
@@ -131,18 +158,47 @@ serve(async (req) => {
         },
         content: [{
           type: 'text/html',
-          value: emailHtml,
+          value: customerEmailHtml,
         }],
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error('SendGrid error:', errorData);
-      throw new Error('Failed to send email');
+    if (!customerResponse.ok) {
+      const errorData = await customerResponse.text();
+      console.error('SendGrid error (customer):', errorData);
+      throw new Error('Failed to send customer email');
     }
 
-    console.log('Email sent successfully to:', booking.customer_email);
+    // Send admin notification email
+    const adminResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        personalizations: [{
+          to: [{ email: adminEmail }],
+          subject: '🚨 NEW BOOKING REQUEST - Get Tunisia Transfer',
+        }],
+        from: { 
+          email: emailFrom.match(/<(.+)>/)?.[1] || emailFrom,
+          name: 'Get Tunisia Transfer Bookings'
+        },
+        content: [{
+          type: 'text/html',
+          value: adminEmailHtml,
+        }],
+      }),
+    });
+
+    if (!adminResponse.ok) {
+      const errorData = await adminResponse.text();
+      console.error('SendGrid error (admin):', errorData);
+      // Don't throw here - customer email was sent
+    }
+
+    console.log('Emails sent successfully to customer and admin');
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { getAllLocations } from "@/data/locations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const bookingSchema = z.object({
   pickup: z.string().min(2, "Pickup location is required"),
@@ -103,6 +104,8 @@ export default function ComprehensiveBookingForm() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showReturnFields, setShowReturnFields] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState<string[]>([]);
   const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
@@ -184,63 +187,125 @@ export default function ComprehensiveBookingForm() {
 
   const onSubmit = async (data: BookingFormValues) => {
     setIsSubmitting(true);
+    setSubmissionError(null);
 
     try {
       // Calculate final price
       const isReturnTrip = data.tripType === 'return';
       const finalPrice = isReturnTrip ? calculatedPrice.return : calculatedPrice.oneWay;
-      const priceText = calculatedPrice.hasPrice 
-        ? `\nEstimated Price: ${formatPrice(finalPrice)}${isReturnTrip ? ' (10% discount applied!)' : ''}`
-        : '\nPrice: Custom quote needed';
+      const estimatedPrice = calculatedPrice.hasPrice 
+        ? `${formatPrice(finalPrice)}${isReturnTrip ? ' (10% discount applied!)' : ''}`
+        : null;
       
-      // Prepare booking message
-      const message = `
-🚗 NEW BOOKING REQUEST
+      // Prepare email data
+      const emailData = {
+        pickup: data.pickup,
+        dropoff: data.dropoff,
+        pickupDate: format(data.pickupDate, "PPP"),
+        pickupTime: data.pickupTime,
+        flightNumber: data.flightNumber || '',
+        passengers: data.passengers,
+        luggage: data.luggage,
+        children: data.children,
+        childSeats: data.childSeats || '',
+        tripType: data.tripType,
+        returnDate: data.returnDate ? format(data.returnDate, "PPP") : '',
+        returnTime: data.returnTime || '',
+        estimatedPrice: estimatedPrice,
+        customerName: data.customerName,
+        customerPhone: data.customerPhone,
+        customerEmail: data.customerEmail,
+        notes: data.notes || ''
+      };
 
-📍 Pickup: ${data.pickup}
-📍 Drop-off: ${data.dropoff}
-📅 Date: ${format(data.pickupDate, "PPP")}
-⏰ Time: ${data.pickupTime}
-${data.flightNumber ? `✈️ Flight: ${data.flightNumber}` : ''}
-
-👥 Passengers: ${data.passengers}
-🧳 Luggage: ${data.luggage}
-${data.children ? `👶 Child Seats: ${data.childSeats || 'Yes'}` : ''}
-
-🔄 Trip Type: ${data.tripType === 'return' ? 'Return Trip (10% OFF!)' : 'One-way'}
-${data.tripType === 'return' ? `📅 Return: ${format(data.returnDate!, "PPP")} at ${data.returnTime}` : ''}
-${priceText}
-
-👤 Customer: ${data.customerName}
-📱 Phone: ${data.customerPhone}
-📧 Email: ${data.customerEmail}
-${data.notes ? `📝 Notes: ${data.notes}` : ''}
-      `.trim();
-
-      // Send WhatsApp notification
-      const whatsappUrl = `https://wa.me/447956643662?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-
-      // Show success message
-      toast({
-        title: "Booking Request Sent!",
-        description: "Thanks! We've received your request. We'll confirm on WhatsApp and email shortly.",
+      // Send booking emails
+      const { error } = await supabase.functions.invoke('send-booking-email', {
+        body: emailData
       });
 
-      // Reset form
-      form.reset();
-      setShowReturnFields(false);
+      if (error) throw error;
+
+      // Show success panel
+      setShowSuccess(true);
 
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to submit booking. Please try again.",
-        variant: "destructive"
-      });
+      console.error('Booking submission error:', error);
+      setSubmissionError('Failed to submit booking. Please try again or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Prepare WhatsApp message with booking details
+  const getWhatsAppMessage = () => {
+    const values = form.getValues();
+    return `🚗 NEW BOOKING REQUEST
+
+📍 Pickup: ${values.pickup}
+📍 Drop-off: ${values.dropoff}
+📅 Date: ${values.pickupDate ? format(values.pickupDate, "PPP") : ''}
+⏰ Time: ${values.pickupTime}
+${values.flightNumber ? `✈️ Flight: ${values.flightNumber}` : ''}
+
+👥 Passengers: ${values.passengers}
+🧳 Luggage: ${values.luggage}
+${values.children ? `👶 Child Seats: ${values.childSeats || 'Yes'}` : ''}
+
+🔄 Trip Type: ${values.tripType === 'return' ? 'Return Trip (10% OFF!)' : 'One-way'}
+${values.tripType === 'return' && values.returnDate ? `📅 Return: ${format(values.returnDate, "PPP")} at ${values.returnTime}` : ''}
+
+👤 Customer: ${values.customerName}
+📱 Phone: ${values.customerPhone}
+📧 Email: ${values.customerEmail}`;
+  };
+
+  if (showSuccess) {
+    return (
+      <Card className="w-full max-w-4xl mx-auto border-tunisia-blue/20 shadow-tunisia bg-white/95 backdrop-blur-sm">
+        <CardHeader className="text-center bg-gradient-to-r from-tunisia-blue to-tunisia-coral text-white">
+          <CardTitle className="text-3xl">✅ Request Received!</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-8 pb-8 text-center space-y-6">
+          <div className="space-y-4">
+            <p className="text-xl font-semibold text-tunisia-blue">
+              Thanks! We've received your booking request.
+            </p>
+            <p className="text-muted-foreground">
+              A confirmation email has been sent to your inbox. We'll confirm your booking within 30 minutes.
+            </p>
+          </div>
+          
+          <div className="bg-tunisia-sand/30 p-6 rounded-lg border border-tunisia-blue/20">
+            <p className="font-medium mb-3">Need immediate assistance?</p>
+            <a 
+              href={`https://wa.me/447956643662?text=${encodeURIComponent(getWhatsAppMessage())}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button 
+                size="lg" 
+                className="bg-[#25D366] hover:bg-[#20BA5A] text-white gap-2"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Chat on WhatsApp
+              </Button>
+            </a>
+          </div>
+
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              setShowSuccess(false);
+              form.reset();
+            }}
+            className="mt-4"
+          >
+            Make Another Booking
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full max-w-4xl mx-auto border-tunisia-blue/20 shadow-tunisia bg-white/95 backdrop-blur-sm">
@@ -712,10 +777,16 @@ ${data.notes ? `📝 Notes: ${data.notes}` : ''}
 
             {/* Submit Button */}
             <div className="pt-4">
+              {submissionError && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-600 text-sm">
+                  {submissionError}
+                </div>
+              )}
+              
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold py-6 text-lg"
+                className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white font-bold py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
