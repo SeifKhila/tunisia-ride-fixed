@@ -160,7 +160,7 @@ const Index = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-white/70"></div>
         
         {/* Top Routes */}
         <section className="relative py-12 md:py-16">
