@@ -142,7 +142,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     const eurWithUplift = eurAmount + FLAT_EUR_UPLIFT;
     
     if (targetCurrency === 'EUR') {
-      return Number(eurWithUplift.toFixed(2)); // 2 decimal places for EUR
+      return Math.round(eurWithUplift); // Round EUR to whole number
     }
     
     const rate = exchangeRates[targetCurrency];
@@ -153,13 +153,8 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     
     const converted = eurWithUplift * rate;
     
-    // Apply rounding rules per currency
-    if (targetCurrency === 'TND') {
-      return Math.round(converted); // Round to nearest 1 TND
-    }
-    
-    // GBP, USD: 2 decimal places
-    return Number(converted.toFixed(2));
+    // Round all currencies to nearest whole number
+    return Math.round(converted);
   };
 
   const formatPrice = (eurAmount: number, targetCurrency?: Currency): string => {
@@ -178,15 +173,15 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       return `${symbol} ${convertedAmount}`;
     }
     
-    // EUR, GBP, USD (2 decimals)
-    return `${symbol}${convertedAmount.toFixed(2)}`;
+    // All currencies: no decimals (rounded to whole numbers)
+    return `${symbol}${convertedAmount}`;
   };
 
   const calculateDeposit = (totalEurAmount: number, targetCurrency?: Currency) => {
     const curr = targetCurrency || currency;
     const total = convertFromEUR(totalEurAmount, curr);
-    const deposit = Number((total * 0.25).toFixed(curr === 'TND' ? 0 : 2)); // 25% deposit
-    const balance = Number((total - deposit).toFixed(curr === 'TND' ? 0 : 2));
+    const deposit = Math.round(total * 0.25); // 25% deposit, rounded
+    const balance = total - deposit; // Balance is the difference
     
     return { deposit, balance, total };
   };
