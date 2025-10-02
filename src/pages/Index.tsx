@@ -65,6 +65,8 @@ const Index = () => {
   };
 
   const topRoutes = [
+    { from: 'Enfidha', to: 'Hammamet', price: 35, duration: '45 min' },
+    { from: 'Tunis', to: 'Hammamet', price: 45, duration: '60 min' },
     { from: 'Monastir', to: 'Sousse', price: 33, duration: '30 min' },
     { from: 'Djerba', to: 'Midoun', price: 22, duration: '20 min' },
     { from: 'Enfidha', to: 'Sousse', price: 39, duration: '35 min' },
