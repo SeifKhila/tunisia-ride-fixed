@@ -69,7 +69,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   const fetchExchangeRates = async () => {
     try {
       console.log('Fetching live exchange rates...');
-      const response = await fetch('https://api.frankfurter.app/latest?from=EUR&to=GBP,TND,USD');
+      const response = await fetch('https://api.frankfurter.app/latest?from=EUR&to=GBP,USD');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -78,10 +78,10 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       const data = await response.json();
       
       if (data.rates) {
-        // Frankfurter API doesn't support TND, so merge with manual TND rate
+        // Always use manual TND rate since API doesn't support it
         const mergedRates = {
           ...data.rates,
-          TND: data.rates.TND || manualRates.TND // Use manual TND if not provided by API
+          TND: manualRates.TND
         };
         
         const rateData: ExchangeRateData = {
@@ -119,8 +119,12 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
           const sixHours = 6 * 60 * 60 * 1000; // 6-hour cache as per requirements
           
           if (cacheAge < sixHours) {
-            // Use cached rates
-            setExchangeRates(rateData.rates);
+            // Use cached rates but ensure TND is always from manual rate
+            const ratesWithTND = {
+              ...rateData.rates,
+              TND: manualRates.TND
+            };
+            setExchangeRates(ratesWithTND);
             setRatesLastUpdated(rateData.fetchedAt);
             setIsUsingFallbackRates(false);
             console.log('Using cached exchange rates from', rateData.fetchedAt);
