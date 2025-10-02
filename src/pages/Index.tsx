@@ -235,55 +235,23 @@ const Index = () => {
                 {t('how_it_works.title')}
               </h2>
               <p className={`text-muted-foreground max-w-2xl mx-auto text-sm md:text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
-                Simple booking process in three easy steps
+                Simple and secure booking process
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
-              <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
+            <div className="flex justify-center max-w-md mx-auto">
+              <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm w-full">
                 <CardHeader className="pb-4">
-                  <div className="w-12 md:w-16 h-12 md:h-16 bg-tunisia-blue rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
-                    <MessageCircle className="h-6 md:h-8 w-6 md:w-8 text-white" />
+                  <div className="w-16 h-16 bg-tunisia-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MessageCircle className="h-8 w-8 text-white" />
                   </div>
-                  <CardTitle className={`text-tunisia-blue text-lg md:text-xl ${language === 'ar' ? 'font-arabic' : ''}`}>
+                  <CardTitle className={`text-tunisia-blue text-xl ${language === 'ar' ? 'font-arabic' : ''}`}>
                     {t('how_it_works.step1')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className={`text-muted-foreground text-sm md:text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
+                  <p className={`text-muted-foreground text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
                     Complete your booking with our secure online form. Choose your pickup location, destination, and travel date.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <div className="w-12 md:w-16 h-12 md:h-16 bg-tunisia-coral rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
-                    <CreditCard className="h-6 md:h-8 w-6 md:w-8 text-white" />
-                  </div>
-                  <CardTitle className={`text-tunisia-blue text-lg md:text-xl ${language === 'ar' ? 'font-arabic' : ''}`}>
-                    {t('how_it_works.step2')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className={`text-muted-foreground text-sm md:text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
-                    Secure your transfer with just a 25% deposit. Pay the remaining balance to your driver upon arrival.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="text-center border-tunisia-blue/20 hover:shadow-tunisia transition-all duration-300 bg-white/95 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <div className="w-12 md:w-16 h-12 md:h-16 bg-tunisia-blue rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
-                    <Car className="h-6 md:h-8 w-6 md:w-8 text-white" />
-                  </div>
-                  <CardTitle className={`text-tunisia-blue text-lg md:text-xl ${language === 'ar' ? 'font-arabic' : ''}`}>
-                    {t('how_it_works.step3')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className={`text-muted-foreground text-sm md:text-base ${language === 'ar' ? 'font-arabic' : ''}`}>
-                    Your professional driver will be waiting for you at the agreed location with a personalized sign.
                   </p>
                 </CardContent>
               </Card>
