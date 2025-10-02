@@ -133,14 +133,12 @@ export default function ComprehensiveBookingForm() {
   };
 
   const handlePickupChange = (value: string) => {
-    form.setValue("pickup", value);
     const suggestions = filterLocations(value);
     setPickupSuggestions(suggestions);
     setShowPickupSuggestions(suggestions.length > 0);
   };
 
   const handleDropoffChange = (value: string) => {
-    form.setValue("dropoff", value);
     const suggestions = filterLocations(value);
     setDropoffSuggestions(suggestions);
     setShowDropoffSuggestions(suggestions.length > 0);
@@ -258,7 +256,10 @@ ${data.notes ? `📝 Notes: ${data.notes}` : ''}
                     <Input
                       {...field}
                       placeholder="Enter pickup location (airport, hotel, city)"
-                      onChange={(e) => handlePickupChange(e.target.value)}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handlePickupChange(e.target.value);
+                      }}
                       onFocus={() => field.value && setShowPickupSuggestions(true)}
                       onBlur={() => setTimeout(() => setShowPickupSuggestions(false), 200)}
                     />
@@ -296,7 +297,10 @@ ${data.notes ? `📝 Notes: ${data.notes}` : ''}
                     <Input
                       {...field}
                       placeholder="Enter drop-off location"
-                      onChange={(e) => handleDropoffChange(e.target.value)}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleDropoffChange(e.target.value);
+                      }}
                       onFocus={() => field.value && setShowDropoffSuggestions(true)}
                       onBlur={() => setTimeout(() => setShowDropoffSuggestions(false), 200)}
                     />

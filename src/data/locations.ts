@@ -13,6 +13,7 @@ export const locationData = {
     "La Marsa",
     "Sidi Bou Said",
     "Hammamet",
+    "Yasmine Hammamet",
     "Nabeul",
     "Sousse",
     "Monastir",
