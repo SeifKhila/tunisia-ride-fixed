@@ -23,3 +23,9 @@ verify_jwt = false
 
 [functions.booking-to-whatsapp]
 verify_jwt = false
+
+[functions.healthz]
+verify_jwt = false
+
+[functions.booking-selftest]
+verify_jwt = false

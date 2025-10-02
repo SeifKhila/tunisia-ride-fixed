@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import AdminStats from "./pages/AdminStats";
 import BookingSuccess from "./pages/BookingSuccess";
 import BookingCancelled from "./pages/BookingCancelled";
+import QASelfTest from "./pages/QASelfTest";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/admin-stats" element={<AdminStats />} />
               <Route path="/booking-success" element={<BookingSuccess />} />
               <Route path="/booking-cancelled" element={<BookingCancelled />} />
+              <Route path="/qa/self-test" element={<QASelfTest />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
