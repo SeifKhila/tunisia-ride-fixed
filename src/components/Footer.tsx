@@ -55,14 +55,24 @@ const Footer = () => {
               <span>Email</span>
             </a>
 
-            {/* Phone */}
+            {/* Phone 1 */}
             <a
-              href="tel:+447956643662"
-              aria-label="Call us"
+              href="tel:+21628602147"
+              aria-label="Call us +216 28 602 147"
               className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] text-white font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
             >
               <Phone className="h-5 w-5" />
-              <span>Call</span>
+              <span>+216 28 602 147</span>
+            </a>
+
+            {/* Phone 2 */}
+            <a
+              href="tel:+21622609510"
+              aria-label="Call us +216 22 609 510"
+              className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] text-white font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
+            >
+              <Phone className="h-5 w-5" />
+              <span>+216 22 609 510</span>
             </a>
           </div>
         </div>

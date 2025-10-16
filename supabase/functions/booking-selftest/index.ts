@@ -27,7 +27,7 @@ serve(async (req) => {
     // Build test payload
     const testPayload = {
       customerName: 'John Doe (TEST)',
-      customerPhone: '+44 7956 643662',
+      customerPhone: '+216 28 602 147',
       customerEmail: 'gemma.test+qa@example.com',
       pickup: 'Yasmine Hammamet',
       dropoff: 'Enfidha (NBE)',
@@ -53,7 +53,7 @@ serve(async (req) => {
     // Test WhatsApp delivery using production flow
     const META_WA_PHONE_ID = Deno.env.get('META_WA_PHONE_ID');
     const META_WA_TOKEN = Deno.env.get('META_WA_TOKEN');
-    const WHATSAPP_TO = '447956643662';
+    const WHATSAPP_TO = '21628602147';
 
     if (META_WA_PHONE_ID && META_WA_TOKEN) {
       result.whatsapp.attempted = true;

@@ -69,7 +69,7 @@ export default function VehicleCategories() {
                     ))}
                   </ul>
                   <a 
-                    href={`https://wa.me/447956643662?text=${encodeURIComponent(`🚗 VEHICLE BOOKING\n\nCategory: ${category.name}\nPrice from: ${formatPrice(category.priceFrom)}\nCapacity: ${category.passengers} passengers\nLuggage: ${category.luggage} bags\n\n📋 Please provide:\n• Pickup location\n• Destination\n• Date & time\n• Number of passengers\n• Special requests`)}`}
+                    href={`https://wa.me/21628602147?text=${encodeURIComponent(`🚗 VEHICLE BOOKING\n\nCategory: ${category.name}\nPrice from: ${formatPrice(category.priceFrom)}\nCapacity: ${category.passengers} passengers\nLuggage: ${category.luggage} bags\n\n📋 Please provide:\n• Pickup location\n• Destination\n• Date & time\n• Number of passengers\n• Special requests`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full"

@@ -169,7 +169,7 @@ const BookingSuccess = () => {
               </Button>
               
               <Button 
-                onClick={() => window.open(`https://wa.me/447956643662?text=Hi, I have a question about booking ${booking?.reference}`, '_blank')}
+                onClick={() => window.open(`https://wa.me/21628602147?text=Hi, I have a question about booking ${booking?.reference}`, '_blank')}
                 className="flex-1 bg-[#25D366] hover:bg-[#20BA5A]"
               >
                 <MessageCircle className="mr-2 h-4 w-4" />

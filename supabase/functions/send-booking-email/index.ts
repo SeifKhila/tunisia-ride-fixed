@@ -77,7 +77,7 @@ serve(async (req) => {
 
               <div class="footer">
                 <p>Need immediate assistance? Contact us:</p>
-                <p>📱 WhatsApp: +44 7956 643662</p>
+                <p>📱 WhatsApp: +216 28 602 147 / +216 22 609 510</p>
                 <p>📧 info@get-tunisia-transfer.com</p>
                 <p><small>Get Tunisia Transfer - Your trusted transfer partner in Tunisia</small></p>
               </div>

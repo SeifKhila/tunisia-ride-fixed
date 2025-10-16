@@ -58,7 +58,7 @@ Notes:`
       <CardContent className="space-y-6">
         {/* WhatsApp Button (Primary) */}
         <a 
-          href={`https://wa.me/447956643662?text=${encodeURIComponent(getValidatedMessage())}`}
+          href={`https://wa.me/21628602147?text=${encodeURIComponent(getValidatedMessage())}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full"

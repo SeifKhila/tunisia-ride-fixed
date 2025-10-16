@@ -332,7 +332,7 @@ export default function BookingCalculator() {
                       
                       <div className="flex flex-col gap-2">
         <a 
-          href={`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
+          href={`https://wa.me/21628602147?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full"
@@ -340,12 +340,12 @@ export default function BookingCalculator() {
         >
           <Button className="w-full bg-tunisia-coral hover:bg-tunisia-coral/90 text-white">
             <MessageCircle className="mr-2 h-4 w-4" />
-            WhatsApp Tunisia (+216 28 602 147)
+            WhatsApp (+216 28 602 147)
           </Button>
         </a>
         
         <a 
-          href={`https://wa.me/447956643662?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
+          href={`https://wa.me/21622609510?text=${encodeURIComponent(generateBookingMessage(selectedTripType))}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full"
@@ -356,7 +356,7 @@ export default function BookingCalculator() {
             className="w-full border-tunisia-coral text-tunisia-coral hover:bg-tunisia-coral/10"
           >
             <MessageCircle className="mr-2 h-4 w-4" />
-            WhatsApp UK (+44 7956 643662)
+            WhatsApp (+216 22 609 510)
           </Button>
         </a>
         
