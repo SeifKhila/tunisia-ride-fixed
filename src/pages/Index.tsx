@@ -55,7 +55,7 @@ const Index = () => {
 
   const generateWhatsAppLink = (message: string) => {
     const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/21628602147?text=${encodedMessage}`;
+    return `https://wa.me/447956643662?text=${encodedMessage}`;
   };
 
   const generateEmailLink = (subject: string, body: string) => {
@@ -132,7 +132,7 @@ const Index = () => {
                 {t('hero.get_quote')}
               </Button>
               
-              <a href="tel:+21628602147" className="hidden sm:block">
+              <a href="tel:+447956643662" className="hidden sm:block">
                 <Button 
                   variant="outline" 
                   size="lg"
@@ -400,7 +400,7 @@ const Index = () => {
 
       {/* Mobile Contact Button */}
       <a 
-        href="tel:+21628602147" 
+        href="tel:+447956643662" 
         className="md:hidden fixed bottom-20 left-4 z-40 bg-tunisia-coral hover:bg-tunisia-coral/90 text-white p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
         aria-label="Call us directly"
       >

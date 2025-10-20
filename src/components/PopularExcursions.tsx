@@ -38,7 +38,7 @@ const PopularExcursions = () => {
                 {excursions.map((excursion, index) => (
                   <a 
                     key={index}
-                    href={`https://wa.me/21628602147?text=${encodeURIComponent(`🗺️ EXCURSION INQUIRY\n\nExcursion: ${excursion}\n\n📋 Please provide:\n• Preferred date\n• Number of people\n• Pickup location\n• Special interests or requests`)}`}
+                    href={`https://wa.me/447956643662?text=${encodeURIComponent(`🗺️ EXCURSION INQUIRY\n\nExcursion: ${excursion}\n\n📋 Please provide:\n• Preferred date\n• Number of people\n• Pickup location\n• Special interests or requests`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between gap-3 p-3 rounded-lg bg-tunisia-blue/5 hover:bg-tunisia-blue/10 transition-colors group cursor-pointer"
@@ -61,7 +61,7 @@ const PopularExcursions = () => {
                   Contact us for personalized excursion packages and competitive pricing
                 </p>
                 <a 
-                  href={`https://wa.me/21628602147?text=${encodeURIComponent(whatsappMessage)}`}
+                  href={`https://wa.me/447956643662?text=${encodeURIComponent(whatsappMessage)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full"

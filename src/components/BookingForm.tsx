@@ -139,7 +139,7 @@ Booking Ref: ${safeReference}`;
         {/* Contact Buttons */}
         <div className="grid grid-cols-1 gap-4">
           <a 
-            href={`https://wa.me/21628602147?text=${encodeURIComponent(getBookingMessage())}`}
+            href={`https://wa.me/447956643662?text=${encodeURIComponent(getBookingMessage())}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full"

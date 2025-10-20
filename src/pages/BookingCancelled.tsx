@@ -47,7 +47,7 @@ const BookingCancelled = () => {
               </Button>
               
               <Button 
-                onClick={() => window.open('https://wa.me/21628602147?text=Hi, I had an issue with my booking payment', '_blank')}
+                onClick={() => window.open('https://wa.me/447956643662?text=Hi, I had an issue with my booking payment', '_blank')}
                 variant="outline"
                 className="w-full"
               >

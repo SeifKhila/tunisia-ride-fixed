@@ -17,7 +17,7 @@ serve(async (req) => {
 
     const META_WA_PHONE_ID = Deno.env.get('META_WA_PHONE_ID');
     const META_WA_TOKEN = Deno.env.get('META_WA_TOKEN');
-    const WHATSAPP_TO = '21628602147';
+    const WHATSAPP_TO = '447956643662';
 
     if (!META_WA_PHONE_ID || !META_WA_TOKEN) {
       console.log('WhatsApp credentials not configured');

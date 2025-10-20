@@ -67,7 +67,7 @@ const QASelfTest = () => {
     const message = `🚗 NEW BOOKING REQUEST
 
 👤 Customer: John Doe (TEST)
-📱 Phone: +216 28 602 147 / +216 22 609 510
+📱 Phone: +44 7956 643 662
 📧 Email: gemma.test+qa@example.com
 
 📍 Pickup: Yasmine Hammamet
@@ -87,7 +87,7 @@ const QASelfTest = () => {
 Get Tunisia Transfer`;
 
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/21628602147?text=${encodedMessage}`, '_blank');
+    window.open(`https://wa.me/447956643662?text=${encodedMessage}`, '_blank');
   };
 
   return (
