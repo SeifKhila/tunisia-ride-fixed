@@ -19,7 +19,7 @@ const NotFound = () => {
         <div className="space-y-4 text-muted-foreground">
           <p>We're a simple booking service that operates via:</p>
           <div className="flex flex-col gap-2">
-            <p>📱 WhatsApp: +44 7956 643 662</p>
+            <p>📱 WhatsApp: +216 28 602 147</p>
             <p>📧 Email: khilas592@gmail.com</p>
           </div>
           <p className="text-sm">No online accounts or complex forms - just direct contact for bookings.</p>

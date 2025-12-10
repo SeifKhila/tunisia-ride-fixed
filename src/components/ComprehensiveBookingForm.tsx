@@ -255,7 +255,7 @@ ${data.notes ? `📝 Notes: ${data.notes}` : ''}`;
         
         // Open WhatsApp web with prefilled message
         window.open(
-          `https://wa.me/447956643662?text=${encodeURIComponent(fallbackMsg)}`,
+          `https://wa.me/21628602147?text=${encodeURIComponent(fallbackMsg)}`,
           '_blank'
         );
         
@@ -346,7 +346,7 @@ ${values.tripType === 'return' && values.returnDate ? `📅 Return: ${format(val
           <div className="bg-tunisia-sand/30 p-6 rounded-lg border border-tunisia-blue/20">
             <p className="font-medium mb-3">Need immediate assistance?</p>
             <a 
-              href={`https://wa.me/447956643662?text=${encodeURIComponent(fallbackMessage || getWhatsAppMessage())}`}
+              href={`https://wa.me/21628602147?text=${encodeURIComponent(fallbackMessage || getWhatsAppMessage())}`}
               target="_blank"
               rel="noopener noreferrer"
             >

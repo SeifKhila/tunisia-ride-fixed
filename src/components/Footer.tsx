@@ -57,12 +57,12 @@ const Footer = () => {
 
             {/* Phone */}
             <a
-              href="tel:+447956643662"
-              aria-label="Call us +44 7956 643 662"
+              href="tel:+21628602147"
+              aria-label="Call us +216 28 602 147"
               className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] text-white font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
             >
               <Phone className="h-5 w-5" />
-              <span>+44 7956 643 662</span>
+              <span>+216 28 602 147</span>
             </a>
           </div>
         </div>

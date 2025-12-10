@@ -114,7 +114,7 @@ export default function InstantPriceCalculator() {
                   Fixed price • No hidden fees • Includes all taxes
                 </p>
                 <a
-                  href={`https://wa.me/447956643662?text=${encodeURIComponent(`I'd like to book a transfer from ${from} to ${to}`)}`}
+                  href={`https://wa.me/21628602147?text=${encodeURIComponent(`I'd like to book a transfer from ${from} to ${to}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -15,7 +15,7 @@ I'd like to book a transfer:
 
   return (
     <a 
-      href={`https://wa.me/447956643662?text=${encodeURIComponent(message)}`}
+      href={`https://wa.me/21628602147?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50"

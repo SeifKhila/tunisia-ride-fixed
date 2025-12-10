@@ -380,7 +380,7 @@ export type Database = {
           created_at: string | null
           details: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           record_id: string | null
           table_name: string | null
           user_agent: string | null
@@ -391,7 +391,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_id?: string | null
           table_name?: string | null
           user_agent?: string | null
@@ -402,7 +402,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_id?: string | null
           table_name?: string | null
           user_agent?: string | null
@@ -522,16 +522,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      approve_driver: {
-        Args: { driver_id: string }
-        Returns: undefined
-      }
-      generate_booking_reference: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      approve_driver: { Args: { driver_id: string }; Returns: undefined }
+      generate_booking_reference: { Args: never; Returns: string }
       get_driver_visible_requests: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           distance_km: number

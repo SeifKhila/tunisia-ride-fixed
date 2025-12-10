@@ -55,7 +55,7 @@ const Index = () => {
 
   const generateWhatsAppLink = (message: string) => {
     const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/447956643662?text=${encodedMessage}`;
+    return `https://wa.me/21628602147?text=${encodedMessage}`;
   };
 
   const generateEmailLink = (subject: string, body: string) => {
@@ -132,7 +132,7 @@ const Index = () => {
                 {t('hero.get_quote')}
               </Button>
               
-              <a href="tel:+447956643662" className="hidden sm:block">
+              <a href="tel:+21628602147" className="hidden sm:block">
                 <Button 
                   variant="outline" 
                   size="lg"
