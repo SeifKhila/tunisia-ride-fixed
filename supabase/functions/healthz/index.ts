@@ -17,7 +17,7 @@ serve(async (req) => {
       env: {
         META_WA_PHONE_ID: !!Deno.env.get('META_WA_PHONE_ID'),
         META_WA_TOKEN: !!Deno.env.get('META_WA_TOKEN'),
-        WHATSAPP_TO: '447956643662',
+        WHATSAPP_TO: '21628602147',
         SENDGRID_API_KEY: !!Deno.env.get('SENDGRID_API_KEY'),
         EMAIL_API_KEY: !!Deno.env.get('EMAIL_API_KEY'),
         RESEND_API_KEY: !!Deno.env.get('RESEND_API_KEY'),

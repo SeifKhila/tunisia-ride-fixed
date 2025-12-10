@@ -163,7 +163,7 @@ const EnhancedPaymentBooking: React.FC<EnhancedPaymentBookingProps> = ({
 
         <div>
           <Label htmlFor="phone">Phone / WhatsApp *</Label>
-          <Input {...register('phone')} placeholder="+44 7956 643 662" />
+          <Input {...register('phone')} placeholder="+216 28 602 147" />
           {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
         </div>
 
